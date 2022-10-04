@@ -181,7 +181,6 @@ export class SimulationMenu {
         naviOption = this.naviOption; 
         naviOption.origin={};
         naviOption.destination={};
-        console.log(naviOption);
 
         naviOption.defaultLineOption =  this.defaultLineOption;
         naviOption.origin.markerOptions =  this.originMarkerOptions;

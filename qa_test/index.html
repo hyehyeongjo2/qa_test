@@ -47,8 +47,8 @@
         const mapContainer = document.querySelector('.map');
         const context = new ContextMenu();
         const mapInfo = new MapInfo();
-        const mapOption = new MapOption(dabeeoMaps, context, null);
-        const getMapDataMenu = new GetMapDataMenu(dabeeoMaps, mapContainer, mapInfo, mapOption, context, null);
+        const mapOption = new MapOption(dabeeoMaps, context);
+        const getMapDataMenu = new GetMapDataMenu(dabeeoMaps, mapContainer, mapInfo, mapOption, context);
 
         const mapGui = getMapDataMenu.init(gui);
     }
