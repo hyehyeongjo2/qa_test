@@ -16,6 +16,9 @@ export class MapInfo {
             height: mapData.mapInfo.size.height,
             scaleCm: mapData.mapInfo.scaleCm,
             name: mapData.mapInfo.name,
+            id: mapData.mapInfo.id,
+            version: mapData.mapInfo.versionString
+
         };
         this.menu = this.gui.addFolder("mapInfo");
         // mapInfoGui.open();
@@ -24,6 +27,9 @@ export class MapInfo {
         this.menu.add(mapInfo, "height");
         this.menu.add(mapInfo, "scaleCm");
         this.menu.add(mapInfo, "name");
+        this.menu.add(mapInfo, "id");
+        this.menu.add(mapInfo, "version");
+
         return this.menu;
     }
     removeMenu() {

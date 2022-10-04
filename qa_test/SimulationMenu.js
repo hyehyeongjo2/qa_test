@@ -19,6 +19,7 @@ export class SimulationMenu {
         this.destinationMarkerOptions = null;
         this.destinationLineOptions = null;
         this.animOption = null;
+        this.animMarkerOptions = null; 
 
     }
     removeMenu() {
@@ -35,12 +36,22 @@ export class SimulationMenu {
         this.menu = this.gui.addFolder("Simulation Menu");
         this.originPoi = this.initPoiSetting("origin");
         this.destinationPoi = this.initPoiSetting("destination");
-        this.waypoint1 = this.initPoiSetting("waypoint1");
-        this.waypoint2 = this.initPoiSetting("waypoint2");
+        this.waypoint1 = this.initWayPoint("waypoint1");
+        this.waypoint2 = this.initWayPoint("waypoint2");
         this.setting = this.initSetting(); 
         this.initNaviOptions();
         return this.menu;
     }
+    initNaviOptions() {
+        this.naviOption = this.initOptions();
+        this.defaultLineOption = this.initLineMenu("Default Line");
+        this.originMarkerOptions = this.initIconMenu("Origin Icon");
+        this.destinationMarkerOptions = this.initIconMenu("Destination Icon"); 
+        this.destinationLineOptions = this.initLineMenu("Destination Line");
+        this.animOption = this.initAnimationMenu("Animation Menu")
+        this.animMarkerOptions = this.initIconMenu("Animation Icon");
+    }
+
     initPoiSetting(menuName) {
         let poiSetting = null;
         const changeFloor = (value) => {
@@ -73,10 +84,45 @@ export class SimulationMenu {
 
         menu.add(setting, "floor", floorSetting).onChange(changeFloor);
         poiSetting = menu.add(setting, "poi", poisSetting);
+
+        return setting;
+    }
+    initWayPoint(menuName) {
+        let poiSetting = null;
+        const changeFloor = (value) => {
+            const currentFloor = value;
+            const poiList = this.mapData.dataPoi.getPois().reduce((result, cur) => {
+                    if (currentFloor == cur.floorId) return {...result, [cur.title]: cur.id};
+                    else return result;
+                },{"": ""});
+            poiSetting = poiSetting.options(poiList);
+        };
+
+        const menu = this.menu.addFolder(menuName);
+
+        const floorSetting = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
+                return {...prev, [cur.name[0].text]: cur.id};
+            },{"not defined": ""});
+
+        const floor = this.mapData.dataFloor.getFloors()[0].id;
+        let poisSetting = this.mapData.dataPoi.getPois().reduce((result, cur) => {
+                if (floor == cur.floorId) return {...result, [cur.title]: cur.id};
+                else return result;
+            },{"": ""});
+
+        const setting = {
+            floor: this.mapData.dataFloor.getFloors()[0].id,
+            poi: this.mapData.dataPoi.find(floor, {type: "floorId"})[0].id,
+            apply : false
+        };
+
+        menu.add(setting, "floor", floorSetting).onChange(changeFloor);
+        poiSetting = menu.add(setting, "poi", poisSetting);
         menu.add(setting, "apply");
 
         return setting;
     }
+
     initSetting() {
         const setting = {
             type: "recommendation",
@@ -128,7 +174,7 @@ export class SimulationMenu {
         const naviResponse = await this.mapData.getRoute(option);
         console.log(naviResponse);
         if (naviResponse.totalDistance === 0) {
-            alert("경로가 존재하지 않습니다!");
+            alert("경로에 대한 거리가 0입니다! ");
             return;
         }
         let naviOption = {};
@@ -152,6 +198,7 @@ export class SimulationMenu {
     start(value) {
         const animSetting = this.animSetting;
         let animOption = Object.assign({}, this.animOption);
+        animOption.markerOptions = this.animMarkerOptions;
         console.log(animOption);
         this.map.routeSimulation.start(animOption);
     }
@@ -161,14 +208,6 @@ export class SimulationMenu {
     }
 
 
-    initNaviOptions() {
-        this.naviOption = this.initOptions();
-        this.defaultLineOption = this.initLineMenu("Default Line");
-        this.originMarkerOptions = this.initIconMenu("Origin Icon");
-        this.destinationMarkerOptions = this.initIconMenu("Destination Icon"); 
-        this.destinationLineOptions = this.initLineMenu("Destination Line");
-        this.animOption = this.initAnimationMenu("Animation Menu")
-    }
     initOptions() {
         const menu = this.menu.addFolder("Navigation Option");
         const setting =  {

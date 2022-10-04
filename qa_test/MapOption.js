@@ -20,10 +20,10 @@ export class MapOption {
         const option = this.getOption();
         this.deleteMap();
         this.context.removeMenu();
-        this.menuClass.removeMenu();
+        if (this.menuClass) this.menuClass.removeMenu();
         this.map = await this.dabeeoMaps.showMap(this.mapContainer, option, this.mapData);
         this.context.init(this.gui, this.mapData, this.map, this.mapContainer);
-        this.menuClass.init(this.gui, this.mapData, this.map, this.mapContainer);
+        if (this.menuClass) this.menuClass.init(this.gui, this.mapData, this.map, this.mapContainer);
 
         return this.map;
     }

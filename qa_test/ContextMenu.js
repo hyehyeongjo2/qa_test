@@ -28,6 +28,7 @@ export class ContextMenu {
             camera : currentCameraMode,
         };
         this.menu = this.gui.addFolder("Context");
+        this.menu.open(); 
         this.menu.add(mapContext, "floor", floorSetting).onChange(this.changeFloor.bind(this)).listen();
         this.menu.add(mapContext, "camera", ["2D", "3D"]).onChange(this.changeCamera.bind(this));
         return this.menu;
