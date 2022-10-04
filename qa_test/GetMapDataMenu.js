@@ -15,7 +15,7 @@ export class GetMapDataMenu {
     }
     removeMenu () {
         if (this.menu) {
-            this.menuClass.removeMenu(); 
+            if (this.menuClass !== null)this.menuClass.removeMenu(); 
             this.context.removeMenu();
             this.gui.removeFolder(this.menu);
          
