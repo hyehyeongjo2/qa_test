@@ -7,8 +7,11 @@ export class SimulationMenu {
         this.menu = null;
         this.setting = null;
 
+
         this.originPoi = null;
         this.destinationPoi = null;
+        this.waypoint1 = null; 
+        this.waypoint2 = null; 
 
         this.naviOption = null;
         this.defaultLineOption = null;
@@ -32,6 +35,8 @@ export class SimulationMenu {
         this.menu = this.gui.addFolder("Simulation Menu");
         this.originPoi = this.initPoiSetting("origin");
         this.destinationPoi = this.initPoiSetting("destination");
+        this.waypoint1 = this.initPoiSetting("waypoint1");
+        this.waypoint2 = this.initPoiSetting("waypoint2");
         this.setting = this.initSetting(); 
         this.initNaviOptions();
         return this.menu;
@@ -63,10 +68,13 @@ export class SimulationMenu {
         const setting = {
             floor: this.mapData.dataFloor.getFloors()[0].id,
             poi: this.mapData.dataPoi.find(floor, {type: "floorId"})[0].id,
+            apply : true
         };
 
         menu.add(setting, "floor", floorSetting).onChange(changeFloor);
         poiSetting = menu.add(setting, "poi", poisSetting);
+        menu.add(setting, "apply");
+
         return setting;
     }
     initSetting() {
@@ -99,7 +107,24 @@ export class SimulationMenu {
             },
             type: this.setting.type,
         };
+        const waypoints = [];
+        if (this.waypoint1.apply) {
+            waypoints.push({
+                poiId : this.waypoint1.poi,
+                floorId:this.waypoint1.floor,
+            })
+        }
+        if (this.waypoint2.apply) {
+            waypoints.push({
+                poiId : this.waypoint2.poi,
+                floorId:this.waypoint2.floor,
+            })
+        }
+        if (waypoints.length>0) {
+            option.waypoints= waypoints;
+        }
         console.log(option);
+
         const naviResponse = await this.mapData.getRoute(option);
         console.log(naviResponse);
         if (naviResponse.totalDistance === 0) {
@@ -207,7 +232,7 @@ export class SimulationMenu {
         const setting  = {
             zoom: 20,
             changeFloorDelay: 1000,
-            speedRate: 10,
+            speedRate: 50,
             removeIcon: true,
         };
         menu.add(setting, "zoom");
