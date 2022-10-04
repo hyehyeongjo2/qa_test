@@ -1,4 +1,4 @@
-export const maps = [
+export const mapList = [
     {
         name: "사무실",
         id: "MP-1jydrhzb11sh17965",

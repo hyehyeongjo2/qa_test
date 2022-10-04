@@ -1,4 +1,4 @@
-import { maps } from "./mapList.js";
+import { mapList } from "./mapList.js";
 
 export class GetMapDataMenu {
     constructor( dabeeoMaps, mapContainer, mapInfo, mapOption, context, menuClass) {
@@ -32,8 +32,8 @@ export class GetMapDataMenu {
         this.removeMenu();
 
         const option = {
-            clientId: maps[value].clientId,
-            clientSecret: maps[value].clientSecret,
+            clientId: mapList[value].clientId,
+            clientSecret: mapList[value].clientSecret,
             serverType: "SERVER_REAL",
         };
         //mapData 가져오기
@@ -74,13 +74,12 @@ export class GetMapDataMenu {
             getMapData: this.getMapData.bind(this),
             getMap:this.getMap.bind(this),
         };
-        const mapSetting = {
+        let mapSetting = {
             선택: -1,
-            사무실: 0,
-            이케아: 1,
-            삼성서울병원전경: 2,
-            삼성서울병원실내: 3,
         }
+        mapList.forEach((element, index)=>{
+            mapSetting[element.name] = index;
+        })
         const setting = this.setting; 
         const getMapClient = gui.addFolder("get Map by client info ");
         getMapClient.add(setting, "clientId");
