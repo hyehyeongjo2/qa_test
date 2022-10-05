@@ -1,6 +1,6 @@
 import { mapList } from "./mapList.js";
 
-export class GetMapDataMenu {
+export class GetMapData {
     constructor( dabeeoMaps, mapContainer, mapInfo, mapOption, context, menuClass) {
         this.dabeeoMaps  = dabeeoMaps; 
         this.mapContainer = mapContainer;
