@@ -25,13 +25,13 @@ export class MapDataMenu {
             console.log(value);
             const option = {
                 ids: value,
-                outerColor: "red",
-                innerColor: "blue",
-                scale: 1.5,
+                outerColor: "#FC032D",
+                innerColor: "red",
+                scale: 1.8,
             };
             const pois = this.mapData.dataPoi.find(value, {type: "iD"});
-            // await this.map.context.changeFloor(pois.floorId);
-            // await this.map.pois.reset();
+            await this.map.context.changeFloor(pois.floorId);
+            await this.map.pois.reset();
             console.log(option);
             this.map.pois.set(option);
         };
@@ -45,7 +45,8 @@ export class MapDataMenu {
             poisMenu = poisMenu.options({[pois.title]:pois.id}).onChange(changePoi);
         }
 
-        function findByFloorId(value) {
+        async function findByFloorId(value) {
+            await this.map.context.changeFloor(value);// 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             const pois = this.mapData.dataPoi.find(value, {type: "floorId"}).reduce((result, cur) => { return  {...result, [cur.title]: cur.id} }, {});
             poisMenu = poisMenu.options(pois).onChange(changePoi);;
         }
