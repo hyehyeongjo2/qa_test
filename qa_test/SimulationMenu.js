@@ -48,71 +48,61 @@ export class SimulationMenu {
         this.originMarkerOptions = this.initIconMenu("Origin Icon");
         this.destinationMarkerOptions = this.initIconMenu("Destination Icon"); 
         this.destinationLineOptions = this.initLineMenu("Destination Line");
-        this.animOption = this.initAnimationMenu("Animation Menu")
+        this.animOption = this.initAnimationMenu("Animation Option")
         this.animMarkerOptions = this.initIconMenu("Animation Icon");
+    }
+    makeFloorSetting (){
+        return (
+            this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
+                return {...prev, [cur.name[0].text]: cur.id};
+            },{"not defined": ""})
+        )
+    }
+    makePoiSetting (floor) {
+        return(
+            this.mapData.dataPoi.getPois().reduce((result, cur) => {
+                if (floor == cur.floorId) return {...result, [cur.title]: cur.id};
+                else return result;
+            },{"": ""})
+        )
     }
 
     initPoiSetting(menuName) {
         let poiSetting = null;
         const changeFloor = (value) => {
-            const currentFloor = value;
-            const poiList = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-                    if (currentFloor == cur.floorId) return {...result, [cur.title]: cur.id};
-                    else return result;
-                },{"": ""});
+            const poiList = this.makePoiSetting(value);
             poiSetting = poiSetting.options(poiList);
         };
 
         const menu = this.menu.addFolder(menuName);
         menu.open();
 
-        const floorSetting = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
-                return {...prev, [cur.name[0].text]: cur.id};
-            },{"not defined": ""});
-
-        const floor = this.mapData.dataFloor.getFloors()[0].id;
-        let poisSetting = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-                if (floor == cur.floorId) return {...result, [cur.title]: cur.id};
-                else return result;
-            },{"": ""});
+        const floorSetting = this.makeFloorSetting()
+        let poisSetting = this.makePoiSetting(this.mapData.dataFloor.getFloors()[0].id);
 
         const setting = {
             floor: this.mapData.dataFloor.getFloors()[0].id,
-            poi: this.mapData.dataPoi.find(floor, {type: "floorId"})[0].id,
-            apply : true
+            poi: ""
         };
 
         menu.add(setting, "floor", floorSetting).onChange(changeFloor);
         poiSetting = menu.add(setting, "poi", poisSetting);
-
         return setting;
     }
     initWayPoint(menuName) {
         let poiSetting = null;
         const changeFloor = (value) => {
-            const currentFloor = value;
-            const poiList = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-                    if (currentFloor == cur.floorId) return {...result, [cur.title]: cur.id};
-                    else return result;
-                },{"": ""});
+            const poiList = this.makePoiSetting(value);
             poiSetting = poiSetting.options(poiList);
         };
 
         const menu = this.menu.addFolder(menuName);
-
-        const floorSetting = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
-                return {...prev, [cur.name[0].text]: cur.id};
-            },{"not defined": ""});
-
-        const floor = this.mapData.dataFloor.getFloors()[0].id;
-        let poisSetting = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-                if (floor == cur.floorId) return {...result, [cur.title]: cur.id};
-                else return result;
-            },{"": ""});
+        const floorSetting = this.makeFloorSetting()
+        let poisSetting = this.makePoiSetting(this.mapData.dataFloor.getFloors()[0].id);
 
         const setting = {
             floor: this.mapData.dataFloor.getFloors()[0].id,
-            poi: this.mapData.dataPoi.find(floor, {type: "floorId"})[0].id,
+            poi: "",
             apply : false
         };
 
@@ -194,15 +184,14 @@ export class SimulationMenu {
     clear() {
         this.map.routeSimulation.clear();
     }
-    start(value) {
-        const animSetting = this.animSetting;
+    start() {
         let animOption = Object.assign({}, this.animOption);
         animOption.markerOptions = this.animMarkerOptions;
         console.log(animOption);
         this.map.routeSimulation.start(animOption);
     }
 
-    stop(value) {
+    stop() {
         this.map.routeSimulation.stop();
     }
 
@@ -258,12 +247,10 @@ export class SimulationMenu {
         menu.add(setting, "iconUrl", ["", "https://assets.dabeeomaps.com/image/btn_floor_up.png"]);
         menu.add(setting, "width");
         menu.add(setting, "height");
-        menu.add(setting, "iconUrl");
         menu.add(setting, "positionZ");
         menu.add(setting, "visibleIcon");
         return setting;
     }
-
 
     initAnimationMenu(menuName) {
         const menu = this.menu.addFolder(menuName);
@@ -277,7 +264,7 @@ export class SimulationMenu {
         menu.add(setting, "changeFloorDelay");
         menu.add(setting, "speedRate");
         menu.add(setting, "removeIcon");
-        return this.setting; 
+        return setting; 
 
     }
 }
