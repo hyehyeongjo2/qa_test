@@ -197,18 +197,17 @@ export class SimulationMenu {
 
 
     initOptions() {
-        const menu = this.menu.addFolder("Navigation Option");
         const setting =  {
             lineZ: 2, // 주행선의 z축 값을 지정합니다.
             lineDivide: false,
         }
+        const menu = this.menu.addFolder("Navigation Option");
         menu.add(setting, "lineZ");
         menu.add(setting, "lineDivide");
         return setting; 
 
     }
     initLineMenu(menuName) {
-        const menu = this.menu.addFolder(menuName);
         const setting = {
             lineColor: "#ffbb00",
             lineSpotSize: 10,
@@ -221,7 +220,8 @@ export class SimulationMenu {
             solidLineJoin: "round",
             solidLineCap: "round",
         };
-       
+        
+        const menu = this.menu.addFolder(menuName);
         menu.addColor(setting, "lineColor");
         menu.add(setting, "lineSpotSize");
         menu.add(setting, "lineSpotInterval");
@@ -235,7 +235,6 @@ export class SimulationMenu {
         return setting;
     }   
     initIconMenu(menuName) {
-        const menu = this.menu.addFolder(menuName);
         const setting = {
             iconUrl: "",
             width: "",
@@ -243,7 +242,8 @@ export class SimulationMenu {
             positionZ: 0,
             visibleIcon: true,
         };
-
+        
+        const menu = this.menu.addFolder(menuName);
         menu.add(setting, "iconUrl", ["", "https://assets.dabeeomaps.com/image/btn_floor_up.png"]);
         menu.add(setting, "width");
         menu.add(setting, "height");
@@ -253,13 +253,13 @@ export class SimulationMenu {
     }
 
     initAnimationMenu(menuName) {
-        const menu = this.menu.addFolder(menuName);
         const setting  = {
             zoom: 20,
             changeFloorDelay: 1000,
             speedRate: 50,
             removeIcon: true,
         };
+        const menu = this.menu.addFolder(menuName);
         menu.add(setting, "zoom");
         menu.add(setting, "changeFloorDelay");
         menu.add(setting, "speedRate");

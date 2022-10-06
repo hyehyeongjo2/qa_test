@@ -22,11 +22,34 @@ export class ObjectsMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder("Object Menu");
-        this.initSetting();
+        this.setting = this.initSetting(this.menu);
+        this.actionSetting = this.initActionSetting(this.menu); 
         new ObjectsMoreMenu().init(this.menu, mapData, map, mapContainer)
         return this.menu;
     }
-    async initSetting() {
+    initSetting(menu) {
+
+        const setting = {
+            activeDest: false,
+            color: "#ff0000",
+            opacity: 0.3,
+            isAnimate: true,
+            duration: 1000,
+            isRepeat: true,
+            isYoyo: true,
+        };
+
+        menu.add(setting, "activeDest");
+        menu.addColor(setting, "color");
+        menu.add(setting, "opacity");
+        menu.add(setting, "isAnimate");
+        menu.add(setting, "duration");
+        menu.add(setting, "isRepeat");
+        menu.add(setting, "isYoyo");
+
+        return setting;
+    }
+    async initActionSetting(menu) {
         let objectSetting = null;
         this.mapContainer.addEventListener("floor-changed", async (e) => {
             console.log("floor-changed 에 대한 결과값", e.detail);
@@ -43,16 +66,8 @@ export class ObjectsMenu {
         const objectList = objects.reduce((result, cur) => {
                 return [...result, cur.id]; },[""]);
 
-        this.setting = {
-            activeDest: false,
-            color: "#ff0000",
-            opacity: 0.3,
-            isAnimate: true,
-            duration: 1000,
-            isRepeat: true,
-            isYoyo: true,
-        };
-        this.actionSetting = {
+
+        const setting = {
             ids: "",
             set: this.set.bind(this),
             reset: this.reset.bind(this),
@@ -60,21 +75,12 @@ export class ObjectsMenu {
             show: this.show.bind(this),
         };
 
-        const menu = this.menu;
-        const setting = this.setting;
-        const actionSetting = this.actionSetting;
-        menu.add(setting, "activeDest");
-        menu.addColor(setting, "color");
-        menu.add(setting, "opacity");
-        menu.add(setting, "isAnimate");
-        menu.add(setting, "duration");
-        menu.add(setting, "isRepeat");
-        menu.add(setting, "isYoyo");
-        objectSetting = menu.add(actionSetting, "ids", objectList);
-        menu.add(actionSetting, "set");
-        menu.add(actionSetting, "reset");
-        menu.add(actionSetting, "hide");
-        menu.add(actionSetting, "show");
+        objectSetting = menu.add(setting, "ids", objectList);
+        menu.add(setting, "set");
+        menu.add(setting, "reset");
+        menu.add(setting, "hide");
+        menu.add(setting, "show");
+        return setting; 
     }
 
     set() {

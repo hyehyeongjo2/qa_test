@@ -28,8 +28,7 @@ export class PoisMoreMenu {
     }
     
     initMoreSetting() {
-        const menu = this.menu;
-
+        
         const setting = {
             single_h_to_s: this.single_h_to_s.bind(this),
             arr_h_to_s: this.arr_h_to_s.bind(this),
@@ -38,7 +37,8 @@ export class PoisMoreMenu {
             arr_s_to_h: this.arr_s_to_h.bind(this),
             all_s_to_h: this.all_s_to_h.bind(this),
         };
-
+        
+        const menu = this.menu;
         menu.add(setting, "single_h_to_s");
         menu.add(setting, "arr_h_to_s");
         menu.add(setting, "all_h_to_s");

@@ -27,7 +27,7 @@ export class PoisMenu {
         this.menu = this.gui.addFolder("Pois Menu");
         this.initSetting();
         new PoisMoreMenu().init(this.menu, mapData, map, mapContainer);
-        this.initCurrentSetting();
+        this.currentSetting = this.initCurrentSetting();
         return this.menu;
     }
 
@@ -74,7 +74,7 @@ export class PoisMenu {
     }
 
     initCurrentSetting() {
-        this.currentsetting = {
+        const setting = {
             isVisible: true,
             x: "",
             y: "",
@@ -83,25 +83,26 @@ export class PoisMenu {
             currentPoi: this.currentPoi.bind(this),
         };
 
-        const current = this.menu.addFolder("current menu");
-        current.add(this.currentsetting, "isVisible");
-        current.add(this.currentsetting, "x");
-        current.add(this.currentsetting, "y");
-        current.add(this.currentsetting, "z");
-        current.add(this.currentsetting, "byAsc");
-        current.add(this.currentsetting, "currentPoi");
+        const menu = this.menu.addFolder("current menu");
+        menu.add(setting, "isVisible");
+        menu.add(setting, "x");
+        menu.add(setting, "y");
+        menu.add(setting, "z");
+        menu.add(setting, "byAsc");
+        menu.add(setting, "currentPoi");
+        return setting; 
     }
     currentPoi(value) {
         setTimeout(() => {
             const option = {
-                isVisible: this.currentsetting.isVisible,
+                isVisible: this.currentSetting.isVisible,
                 sortOption: {
                     center: {
-                        x: this.currentsetting.x,
-                        y: this.currentsetting.y,
-                        z: this.currentsetting.z,
+                        x: this.currentSetting.x,
+                        y: this.currentSetting.y,
+                        z: this.currentSetting.z,
                     },
-                    byAsc: this.currentsetting.byAsc,
+                    byAsc: this.currentSetting.byAsc,
                 },
             };
             const pois = this.map.pois.getCurrentPois(option);
