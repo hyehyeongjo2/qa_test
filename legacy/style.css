@@ -1,0 +1,38 @@
+.items {
+    position: absolute;
+    top: 1rem;
+    right: 5rem;
+    text-align: center;
+}
+
+.codeSnipet {
+    width: 400px;
+    height: 800px;
+    background-color: lightgray;;
+}
+
+#container {
+    margin-left: 5rem;
+    width: 1000px;
+    height: 500px;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+}
+
+.addBtn,
+.addMap {
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid black;
+    margin-right: 1rem;
+}
+
+.addBtn:hover,
+.addMap:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}

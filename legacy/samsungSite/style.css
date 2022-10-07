@@ -1,0 +1,87 @@
+.viewport {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.changeFloorContainer,
+.layerContainer,
+.searchContainer {
+  display: flex;
+  margin-top: 1rem;
+}
+
+select,
+input {
+  width: 200px;
+  height: 30px;
+}
+
+.floorBtn,
+.showBtn,
+.hideBtn,
+.searchBtn,
+.searchShowBtn,
+.searchHideBtn,
+.capture {
+  width: 50px;
+  height: 30px;
+  border: 1px solid black;;
+  border-radius: 8px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capture {
+  width: 80px;
+  height: 40px;
+  margin-top: 1rem;
+}
+
+.floorBtn:hover,
+.showBtn:hover,
+.hideBtn:hover,
+.searchBtn:hover,
+.searchShowBtn:hover,
+.searchHideBtn:hover,
+.capture:hover {
+  cursor: pointer;
+}
+/* 
+.changeFloorContainer {
+  display:flex;
+  position: absolute;
+  top: 3rem;
+  left: 1rem;
+  z-index: 10;
+}
+
+.floorBtn {
+  margin-left: 1rem;
+}
+
+.contextInputer {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+}
+
+.layerContainer {
+  position: absolute;
+  top: 3rem;
+  z-index: 10;
+  width: 100vw;
+  display: none;
+}
+
+.layerInputer {
+  left: 1rem;
+}
+
+.showBtn,
+.hideBtn {
+  right: 1rem;
+} */

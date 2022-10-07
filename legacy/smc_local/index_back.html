@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[index]</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id='map' class="map"></div>
+</body>
+<script type="text/javascript" src='./js/dabeeomaps-4.0.0.js'></script>
+<script>
+
+
+    async function init () {
+
+        const dabeeoMaps = new dabeeo.Maps();
+        //mapDataOption
+        const mapDataOption = {
+            // name: "사무실",
+            // mapId: "MP-1jydrhzb11sh17965",
+            // clientId: "75hb8YSnAokb-sZ04aDR91",
+            // clientSecret: "0f7ad84f160c7b3fd1849a7920af718b",
+            // name: "이케아",
+            // mapId: "MP-1iepzl36f94xl2305",
+            // clientId: "6cHpIJoJknv9ZbsaLRN2Dj",
+            // clientSecret: "ad980b99be38dbd033aac1c757115064",
+            
+            // name: "삼성서울병원전경",
+            mapId: "./MP-1ji27857fjwa95948",
+            // clientId: "47o545DKANS8Jra5FZUXJq",
+            // clientSecret: "72671b30f940fc0bcb7225fe2e0b27b7",
+            // name: "삼성서울병원실내",
+            // mapId: "./MP-qxqj1sizdtte4942",
+            // clientId: "cmnGuxYqQkV87wHcXXOvfN",
+            // clientSecret: "46a9752504f3054998b53adbfb73297e",
+
+            serverType: 'SERVER_LOCAL'
+        }
+        //mapData 가져오기 
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        console.log(mapData);
+
+        //mapContainer
+        const mapContainer = document.getElementById('map');
+        //mapOption 정의 
+        const mapOption = Object.assign({
+        });
+        //mapOption으로 mapContainer에 map 그리기 
+        const map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        console.log(map);
+
+        //test code begins
+
+
+
+
+
+
+
+
+
+
+
+        //test code ends
+
+        console.log('test: [index]');
+    }
+    init(); 
+</script>
+
+</html>
