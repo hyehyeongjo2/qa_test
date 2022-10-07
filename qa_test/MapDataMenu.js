@@ -13,9 +13,10 @@ export class MapDataMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder("MapData");
+        this.initDataFloor(this.menu);
+        this.initDataLanguage(this.menu);
         this.initDataPoi(this.menu);
         this.initDataObject(this.menu);
-        this.initDataFloor(this.menu);
         this.initDataGroupCode(this.menu);
         return this.menu;
     }
@@ -25,6 +26,63 @@ export class MapDataMenu {
             this.gui.removeFolder(this.menu);
             this.menu = null;
         }
+    }
+
+    initDataFloor(gui) {
+        let floorsMenu = null;
+
+        const changeFloor = async (value) => {
+            await this.map.context.changeFloor(value);
+        };
+
+        function findByTitle(value) {
+            const floors = this.mapData.dataFloor.find({title: value}).reduce((result, cur) => {
+                return [...result, cur.id];
+            }, []);
+            floorsMenu = floorsMenu.options(floors).onChange(changeFloor);
+        }
+        function findByFloorId(value) {
+            const floors = this.mapData.dataFloor.find({id: value});
+            floorsMenu = floorsMenu.options([floors.id]).onChange(changeFloor);
+        }
+        const floorList = this.mapData.dataFloor.getFloors().reduce(
+            (prev, cur) => {
+                return [...prev, cur.id];
+            },
+            [""],
+        );
+        const defaultFloor = this.mapData.dataFloor.getDefaultFloor();
+        const setting = {
+            getDefaultFloor: defaultFloor.id,
+            findByFloorId: "",
+            findByTitle: "",
+            floors: "",
+        };
+        const menu = gui.addFolder("dataFloor");
+        // menu.open();
+        menu.add(setting, "getDefaultFloor");
+        menu.add(setting, "findByFloorId", floorList).onChange(findByFloorId.bind(this));
+        menu.add(setting, "findByTitle").onFinishChange(findByTitle.bind(this));
+        floorsMenu = menu.add(setting, "floors").onChange(changeFloor);
+    }
+
+    initDataLanguage(gui) {
+        const changeLanguage = async (value) => {
+            this.map.context.changeLanguage(value);
+        };
+        console.log(this.mapData.dataLanguage.getLanguage());
+        const langList = this.mapData.dataLanguage.getLanguage().reduce((result, cur) => {
+            return {...result, [cur.name]: cur.lang};
+        }, {});
+        const defaultLanguage = this.mapData.dataLanguage.getDefaultLanguage();
+        const setting = {
+            getDefaultLang: defaultLanguage.lang,
+            language: "",
+        };
+        const menu = gui.addFolder("data Language");
+        // menu.open();
+        menu.add(setting, "getDefaultLang");
+        menu.add(setting, "language", langList).onChange(changeLanguage);
     }
 
     initDataPoi(gui) {
@@ -46,25 +104,25 @@ export class MapDataMenu {
         };
 
         function findByTitle(value) {
-            const pois = this.mapData.dataPoi.find(value, {type: "title"}).reduce((result, cur) => {
+            const pois = this.mapData.dataPoi.find({title:value}).reduce((result, cur) => {
                 return {...result, [cur.title]: cur.id};
             }, {});
             poisMenu = poisMenu.options(pois).onChange(changePoi);
         }
         function findByID(value) {
-            const pois = this.mapData.dataPoi.find(value, {type: "iD"});
+            const pois = this.mapData.dataPoi.find({id: value});
             poisMenu = poisMenu.options({[pois.title]: pois.id}).onChange(changePoi);
         }
 
         async function findByFloorId(value) {
             await this.map.context.changeFloor(value); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
-            const pois = this.mapData.dataPoi.find(value, {type: "floorId"}).reduce((result, cur) => {
+            const pois = this.mapData.dataPoi.find({floorId : value}).reduce((result, cur) => {
                 return {...result, [cur.title]: cur.id};
             }, {});
             poisMenu = poisMenu.options(pois).onChange(changePoi);
         }
         function findByGroupCode(value) {
-            const pois = this.mapData.dataPoi.find(value, {type: "groupCode"}).reduce((result, cur) => {
+            const pois = this.mapData.dataPoi.find({groupCode:value}).reduce((result, cur) => {
                 return {...result, [cur.title]: cur.id};
             }, {});
             poisMenu = poisMenu.options(pois).onChange(changePoi);
@@ -117,26 +175,26 @@ export class MapDataMenu {
 
         function findByTitle(value) {
             const objects = this.mapData.dataObject
-                .find({title: value, floor: setting.object})
+                .find({title: value, floorId: setting.findByFloorId})
                 .reduce((result, cur) => {
                     return [...result, cur.id];
                 }, []);
             objectsMenu = objectsMenu.options(objects).onChange(changeObject);
         }
         function findByID(value) {
-            const objects = this.mapData.dataObject.find({iD: value, floor: setting.object});
+            const objects = this.mapData.dataObject.find({id: value, floorId: setting.findByFloorId});
             objectsMenu = objectsMenu.options(objects.id).onChange(changeObject);
         }
 
         async function findByFloorId(value) {
             await this.map.context.changeFloor(value); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
-            const objects = this.mapData.dataObject.find({floor: value}).reduce((result, cur) => {
+            const objects = this.mapData.dataObject.find({floorId: value}).reduce((result, cur) => {
                 return [...result, cur.id];
             }, []);
             objectsMenu = objectsMenu.options(objects).onChange(changeObject);
         }
         function findByGroupCode(value) {
-            const objects = this.mapData.dataObject.find({groupCode: value, floor: setting.object});
+            const objects = this.mapData.dataObject.find({groupCode: value, floor: setting.findByFloorId});
             objectsMenu = objectsMenu
                 .options(objects)
                 .onChange(changeObject)
@@ -172,93 +230,54 @@ export class MapDataMenu {
         objectsMenu = menu.add(setting, "object").onChange(changeObject);
     }
 
-    initDataFloor(gui) {
-        let floorsMenu = null;
-
-        const changeFloor = async (value) => {
-            await this.map.context.changeFloor(value);
-        };
-
-        function findByTitle(value) {
-            const floors = this.mapData.dataFloor.find(value, {type: "title"}).reduce((result, cur) => {
-                return [...result, cur.id];
-            }, []);
-            floorsMenu = floorsMenu.options(floors).onChange(changeFloor);
-        }
-        function findByFloorId(value) {
-            const floors = this.mapData.dataFloor.find(value, {type: "id"});
-            floorsMenu = floorsMenu.options([floors.id]).onChange(changeFloor);
-        }
-        const floorList = this.mapData.dataFloor.getFloors().reduce(
-            (prev, cur) => {
-                return [...prev, cur.id];
-            },
-            [""],
-        );
-        const defaultFloor = this.mapData.dataFloor.getDefaultFloor();
-        const setting = {
-            getDefaultFloor: defaultFloor.id,
-            findByFloorId: "",
-            findByTitle: "",
-            floors: "",
-        };
-        const menu = gui.addFolder("dataFloor");
-        // menu.open();
-        menu.add(setting, "getDefaultFloor");
-        menu.add(setting, "findByFloorId", floorList).onChange(findByFloorId.bind(this));
-        menu.add(setting, "findByTitle").onFinishChange(findByTitle.bind(this));
-        floorsMenu = menu.add(setting, "floors").onChange(changeFloor);
-    }
-
-    initDataGroupCode (gui) {
-        let groupCodeMenu = null; 
-        const changeGroupCode=(value)=> {
+    initDataGroupCode(gui) {
+        let groupCodeMenu = null;
+        const changeGroupCode = (value) => {
             console.log(value);
-        }
+        };
         function findChild(value) {
             const groups = this.mapData.dataGroupCode.findChild(value);
-            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);;
+            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);
         }
         function findAllChild(value) {
             const groups = this.mapData.dataGroupCode.findAllChild(value);
-            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);;
+            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);
         }
         function findParent(value) {
             const groups = this.mapData.dataGroupCode.findParent(value);
-            groupCodeMenu = groupCodeMenu.options([groups]).onChange(changeGroupCode);;
+            groupCodeMenu = groupCodeMenu.options([groups]).onChange(changeGroupCode);
         }
         function findRootParent(value) {
             const groups = this.mapData.dataGroupCode.findRootParent(value);
-            groupCodeMenu = groupCodeMenu.options([groups]).onChange(changeGroupCode);;
+            groupCodeMenu = groupCodeMenu.options([groups]).onChange(changeGroupCode);
         }
         function findAllRoot(value) {
             const groups = this.mapData.dataGroupCode.findAllRoot();
-            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);;
+            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);
         }
         function findAll(value) {
             const groups = this.mapData.dataGroupCode.findAll();
-            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);;
+            groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);
         }
-        
-        const groupList = this.mapData.dataGroupCode.findAll()
+
+        const groupList = this.mapData.dataGroupCode.findAll();
         const setting = {
             findChild: "",
             findAllChild: "",
             findParent: "",
             findRootParent: "",
-            findAllRoot:findAllRoot.bind(this),
-            findAll:findAll.bind(this),
-            groupCode:""
-
+            findAllRoot: findAllRoot.bind(this),
+            findAll: findAll.bind(this),
+            groupCode: "",
         };
         const menu = gui.addFolder("dataGroupCode");
         // menu.open();
         menu.add(setting, "findChild", groupList).onChange(findChild.bind(this));
         menu.add(setting, "findAllChild", groupList).onChange(findAllChild.bind(this));
-        menu.add(setting, "findParent",groupList).onFinishChange(findParent.bind(this));
+        menu.add(setting, "findParent", groupList).onFinishChange(findParent.bind(this));
         menu.add(setting, "findRootParent", groupList).onFinishChange(findRootParent.bind(this));
         menu.add(setting, "findAllRoot");
         menu.add(setting, "findAll");
-        groupCodeMenu= menu.add(setting, "groupCode").onChange(changeGroupCode);
+        groupCodeMenu = menu.add(setting, "groupCode").onChange(changeGroupCode);
     }
 }

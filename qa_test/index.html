@@ -37,7 +37,7 @@
     import { MapInfo } from './MapInfo.js';
     import { MapOption } from './MapOption.js';
     import { ContextMenu } from './ContextMenu.js';
-    import { GetMapDataMenu } from './GetMapDataMenu.js';
+    import { GetMapData } from './GetMapData.js';
 
     const gui = new dat.GUI({ width: 300 });
     const dabeeoMaps = new dabeeo.Maps();
@@ -48,9 +48,9 @@
         const context = new ContextMenu();
         const mapInfo = new MapInfo();
         const mapOption = new MapOption(dabeeoMaps, context, null);
-        const getMapDataMenu = new GetMapDataMenu(dabeeoMaps, mapContainer, mapInfo, mapOption, context, null);
+        const getMapData = new GetMapData(dabeeoMaps, mapContainer, mapInfo, mapOption, context, null);
 
-        const mapGui = getMapDataMenu.init(gui);
+        const mapGui = getMapData.init(gui);
     }
 
     init(); 
