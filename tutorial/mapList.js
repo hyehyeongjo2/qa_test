@@ -1,28 +1,38 @@
 export const mapList = [
     {
-        name: "사무실",
-        id: "MP-1jydrhzb11sh17965",
-        clientId: "75hb8YSnAokb-sZ04aDR91",
-        clientSecret: "0f7ad84f160c7b3fd1849a7920af718b",
+        name: "[MIDAS] 'OO길'1",
+        id: "MP-1jyag5pfhy3at4627",
+        clientId: "d4YgYsRwADxb2dkzrV3fmi",
+        clientSecret: "03fff2133734d2649d034834e6c7adce",
     },
     {
-        name: "이케아",
-        id: "MP-1iepzl36f94xl2305",
-        clientId: "6cHpIJoJknv9ZbsaLRN2Dj",
-        clientSecret: "ad980b99be38dbd033aac1c757115064",
-        // scaleCm: 10, {width: 3200, height: 2700}
+        name: "[MIDAS] 'OO길'2",
+        id: "MP-1k1zkg9ouev6p9119",
+        clientId: "39jNIWIn4_s8HWPRBdhOCp",
+        clientSecret: "06dd23a3d8c765f6d4147c699b6a6a3e",
     },
     {
-        name: "삼성서울병원전경",
-        id: "MP-1ji27857fjwa95948",
-        clientId: "47o545DKANS8Jra5FZUXJq",
-        clientSecret: "72671b30f940fc0bcb7225fe2e0b27b7",
+        name: "[MIDAS] 'OO길'3",
+        id: "MP-1iyq2c775fnfq4016",
+        clientId: "fWypEC8kV18_r5TeGE8F7",
+        clientSecret: "7653fd5e8dde28f73da6e01ab395ed52",
     },
-    // {
-    //     name: "삼성서울병원실내",
-    //     id: "MP-qxqj1sizdtte4942",
-    //     clientId: "cmnGuxYqQkV87wHcXXOvfN",
-    //     clientSecret: "46a9752504f3054998b53adbfb73297e",
-        // scaleCm: 10, {width: 5000, height: 3000}
-    // },
+    {
+        name: "[MIDAS] 'OO길'4",
+        id: "MP-u7p0r021592w2144",
+        clientId: "2NgKnGx7QPf84EBPRuo1V1",
+        clientSecret: "c12ac94fde3242c63396d4144596661a",
+    },
+    {
+        name: "[MIDAS] 'OO길'5",
+        id: "MP-toalk5p5caie7516",
+        clientId: "2gp1-MLuADoa2c43MRguCP",
+        clientSecret: "ffd6b4d28ee431cb51475c0b04eaa402",
+    },
+    {
+        name: "[MIDAS] 'OO길'6",
+        id: "MP-qxw4m0y4sxno7398",
+        clientId: "8hDX0wxYApY9e35_0dtw0x",
+        clientSecret: "8f46c5f02513ce515997c83bead4348d",
+    },
 ];

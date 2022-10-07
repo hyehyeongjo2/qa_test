@@ -24,11 +24,5 @@ export const mapList = [
         clientId: "djuVS4eGku58qpo_6sue80",
         clientSecret: "0bdcf18584dab6292d1c81e81db1c7d3",
     },
-    // {
-    //     name: "삼성서울병원실내",
-    //     id: "MP-qxqj1sizdtte4942",
-    //     clientId: "cmnGuxYqQkV87wHcXXOvfN",
-    //     clientSecret: "46a9752504f3054998b53adbfb73297e",
-        // scaleCm: 10, {width: 5000, height: 3000}
-    // },
+
 ];
