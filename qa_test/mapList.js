@@ -18,6 +18,12 @@ export const mapList = [
         clientId: "47o545DKANS8Jra5FZUXJq",
         clientSecret: "72671b30f940fc0bcb7225fe2e0b27b7",
     },
+    {
+        name: "인천개항장",
+        id: "MP-vbk5nade6uya0710",
+        clientId: "djuVS4eGku58qpo_6sue80",
+        clientSecret: "0bdcf18584dab6292d1c81e81db1c7d3",
+    },
     // {
     //     name: "삼성서울병원실내",
     //     id: "MP-qxqj1sizdtte4942",
