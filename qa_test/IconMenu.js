@@ -13,7 +13,6 @@ export class IconMenu {
             anchorX: "0",
             anchorY: "0",
             iconUrl: "",
-            async: true,
             visibleIcon: true,
             apply : this.apply.bind(this),
             reset : this.reset.bind(this)
@@ -21,7 +20,6 @@ export class IconMenu {
         return this.initIconFolder();
     }
     reset() {
-        this.iconSetting.async=true;
         this.iconSetting.width="";
         this.iconSetting.height="";
         this.iconSetting.positionZ="";
@@ -45,7 +43,6 @@ export class IconMenu {
                 x: iconSetting.anchorX,
                 y: iconSetting.anchorY,
             },
-            async: iconSetting.async,
             visibleIcon: iconSetting.visibleIcon,
         }
         this.option = option; 
@@ -66,7 +63,6 @@ export class IconMenu {
         iconGui.add(iconSetting, "positionZ").listen();
         iconGui.add(iconSetting, "anchorX").listen();
         iconGui.add(iconSetting, "anchorY").listen();
-        iconGui.add(iconSetting, "async").listen();
         iconGui.add(iconSetting, "iconUrl", iconUrls).listen();
         iconGui.add(iconSetting, "visibleIcon").listen();
         iconGui.add(iconSetting, "apply");
