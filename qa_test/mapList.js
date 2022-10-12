@@ -18,11 +18,22 @@ export const mapList = [
         clientId: "47o545DKANS8Jra5FZUXJq",
         clientSecret: "72671b30f940fc0bcb7225fe2e0b27b7",
     },
+    // {
+    //     name: "삼성서울병원실내",
+    //     id: "MP-qxqj1sizdtte4942",
+    //     clientId: "cmnGuxYqQkV87wHcXXOvfN",
+    //     clientSecret: "46a9752504f3054998b53adbfb73297e",
+    // },
     {
         name: "인천개항장",
         id: "MP-vbk5nade6uya0710",
         clientId: "djuVS4eGku58qpo_6sue80",
         clientSecret: "0bdcf18584dab6292d1c81e81db1c7d3",
     },
-
+    {
+        name: "[geolocation]공덕 주변지도",
+        id: "MP-soem95apov8w1825",
+        clientId: `fji1sdUNkOz91XEtqArQT8`,
+        clientSecret: `b3badc99266da98c4ed55f98ecafb237`,
+    },
 ];

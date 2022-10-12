@@ -18,6 +18,7 @@ export class MapOption {
             return;
         }
         const option = this.getOption();
+        console.log(option);
         this.deleteMap();
         this.context.removeMenu();
         if (this.menuClass !== null) this.menuClass.removeMenu();
@@ -112,8 +113,8 @@ export class MapOption {
                     x: setting.x,
                     y: setting.y,
                 },
-                rotate: setting.rotate, //회전 3d, 2d
-                tilt: setting.tilt, //기울기 3d
+                rotate: Number(setting.rotate), //회전 3d, 2d
+                tilt: Number(setting.tilt), //기울기 3d
             },
             mergeMesh: setting.mergeMesh, // mergedMesh 활성화 여부
         };
