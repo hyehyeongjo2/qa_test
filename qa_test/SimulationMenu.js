@@ -141,7 +141,7 @@ export class SimulationMenu {
                 poiId: this.destinationPoi.poi,
                 floorId: this.destinationPoi.floor,
             },
-            type: this.setting.type,
+            type: [this.setting.type],
         };
         const waypoints = [];
         if (this.waypoint1.apply) {
@@ -177,7 +177,7 @@ export class SimulationMenu {
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions =  this.destinationLineOptions;
         console.log(naviOption);
-        await this.map.routeSimulation.set(naviResponse, naviOption);
+        await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);
 
     }
 

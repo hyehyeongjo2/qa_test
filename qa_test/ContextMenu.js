@@ -49,7 +49,7 @@ export class ContextMenu {
         };
 
 
-        menu.open(); 
+        // menu.open(); 
         menu.add(setting, "changeFloor", floorList).onChange(this.changeFloor.bind(this)).listen();
         menu.add(setting, "changeCamera", ["2D", "3D"]).onChange(this.changeCamera.bind(this));
         menu.add(setting, "changeLang", langList).onChange(this.changeLanguage.bind(this));
