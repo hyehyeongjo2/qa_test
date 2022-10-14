@@ -34,7 +34,8 @@ export class GetMapData {
         const option = {
             clientId: mapList[value].clientId,
             clientSecret: mapList[value].clientSecret,
-            serverType: "SERVER_REAL",
+            // serverType: "SERVER_REAL",
+            serverType: "SERVER_STAGE",
         };
         //mapData 가져오기
 
@@ -53,7 +54,9 @@ export class GetMapData {
         const option = {
             clientId: this.setting.clientId,
             clientSecret: this.setting.clientSecret,
-            serverType: "SERVER_REAL",
+            // serverType: "SERVER_REAL",
+            serverType: "SERVER_STAGE",
+
         };
         //mapData 가져오기
 
