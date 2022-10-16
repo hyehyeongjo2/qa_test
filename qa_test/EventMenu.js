@@ -32,6 +32,8 @@ export class EventMenu {
             "poi-click": false,
             "object-click": false,
             "marker-click": false,
+            "void-click": false,
+            "on-mouse-click": false,
             "floor-changed": false,
             "floor-changing": false,
             "navi-complete": false,
@@ -41,14 +43,17 @@ export class EventMenu {
             "rotation-changed": false,
             "control-start": false,
             "control-end": false,
-            "on-mouse-move": false,
-            "on-mouse-click": false,
-            "object-mouse-over": false,
-            "void-click": false,
             "drag-start": false,
             "drag-move": false,
             "drag-end": false,
+            "on-mouse-move": false,
+            "object-mouse-over": false,
+            "object-mouse-enter": false,
+            "object-mouse-leave": false,
             "poi-mouse-over": false,
+            "poi-mouse-enter": false,
+            "poi-mouse-leave": false,
+
         };
         let menu = this.menu; 
         const setting = this.setting; 
@@ -72,35 +77,27 @@ export class EventMenu {
         menu.add(setting, "drag-move");
         menu.add(setting, "drag-end");
         menu.add(setting, "poi-mouse-over");
+        menu.add(setting, "poi-mouse-enter");
+        menu.add(setting, "poi-mouse-leave");
+        menu.add(setting, "object-mouse-enter");
+        menu.add(setting, "object-mouse-leave");
         return menu;
     }
     initObjectHover() {
         const map = this.map; 
         const mapContainer = this.mapContainer; 
-        let prevObjectId = null;
-        let isHovering = false;
-        let currObjectId = null;
-        mapContainer.addEventListener("object-mouse-over", (e) => {
-            currObjectId = e.detail[0].id;
-            isHovering = true;
+        mapContainer.addEventListener("object-mouse-enter", (e) => {
             const option = {
                 activeDest: true,
                 color: "#ffff00",
                 opacity: 1.0,
                 isAnimate: false,
-                ids: [currObjectId],
+                ids: [e.detail.id],
             };
             map.objects.set(option);
-            if (prevObjectId != currObjectId) {
-                this.map.objects.reset(prevObjectId);
-                prevObjectId = currObjectId;
-            }
         });
-        mapContainer.addEventListener("on-mouse-move", (e) => {
-            if (isHovering) {
-                isHovering = false;
-                map.objects.reset(currObjectId);
-            }
+        mapContainer.addEventListener("object-mouse-leave", (e) => {
+            map.objects.reset(e.detail.id);
         });
     }
 
@@ -205,6 +202,22 @@ export class EventMenu {
         mapContainer.addEventListener("poi-mouse-over", (e) => {
             if (setting["poi-mouse-over"]) console.log("poi-mouse-over에 대한 결과값: ", e.detail);
         });
-    };
+        // poi mouse enter
+        mapContainer.addEventListener("poi-mouse-enter", (e) => {
+          if (setting["poi-mouse-enter"]) console.log("poi-mouse-enter 대한 결과값: ", e.detail);
+      });
+        // poi mouse leace
+        mapContainer.addEventListener("poi-mouse-leave", (e) => {
+          if (setting["poi-mouse-leave"]) console.log("poi-mouse-leave 대한 결과값: ", e.detail);
+      });
+        // object mouse enter
+        mapContainer.addEventListener("object-mouse-enter", (e) => {
+          if (setting["object-mouse-enter"]) console.log("object-mouse-enter 대한 결과값: ", e.detail);
+      });
+        // object mouse leace
+        mapContainer.addEventListener("object-mouse-leave", (e) => {
+          if (setting["object-mouse-leave"]) console.log("object-mouse-leave 대한 결과값: ", e.detail);
+      });
+};
 
 }
