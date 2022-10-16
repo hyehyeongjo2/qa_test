@@ -1,3 +1,5 @@
+import {ControlMoreMenu} from "./ControlMoreMenu.js";
+
 export class ControlMenu {
   constructor() {
     this.gui = null;
@@ -32,9 +34,7 @@ export class ControlMenu {
     this.initZoomIn(this.menu);
     this.initZoomOut(this.menu);
     this.initReset(this.menu);
-    this.initztest(this.menu);
-    this.initMtest(this.menu);
-    this.initStest(this.menu);
+    new ControlMoreMenu().init(this.menu, mapData, map, mapContainer);
     return this.menu;
   }
 
@@ -212,22 +212,38 @@ export class ControlMenu {
 
   initztest(gui) {
     const ztest = (value) => {
-      const option = {
-        transition: this.transitionSetting.transition,
-      };
-      this.map.control.zoomIn(option);
+      this.map.control.setOption({
+        controlRangeOption: {
+          zoom: {
+            min: 21,
+            max: 22,
+          },
+        },
+      });
+      this.map.control.changeZoom({zoom: 4, transition: true});
       setTimeout(() => {
-        this.map.control.zoomOut(option);
+        this.map.control.changeZoom({zoom: 24, transition: true});
+        console.log("changeZoom");
       }, 1000);
-      const option2 = {
-        transition: this.transitionSetting.transition2,
-      };
       setTimeout(() => {
-        this.map.control.zoomIn(option2);
+        this.map.control.set({zoom: 4, rotation: 0, tilt: 0, transition: true});
       }, 3000);
       setTimeout(() => {
-        this.map.control.zoomOut(option2);
+        this.map.control.set({zoom: 24, rotation: 0, tilt: 0, transition: true});
+        console.log("set");
       }, 4000);
+      setTimeout(() => {
+        this.map.control.changeZoom({zoom: 4});
+        map.control.zoomIn({transition: true});
+      }, 6000);
+      setTimeout(() => {
+        this.map.control.changeZoom({zoom: 24});
+        map.control.zoomOut({transition: true});
+        console.log("Zoomin/ Out");
+      }, 7000);
+      setTimeout(() => {
+        console.log("scroll plz");
+      }, 8000);
     };
     const setting = {
       ztest: ztest,
@@ -324,6 +340,32 @@ export class ControlMenu {
     menu.add(settingActonSet, "set");
   }
 
+  initRotest(gui) {
+    const Rotest = (value) => {
+      this.map.control.setOption({
+        controlRangeOption: {
+          rotate: {
+            min: -90,
+            max: 90,
+          },
+        },
+      });
+      setTimeout(() => {
+        this.map.control.set({zoom: 20, rotation: -180, tilt: 0});
+      }, 1000);
+      setTimeout(() => {
+        this.map.control.set({zoom: 20, rotation: 180, tilt: 0});
+        console.log("set");
+      }, 2000);
+      setTimeout(() => {
+        console.log("scroll plz");
+      }, 3000);
+    };
+    const setting = {
+      Rotest: Rotest,
+    };
+    gui.add(setting, "Rotest");
+  }
   initStest(gui) {
     const Stest = (value) => {
       const option = {
@@ -368,18 +410,136 @@ export class ControlMenu {
     };
     gui.add(setting, "Stest");
   }
+  inittitest(gui) {
+    const titest = (value) => {
+      this.map.control.setOption({
+        controlRangeOption: {
+          tilt: {
+            min: 40,
+            max: 50,
+          },
+        },
+      });
+      setTimeout(() => {
+        this.map.control.set({zoom: 20, rotation: 0, tilt: 10});
+      }, 1000);
+      setTimeout(() => {
+        this.map.control.set({zoom: 20, rotation: 0, tilt: 80});
+        console.log("set");
+      }, 2000);
+      setTimeout(() => {
+        console.log("scroll plz");
+      }, 3000);
+    };
+    const setting = {
+      titest: titest,
+    };
+    gui.add(setting, "titest");
+  }
+
+  initenztest(gui) {
+    const initenztest = (value) => {
+      setTimeout(() => {
+        this.map.control.setOption({
+          mouseOption: {
+            enableZoom: false,
+            enableRotate: true,
+            enablePan: true,
+            enableTilt: true,
+            buttonOption: {
+              left: "PAN",
+              middle: "ZOOM",
+              right: "ROTATE",
+            },
+          },
+        });
+        console.log("plz check zoom false : 6s");
+      }, 1000);
+      setTimeout(() => {
+        // this.map.control.reset();
+        this.map.control.setOption({
+          mouseOption: {
+            enableZoom: true,
+            enableRotate: false,
+            enablePan: true,
+            enableTilt: true,
+            buttonOption: {
+              left: "PAN",
+              middle: "ZOOM",
+              right: "ROTATE",
+            },
+          },
+        });
+        console.log("plz check rotate false : 6s");
+      }, 7000);
+      setTimeout(() => {
+        // this.map.control.reset();
+        this.map.control.setOption({
+          mouseOption: {
+            enableZoom: true,
+            enableRotate: true,
+            enablePan: false,
+            enableTilt: true,
+            buttonOption: {
+              left: "PAN",
+              middle: "ZOOM",
+              right: "ROTATE",
+            },
+          },
+        });
+        console.log("plz check pan false : 6s");
+      }, 13000);
+      setTimeout(() => {
+        // this.map.control.reset();
+        this.map.control.setOption({
+          mouseOption: {
+            enableZoom: true,
+            enableRotate: true,
+            enablePan: true,
+            enableTilt: false,
+            buttonOption: {
+              left: "PAN",
+              middle: "ZOOM",
+              right: "ROTATE",
+            },
+          },
+        });
+        console.log("plz check tilt false : 6s");
+      }, 19000);
+      setTimeout(() => {
+        this.map.control.reset();
+        this.map.control.setOption({
+          mouseOption: {
+            enableZoom: true,
+            enableRotate: true,
+            enablePan: true,
+            enableTilt: true,
+            buttonOption: {
+              left: "ROTATE",
+              middle: "ZOOM",
+              right: "PAN",
+            },
+          },
+        });
+        console.log("plz check ro/pa button change : 6s");
+      }, 25000);
+    };
+    const setting = {
+      initenztest: initenztest,
+    };
+    gui.add(setting, "initenztest");
+  }
 
   initFocus(gui) {
     const focusTo = (value) => {
-
       let ids = null;
 
-      if (settingFocusTo.type === "OBJECT")  {
+      if (settingFocusTo.type === "OBJECT") {
         if (this.objectIds.length == 0) {
           alert("click one or multiple objects to focus on");
           return;
         }
-        ids = this.objectIds; 
+        ids = this.objectIds;
       } else if (settingFocusTo.type === "POI") {
         if (this.poisIds.length == 0) {
           alert("click one or multiple pois to focus on");
@@ -387,7 +547,6 @@ export class ControlMenu {
         }
         ids = this.poisIds;
       } else if (settingFocusTo.type === "NAVIGATION") {
-
       }
 
       const option = {
@@ -415,7 +574,7 @@ export class ControlMenu {
       focusTo: focusTo,
     };
     const focusToMenu = gui.addFolder("Focus To");
-    const focusType = ["OBJECT_ALL", "OBJECT", 'NAVIGATION', 'POI', 'POI_ALL'];
+    const focusType = ["OBJECT_ALL", "OBJECT", "NAVIGATION", "POI", "POI_ALL"];
     focusToMenu.add(settingFocusTo, "type", focusType);
     focusToMenu.add(settingFocusTo, "top", 0, 2000);
     focusToMenu.add(settingFocusTo, "left", 0, 2000);
@@ -438,7 +597,7 @@ export class ControlMenu {
     this.mapContainer.addEventListener("object-mouse-enter", (e) => {
       console.log("object enter ", e.detail);
       const id = e.detail.id;
-      option = {...option, ids:[id]};
+      option = {...option, ids: [id]};
       this.map.objects.set(option);
     });
 
@@ -464,11 +623,10 @@ export class ControlMenu {
   }
 
   initPoiEvent() {
-
-    const map = this.map; 
+    const map = this.map;
     const mapContainer = this.mapContainer;
-    let poisIds=this.poisIds;
-    console.log('initPOI event')
+    let poisIds = this.poisIds;
+    console.log("initPOI event");
 
     let option = {
       outerColor: "#00ff00",
@@ -479,15 +637,14 @@ export class ControlMenu {
     mapContainer.addEventListener("poi-mouse-enter", async (e) => {
       console.log("poi enter ", e.detail);
       const id = e.detail.id;
-      option = {...option, ids:[id]};
+      option = {...option, ids: [id]};
       await map.pois.set(option);
     });
 
     mapContainer.addEventListener("poi-mouse-leave", async (e) => {
       console.log("poi leave ", e.detail);
       const id = e.detail.id;
-      if (!poisIds.includes(id)) 
-        await map.pois.reset(id);
+      if (!poisIds.includes(id)) await map.pois.reset(id);
     });
 
     mapContainer.addEventListener("poi-click", (e) => {
