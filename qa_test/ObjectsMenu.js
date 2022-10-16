@@ -16,14 +16,14 @@ export class ObjectsMenu {
             this.menu = null;
         }
     }
-    init(gui, mapData, map, mapContainer) {
+    async init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder("Object Menu");
         this.setting = this.initSetting(this.menu);
-        this.actionSetting = this.initActionSetting(this.menu); 
+        this.actionSetting = await this.initActionSetting(this.menu); 
         new ObjectsMoreMenu().init(this.menu, mapData, map, mapContainer)
         return this.menu;
     }

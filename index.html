@@ -2,45 +2,66 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DabeeoMaps Libray Test</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DabeeoMaps Libray Test</title>
+  <style>
+    * {
+      margin:  0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height:100%;
+    }
+    .header {
+      background-color:wheat;
+    }
+    .item-container {
+      height: 90%;
+      background-color: aqua;
+    }
+    .item {
+      display: inline-block;
+      background-color: whitesmoke;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="header">
-        <h2> DABEEOMAPS API 4 TEST LIST</h2>
+  <div class="header">
+    <h2> DABEEOMAPS API 4 TEST LIST</h2>
+  </div>
+  <div class="item-container">
+    <ul class="item nav">
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/">map test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/controlTest/">control test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/mapDataTest/">mapData test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/markerTest/">marker test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/myLocationTest/">my location test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/objectsTest/">object test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/simulationTest/">simulation test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/poisTest/">pois test</a></li>
+      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/tagTest/">tag test</a></li>
+
+    </ul>
+    <div class="item section">
+
     </div>
-    <div class="main">
-        <ul class="list">
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/controlTest/">control test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/mapDataTest/">mapData test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/markerTest/">marker test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/myLocationTest/">my location test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/objectsTest/">object test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/simulationTest/">simulation test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/poisTest/">pois test</a></li>
-            <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/tagTest/">tag test</a></li>
+  </div>
+  <script>
 
-        </ul>
-        <div class="section">
+    function init() {
+      const script = document.createElement('script');
+      script.innerHTML = 'console.log("aaa");';
+      document.body.appendChild(script);
 
-        </div>
-    </div>
-    <script>
-        const testList = [
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/controlTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/mapDataTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/markerTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/myLocationTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/objectsTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/simulationTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/poisTest/",
-            "https://dabeeo.github.io/dabeeomaps_library_test/qa_test/tagTest/"
-        ]
+    }
+    init(); 
 
-    </script>
+  </script>
+]
 </body>
 
 </html>

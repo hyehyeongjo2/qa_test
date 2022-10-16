@@ -34,8 +34,7 @@ export class GetMapData {
         const option = {
             clientId: mapList[value].clientId,
             clientSecret: mapList[value].clientSecret,
-            // serverType: "SERVER_REAL",
-            serverType: "SERVER_STAGE",
+            serverType: "SERVER_REAL",
         };
         //mapData 가져오기
 
@@ -54,8 +53,7 @@ export class GetMapData {
         const option = {
             clientId: this.setting.clientId,
             clientSecret: this.setting.clientSecret,
-            // serverType: "SERVER_REAL",
-            serverType: "SERVER_STAGE",
+            serverType: this.setting.serverType,
 
         };
         //mapData 가져오기
@@ -74,6 +72,7 @@ export class GetMapData {
             mapIndex: -1,
             clientId: "",
             clientSecret : "",
+            serverType : "SERVER_REAL",
             getMapData: this.getMapData.bind(this),
             getMap:this.getMap.bind(this),
         };
@@ -87,6 +86,7 @@ export class GetMapData {
         const getMapClient = gui.addFolder("get Map by client info ");
         getMapClient.add(setting, "clientId");
         getMapClient.add(setting, "clientSecret");
+        getMapClient.add(setting, "serverType", ['SERVER_REAL', 'SERVER_STAGE']);
         getMapClient.add(setting, "getMap");
         gui.add(setting, "mapIndex", mapSetting).onChange(this.getMapData.bind(this));
         return this.menu; 

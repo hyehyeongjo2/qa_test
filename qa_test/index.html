@@ -39,7 +39,15 @@
     import { ContextMenu } from './ContextMenu.js';
     import { GetMapData } from './GetMapData.js';
 
-    const gui = new dat.GUI({ width: 300 });
+    const gui = new dat.GUI({ width: 300,  name:'main' , autoPlace:true});
+    // const gui2 = new dat.GUI({ width: 500, name:'sub'});
+    // const setting = {
+      // test :"test"
+    // }
+    // gui2.add(setting, "test");
+    // console.log(gui2.domElement);
+    // gui.parent = gui2;
+
     const dabeeoMaps = new dabeeo.Maps();
 
     // menu initialization
