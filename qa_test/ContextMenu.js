@@ -1,3 +1,5 @@
+import {ContextMoreMenu} from "./ContextMoreMenu.js";
+
 export class ContextMenu {
     constructor() {
         this.gui = null; 
@@ -14,6 +16,7 @@ export class ContextMenu {
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder("Context");
         this.setting = this.initSetting(this.menu);
+        new ContextMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu; 
     }
     initSetting(menu) {
@@ -54,16 +57,15 @@ export class ContextMenu {
         menu.add(setting, "changeCamera", ["2D", "3D"]).onChange(this.changeCamera.bind(this));
         menu.add(setting, "changeLang", langList).onChange(this.changeLanguage.bind(this));
         menu.add(setting, "convert2Image", scaleList).onChange(this.convert2Image.bind(this));
-        menu.add(setting, "getCurrentFloor")
+        menu.add(setting, "getCurrentFloor");
         menu.add(setting, "getMapOptions");
         menu.add(setting, "hideByCode",groupList).onChange(this.hideByCode.bind(this));
-        menu.add(setting, "showByCode", groupList).onChange(this.showByCode.bind(this));
+        menu.add(setting, "showByCode",groupList).onChange(this.showByCode.bind(this));
         return setting; 
     }
 
     changeLanguage(value) {
             this.map.context.changeLanguage(value); // poi 언어를 바꿉니다. 'en' | 'ko'
-
     }
     hideByCode(value) {
         this.map.context.hideByCode(value);
@@ -95,5 +97,4 @@ export class ContextMenu {
             this.menu = null;
         }
     }
-
 }

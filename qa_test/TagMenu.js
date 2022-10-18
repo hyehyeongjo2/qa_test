@@ -115,11 +115,20 @@ export class TagMenu {
     async setPoiTag(value) {
         const tag = this.createTag();
         const poi = this.mapData.dataPoi.getPois()[0];
+        let poiset;
         this.mapContainer.addEventListener("poi-click", (e) => {
             console.log("poi click 에 대한 결과값", e.detail);
             if (e.detail[0]) {
-                this.map.tag.setPOITag({parentId: e.detail[0].id, pos: "LEFT", tag: tag});
+                poiset = this.map.tag.setPOITag({parentId: e.detail[0].id, pos: "LEFT", tag: tag});
+                return poiset;
             }
         });
+        tag.addEventListener("click", () => {
+            this.map.tag.clear(poiset.id); // id에 해당하는 태그 삭제 메소드
+        });
+    }
+
+    async Tagloca(){
+
     }
 }

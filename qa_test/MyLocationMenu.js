@@ -1,3 +1,5 @@
+import {MyLocationMoreMenu} from "./MyLocationMoreMenu.js";
+
 export class MyLocationMenu {
     constructor() {
         this.gui = null;
@@ -31,6 +33,7 @@ export class MyLocationMenu {
         this.iconSetting = this.initIconSetting();
         this.anchorSetting = this.initAnchorSetting();
         this.animateSetting = this.initAnimateSetting();
+        new MyLocationMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
     initSetting() {
