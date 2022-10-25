@@ -18,11 +18,15 @@ export class MapOption {
             return;
         }
         const option = this.getOption();
-        console.log(option);
         this.deleteMap();
+        this.menu.close();
         this.context.removeMenu();
         if (this.menuClass !== null) this.menuClass.removeMenu();
         this.map = await this.dabeeoMaps.showMap(this.mapContainer, option, this.mapData);
+        console.log(`await this.dabeeoMaps.showMap(${this.mapContainer}, ${option}, ${this.mapData});`);
+        console.log('this.mapContainer:', this.mapContainer);
+        console.log('option: ', option);
+        console.log('this.mapData : ', this.mapData);
         this.context.init(this.gui, this.mapData, this.map, this.mapContainer);
         if (this.menuClass !== null)this.menuClass.init(this.gui, this.mapData, this.map, this.mapContainer);
 
