@@ -13,16 +13,16 @@ export class MyLocationMoreMenu {
         this.animateApplyFlag = false;
     }
     init(menu, mapData, map, mapContainer) {
-        this.mapData = mapData; 
+        this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
-        this.menu = menu.addFolder("More");
+        this.menu = menu.addFolder('More');
         this.initlocatest(this.menu);
         this.initlocatestOn(this.menu);
-        return this.menu; 
+        return this.menu;
     }
-    initlocatest(gui){
-        const mylocatest=()=>{
+    initlocatest(gui) {
+        const mylocatest = () => {
             setTimeout(() => {
                 const Option = {
                     x: 2000,
@@ -43,13 +43,13 @@ export class MyLocationMoreMenu {
                     y: 1000,
                     iconOption: {
                         positionZ: 400,
-                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png',
                         width: 200,
                         height: 200,
                         anchor: {
                             x: 0.5,
                             y: 0.5,
-                        }
+                        },
                     },
                 };
                 this.map.mylocation.set(Option);
@@ -60,13 +60,13 @@ export class MyLocationMoreMenu {
                     y: 1000,
                     iconOption: {
                         positionZ: 400,
-                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png',
                         width: 50,
                         height: 50,
                         anchor: {
                             x: 0.5,
                             y: 0.5,
-                        }
+                        },
                     },
                 };
                 this.map.mylocation.set(Option);
@@ -77,13 +77,13 @@ export class MyLocationMoreMenu {
                     y: 1000,
                     iconOption: {
                         positionZ: 400,
-                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png',
                         width: 50,
                         height: 50,
                         anchor: {
                             x: 0.1,
                             y: 0.1,
-                        }
+                        },
                     },
                 };
                 this.map.mylocation.set(Option);
@@ -94,43 +94,43 @@ export class MyLocationMoreMenu {
                     y: 1000,
                     iconOption: {
                         positionZ: 400,
-                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png',
                         width: 50,
                         height: 50,
                         anchor: {
                             x: 1,
                             y: 1,
-                        }
+                        },
                     },
                 };
                 this.map.mylocation.set(Option);
             }, 6000);
-        }
+        };
         const setting = {
             mylocatest: mylocatest,
-          };
-        gui.add(setting, "mylocatest");
-        } 
+        };
+        gui.add(setting, 'mylocatest');
+    }
 
-    initlocatestOn(gui){
-        const mylocatestOn=async ()=>{
-            const myloca1=async ()=>{
+    initlocatestOn(gui) {
+        const mylocatestOn = async () => {
+            const myloca1 = async () => {
                 const locationOption = {
                     x: 2500,
                     y: 1000,
                     iconOption: {
                         positionZ: 400,
-                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png',
                         width: 200,
                         height: 200,
                         anchor: {
                             x: 0.5,
                             y: 0.5,
-                        }
+                        },
                     },
                     onActive: true,
                     animate: {
-                        color: "#00ff00",
+                        color: '#00ff00',
                         opacity: 0.4,
                         desireScale: 4,
                         duration: 1500,
@@ -143,25 +143,25 @@ export class MyLocationMoreMenu {
                 setTimeout(() => {
                     this.map.context.changeFloor('FL-t4vqgyek3jnb8146');
                 }, 4000);
-            }
-            
-            const myloca2=async ()=>{
+            };
+
+            const myloca2 = async () => {
                 const locationOption = {
                     x: 2500,
                     y: 1000,
                     iconOption: {
                         positionZ: 400,
-                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png',
                         width: 200,
                         height: 200,
                         anchor: {
                             x: 0.5,
                             y: 0.5,
-                        }
+                        },
                     },
                     onActive: false,
                     animate: {
-                        color: "#00ff00",
+                        color: '#00ff00',
                         opacity: 0.4,
                         desireScale: 4,
                         duration: 1500,
@@ -174,16 +174,15 @@ export class MyLocationMoreMenu {
                 setTimeout(() => {
                     this.map.context.changeFloor('FL-t4vqgyek3jnb8146');
                 }, 4000);
-            }
+            };
             myloca1();
             setTimeout(() => {
-               myloca2();
+                myloca2();
             }, 8000);
-            
-        }
-        const setting ={
-            mylocatestOn : mylocatestOn
-        }
-        gui.add(setting, "mylocatestOn")
+        };
+        const setting = {
+            mylocatestOn: mylocatestOn,
+        };
+        gui.add(setting, 'mylocatestOn');
     }
 }

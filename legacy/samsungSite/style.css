@@ -1,20 +1,20 @@
 .viewport {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 
 .changeFloorContainer,
 .layerContainer,
 .searchContainer {
-  display: flex;
-  margin-top: 1rem;
+    display: flex;
+    margin-top: 1rem;
 }
 
 select,
 input {
-  width: 200px;
-  height: 30px;
+    width: 200px;
+    height: 30px;
 }
 
 .floorBtn,
@@ -24,20 +24,20 @@ input {
 .searchShowBtn,
 .searchHideBtn,
 .capture {
-  width: 50px;
-  height: 30px;
-  border: 1px solid black;;
-  border-radius: 8px;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 50px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .capture {
-  width: 80px;
-  height: 40px;
-  margin-top: 1rem;
+    width: 80px;
+    height: 40px;
+    margin-top: 1rem;
 }
 
 .floorBtn:hover,
@@ -47,7 +47,7 @@ input {
 .searchShowBtn:hover,
 .searchHideBtn:hover,
 .capture:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 /* 
 .changeFloorContainer {

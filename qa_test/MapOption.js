@@ -1,20 +1,19 @@
-
 export class MapOption {
     constructor(dabeeoMaps, context, menuClass) {
-        this.dabeeoMaps  = dabeeoMaps; 
-        this.context = context; 
-        this.menuClass = menuClass; 
+        this.dabeeoMaps = dabeeoMaps;
+        this.context = context;
+        this.menuClass = menuClass;
         this.gui = null;
         this.mapData = null;
         this.setting = null;
         this.menu = null;
         this.mapContainer = null;
-        this.actionSetting = null; 
-        this.map = null; 
+        this.actionSetting = null;
+        this.map = null;
     }
-    async showMap (value)  {
+    async showMap(value) {
         if (!this.mapData) {
-            alert("mapData is not available");
+            alert('mapData is not available');
             return;
         }
         const option = this.getOption();
@@ -28,7 +27,7 @@ export class MapOption {
         console.log('option: ', option);
         console.log('this.mapData : ', this.mapData);
         this.context.init(this.gui, this.mapData, this.map, this.mapContainer);
-        if (this.menuClass !== null)this.menuClass.init(this.gui, this.mapData, this.map, this.mapContainer);
+        if (this.menuClass !== null) this.menuClass.init(this.gui, this.mapData, this.map, this.mapContainer);
 
         return this.map;
     }
@@ -46,17 +45,17 @@ export class MapOption {
         const defaultLang = this.mapData.dataLanguage.getDefaultLanguage().lang;
 
         this.setting = {
-            camera: "3d", // 초기 카메라 모드 3d
+            camera: '3d', // 초기 카메라 모드 3d
             floor: defaultFloorId,
             language: defaultLang, // 초기 poi 언어 설정
             showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
             spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
             spriteKeepRotation: false, // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
-            zoom: "", //초기줌
-            x: "",
-            y: "",
-            rotate: "", //회전 3d, 2d
-            tilt: "", //기울기 3d
+            zoom: '', //초기줌
+            x: '',
+            y: '',
+            rotate: '', //회전 3d, 2d
+            tilt: '', //기울기 3d
             mergeMesh: false, // mergedMesh 활성화 여부
         };
         this.actionSetting = {
@@ -66,37 +65,36 @@ export class MapOption {
         return this.setting;
     }
 
-    deleteMap () {
+    deleteMap() {
         if (this.map) {
             this.map.context.cleanup();
             this.map = null;
         }
-    };
+    }
 
     initMenu() {
-
         const setting = this.setting;
         const floorSetting = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
-            return {...prev, [cur.name[0].text]: cur.id};
+            return { ...prev, [cur.name[0].text]: cur.id };
         }, {});
         const langSetting = this.mapData.dataLanguage.getLanguage().map((data) => data.lang);
 
-        const menu = this.gui.addFolder("mapOption");
+        const menu = this.gui.addFolder('mapOption');
         // menu.open();
-        menu.add(setting, "camera", ["2d", "3d"]);
-        menu.add(setting, "floor", floorSetting);
-        menu.add(setting, "language", langSetting);
-        menu.add(setting, "showPoi");
-        menu.add(setting, "spriteEnable");
-        menu.add(setting, "spriteKeepRotation");
-        menu.add(setting, "zoom");
-        menu.add(setting, "x");
-        menu.add(setting, "y");
-        menu.add(setting, "rotate");
-        menu.add(setting, "tilt");
-        menu.add(setting, "mergeMesh");
-        menu.add(this.actionSetting, "showMap");
-        menu.add(this.actionSetting, "deleteMap");
+        menu.add(setting, 'camera', ['2d', '3d']);
+        menu.add(setting, 'floor', floorSetting);
+        menu.add(setting, 'language', langSetting);
+        menu.add(setting, 'showPoi');
+        menu.add(setting, 'spriteEnable');
+        menu.add(setting, 'spriteKeepRotation');
+        menu.add(setting, 'zoom');
+        menu.add(setting, 'x');
+        menu.add(setting, 'y');
+        menu.add(setting, 'rotate');
+        menu.add(setting, 'tilt');
+        menu.add(setting, 'mergeMesh');
+        menu.add(this.actionSetting, 'showMap');
+        menu.add(this.actionSetting, 'deleteMap');
 
         return menu;
     }

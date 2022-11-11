@@ -8,14 +8,14 @@ let mapContainer;
 function getSize() {
     const width = document.querySelector('.containerWidth').value;
     const height = document.querySelector('.containerHeight').value;
-    
+
     if (width) {
         console.log(Number(width));
-        document.getElementById("container").style.width = Number(width) + 'px';
+        document.getElementById('container').style.width = Number(width) + 'px';
         document.querySelector('.containerWidth').value = '';
     }
     if (height) {
-        document.getElementById("container").style.height = Number(height) + 'px';
+        document.getElementById('container').style.height = Number(height) + 'px';
         document.querySelector('.containerHeight').value = '';
     }
 }
@@ -35,13 +35,13 @@ addMap.addEventListener('click', () => {
 
     async function fetchData() {
         const mapData = await dabeeoMaps.getMapData({
-            clientId: "75hb8YSnAokb-sZ04aDR91",
-            clientSecret: "0f7ad84f160c7b3fd1849a7920af718b",
+            clientId: '75hb8YSnAokb-sZ04aDR91',
+            clientSecret: '0f7ad84f160c7b3fd1849a7920af718b',
         });
 
-        mapContainer = document.getElementById("container");          
-        const mapOption = Object.assign({ canvasSize: { width: 1000, height: 500 }, canvasFitTo: mapContainer});                                         
-        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData); 
+        mapContainer = document.getElementById('container');
+        const mapOption = Object.assign({ canvasSize: { width: 1000, height: 500 }, canvasFitTo: mapContainer });
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
         console.log(map);
     }
     fetchData();
@@ -150,14 +150,13 @@ fetchData();`;
 //           },
 //           {
 //             poiId : "PO-bG8eepPeB2502", // 여자화장실 (2층)
-//             floorId: "FL-ubj3xpjjwp4p7136" 
+//             floorId: "FL-ubj3xpjjwp4p7136"
 //           }
 //         ],
 //         retResponse: true
 //       }).then((response) => {
 //         map.routeSimulation.draw(animOption);
 //     });
-
 
 //     // setTimeout(() => {
 //     //   map.markers.clear();
@@ -184,7 +183,6 @@ fetchData();`;
 //     //     });
 //     // }, 2000);
 
-
 //     // map.control.moveTo({x:100,y:100});
 //     // map.control.zoomIn();
 //     // map.control.zoomOut();
@@ -193,4 +191,3 @@ fetchData();`;
 //     // map.control.reset({});
 
 //   }, 2000);
-

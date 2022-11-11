@@ -1,4 +1,4 @@
-import {PoisMoreMenu} from "./PoisMoreMenu.js";
+import { PoisMoreMenu } from './PoisMoreMenu.js';
 
 export class PoisMenu {
     constructor() {
@@ -24,7 +24,7 @@ export class PoisMenu {
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
-        this.menu = this.gui.addFolder("Pois Menu");
+        this.menu = this.gui.addFolder('Pois Menu');
         this.initSetting();
         this.currentSetting = this.initCurrentSetting();
         new PoisMoreMenu().init(this.menu, mapData, map, mapContainer);
@@ -33,64 +33,70 @@ export class PoisMenu {
 
     initSetting() {
         let poisSetting = null;
-        this.mapContainer.addEventListener("floor-changed", (e) => {
+        this.mapContainer.addEventListener('floor-changed', (e) => {
             const currentFloor = e.detail.id;
-            const poiList = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-                    if (currentFloor == cur.floorId) return {...result, [cur.title]: cur.id};
+            const poiList = this.mapData.dataPoi.getPois().reduce(
+                (result, cur) => {
+                    if (currentFloor == cur.floorId) return { ...result, [cur.title]: cur.id };
                     else return result;
-                },{"": ""});
+                },
+                { '': '' },
+            );
             poisSetting = poisSetting.options(poiList);
         });
 
         const currentFloor = this.map.context.getCurrentFloor().id;
-        const poiList = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-                if (currentFloor == cur.floorId) return {...result, [cur.title]: cur.id};
+        const poiList = this.mapData.dataPoi.getPois().reduce(
+            (result, cur) => {
+                if (currentFloor == cur.floorId) return { ...result, [cur.title]: cur.id };
                 else return result;
-            },{"": ""});
+            },
+            { '': '' },
+        );
 
         this.setting = {
-            outerColor: "#00ff00",
-            innerColor: "#ff00ff",
+            outerColor: '#00ff00',
+            innerColor: '#ff00ff',
             scale: 1,
         };
 
         this.actionSetting = {
-            ids: "",
+            ids: '',
             set: this.set.bind(this),
             reset: this.reset.bind(this),
             hide: this.hide.bind(this),
             show: this.show.bind(this),
         };
         const menu = this.menu;
-        menu.addColor(this.setting, "outerColor");
-        menu.addColor(this.setting, "innerColor");
-        menu.add(this.setting, "scale");
-        poisSetting = menu.add(this.actionSetting, "ids", poiList);
+        menu.addColor(this.setting, 'outerColor');
+        menu.addColor(this.setting, 'innerColor');
+        menu.add(this.setting, 'scale');
+        poisSetting = menu.add(this.actionSetting, 'ids', poiList);
 
-        menu.add(this.actionSetting, "set");
-        menu.add(this.actionSetting, "reset");
-        menu.add(this.actionSetting, "hide");
-        menu.add(this.actionSetting, "show");
+        menu.add(this.actionSetting, 'set');
+        menu.add(this.actionSetting, 'reset');
+        menu.add(this.actionSetting, 'hide');
+        menu.add(this.actionSetting, 'show');
     }
 
     initCurrentSetting() {
         const setting = {
             isVisible: true,
-            x: "",
-            y: "",
-            z: "",
+            x: '',
+            y: '',
+            z: '',
             byAsc: true,
             currentPoi: this.currentPoi.bind(this),
         };
 
-        const menu = this.menu.addFolder("current menu");
-        menu.add(setting, "isVisible");
-        menu.add(setting, "x");
-        menu.add(setting, "y");
-        menu.add(setting, "z");
-        menu.add(setting, "byAsc");
-        menu.add(setting, "currentPoi");
-        return setting; 
+        const menu = this.menu.addFolder('current menu');
+        menu.add(setting, 'isVisible');
+        menu.add(setting, 'x');
+        menu.add(setting, 'y');
+        menu.add(setting, 'z');
+        menu.add(setting, 'byAsc');
+        menu.add(setting, 'currentPoi');
+        return setting;
     }
     currentPoi(value) {
         setTimeout(() => {
@@ -106,9 +112,9 @@ export class PoisMenu {
                 },
             };
             const pois = this.map.pois.getCurrentPois(option);
-            console.log("현재 화면 안에서 보여지고 있는 pois : ", pois);
+            console.log('현재 화면 안에서 보여지고 있는 pois : ', pois);
             pois?.forEach((poi) => {
-                console.log("poi title : ", poi.title);
+                console.log('poi title : ', poi.title);
             });
         }, 500);
     }
@@ -134,5 +140,4 @@ export class PoisMenu {
         if (this.actionSetting.ids) this.map.pois.show(this.actionSetting.ids);
         else this.map.pois.show();
     }
-
 }

@@ -1,4 +1,4 @@
-import {IconMenu} from "./IconMenu.js";
+import { IconMenu } from './IconMenu.js';
 
 export class MarkerMenu {
     constructor() {
@@ -20,7 +20,7 @@ export class MarkerMenu {
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
-        this.menu = this.gui.addFolder("Marker Menu");
+        this.menu = this.gui.addFolder('Marker Menu');
         this.initSetting();
         this.initMarkerFolder();
         return this.menu;
@@ -28,20 +28,19 @@ export class MarkerMenu {
 
     initSetting() {
         this.setting = {
-            x: "1000",
-            y: "2000",
-            data: "myMarker",
-            floor: "",
+            x: '1000',
+            y: '2000',
+            data: 'myMarker',
+            floor: '',
             set: this.set.bind(this),
             start: this.start.bind(this),
             clearAll: this.clearAll.bind(this),
-            anctest : this.anctest.bind(this),
-            deltest : this.deltest.bind(this),
-
+            anctest: this.anctest.bind(this),
+            deltest: this.deltest.bind(this),
         };
     }
     start() {
-        console.log("start");
+        console.log('start');
     }
     async set(value) {
         const setting = this.setting;
@@ -192,20 +191,20 @@ export class MarkerMenu {
 
         const floorSetting = this.mapData.dataFloor.getFloors().reduce(
             (prev, cur) => {
-                return {...prev, [cur.name[0].text]: cur.id};
+                return { ...prev, [cur.name[0].text]: cur.id };
             },
-            {"not defined": ""},
+            { 'not defined': '' },
         );
 
-        menu.add(setting, "x");
-        menu.add(setting, "y");
-        menu.add(setting, "data");
-        menu.add(setting, "floor", floorSetting);
-        menu.add(setting, "anctest");
-        menu.add(setting, "deltest");
-        menu.add(setting, "set");
-        menu.add(setting, "start");
-        menu.add(setting, "clearAll");
+        menu.add(setting, 'x');
+        menu.add(setting, 'y');
+        menu.add(setting, 'data');
+        menu.add(setting, 'floor', floorSetting);
+        menu.add(setting, 'anctest');
+        menu.add(setting, 'deltest');
+        menu.add(setting, 'set');
+        menu.add(setting, 'start');
+        menu.add(setting, 'clearAll');
         this.iconMenu.init();
     }
 }

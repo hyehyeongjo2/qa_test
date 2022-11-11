@@ -1,303 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="icon" href="../dabeeo_ci_symbol.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>dabeeo smc</title>
+        <style>
+            body {
+                overflow: hidden;
+                /* Hide scrollbars */
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" href="../dabeeo_ci_symbol.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dabeeo smc</title>
-    <style>
-        body {
-            overflow: hidden;
-            /* Hide scrollbars */
-        }
+            nav {
+                height: 100%;
+                width: 250px;
+                position: fixed;
+                z-index: 200;
+                top: 50px;
+                left: -250px;
+                background-color: #818181;
+                overflow-x: hidden;
+                transition: 0.5s;
+                padding-top: 10px;
+            }
 
-        nav {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            z-index: 200;
-            top: 50px;
-            left: -250px;
-            background-color: #818181;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 10px;
-        }
+            nav div {
+                padding: 1px 1px 1px 2px;
+                text-decoration: none;
+                color: #fff;
+                display: block;
+                transition: 0.3s;
+            }
 
-        nav div {
-            padding: 1px 1px 1px 2px;
-            text-decoration: none;
-            color: #fff;
-            display: block;
-            transition: 0.3s;
-        }
+            .poi-container {
+                display: flex;
+                border-bottom: 1px solid white;
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
 
+            .poi-text {
+                width: 170px;
+                cursor: pointer;
+            }
 
-        .poi-container {
-            display: flex;
-            border-bottom: 1px solid white;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
+            .poi-title {
+                font-weight: bold;
+            }
 
-        .poi-text {
-            width: 170px;
-            cursor: pointer;
-        }
+            nav img {
+                height: 30px;
+                cursor: pointer;
+            }
 
-        .poi-title {
-            font-weight: bold;
-        }
+            .map {
+                width: 100%-260px;
+                height: 100vh;
+            }
 
-        nav img {
-            height: 30px;
-            cursor: pointer;
-        }
+            .clicked {
+                background-color: grey;
+            }
 
-        .map {
-            width: 100%-260px;
-            height: 100vh;
-        }
+            .tag-container {
+                z-index: 10;
+                border-radius: 15px;
+                outline: 1px solid gray;
+                padding: 10px;
+                text-align: center;
+                background-color: rgba(250, 250, 250, 0.8);
+            }
 
-        .clicked {
-            background-color: grey;
-        }
+            .marker-container {
+                z-index: 100;
+                /* border-radius: 15px; */
+                /* background-color: rgba(250, 250, 250, 1); */
+                width: 40px;
+                height: 60px;
+            }
 
-        .tag-container {
-            z-index: 10;
-            border-radius: 15px;
-            outline: 1px solid gray;
-            padding: 10px;
-            text-align: center;
-            background-color: rgba(250, 250, 250, 0.8);
-        }
+            img {
+                z-index: 200;
+                width: 100%;
+                height: 100%;
+            }
 
-        .marker-container {
-            z-index: 100;
-            /* border-radius: 15px; */
-            /* background-color: rgba(250, 250, 250, 1); */
-            width: 40px;
-            height: 60px;
-        }
+            .tag-title {
+                font-weight: bold;
+            }
 
-        img {
-            z-index: 200;
-            width: 100%;
-            height: 100%;
-        }
+            .origin-dest {
+                margin: 2px;
+            }
+        </style>
+    </head>
 
-        .tag-title {
-            font-weight: bold;
-        }
+    <body>
+        <header>
+            <span class="toggle-button" style="font-size: 30px; cursor: pointer">&#9776;</span>
+            <button type="button" class="button-menu">building</button>
+            <select type="text" class="inline-input" name="building">
+                <option value="">전체</option>
+            </select>
+            <span id="floor"></span>
+            <span id="layer3"></span>
+        </header>
+        <main>
+            <nav>
+                <div class="origin-dest">
+                    <div><button>출발</button> <input type="text" placeholder="" class="origin" /></div>
+                    <div><button>도착</button> <input type="text" placeholder="" class="dest" /></div>
+                </div>
+                <div class="poislist"></div>
+            </nav>
+        </main>
+        <!-- <div id='map' class="map"></div> -->
+    </body>
+    <script type="text/javascript" src="https://assets.dabeeomaps.com/upload/library/dabeeomaps-4.1.0.js"></script>
 
-        .origin-dest {
-            margin: 2px;
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-        <span class="toggle-button" style="font-size:30px;cursor:pointer">&#9776;</span>
-        <button type="button" class="button-menu">building</button>
-        <select type="text" class="inline-input" name="building">
-            <option value="">전체</option>
-        </select>
-        <span id="floor"></span>
-        <span id="layer3"></span>
-    </header>
-    <main>
-        <nav>
-            <div class="origin-dest">
-                <div><button>출발</button> <input type='text' placeholder="" class="origin" /></div>
-                <div><button>도착</button> <input type='text' placeholder="" class="dest" /></div>
-            </div>
-            <div class="poislist">
-            </div>
-        </nav>
-    </main>
-    <!-- <div id='map' class="map"></div> -->
-</body>
-<script type="text/javascript" src='https://assets.dabeeomaps.com/upload/library/dabeeomaps-4.1.0.js'></script>
-
-
-<script>
-    document.querySelector(".toggle-button").addEventListener("click", (e) => {
-        if (document.querySelector("nav").style.left === "0px") {
-            document.querySelector("nav").style.left = "-250px";
-            e.target.innerHTML = "&#9776;";
-            e.target.style.fontSize = "30px";
-
-        } else {
-            document.querySelector("nav").style.left = "0px";
-            e.target.innerHTML = "&times;";
-            e.target.style.fontSize = "36px";
-            document.querySelector('.poislist').innerHTML = "※ 길찾기 안내는 본관, 별관, 암병원 내 부서만 가능합니다.";
-            document.querySelector(".origin").value = "";
-            document.querySelector(".dest").value = "";
-
-        }
-    });
-
-    const dabeeoMaps = new dabeeo.Maps();
-    // indoor map data, map context
-    let mapDataIndoor = null;
-    let mapIndoor = null;
-
-    // outdoor map data, map context
-    let mapDataOutdoor = null;
-    let mapOutdoor = null;
-
-    let mapContainer = null;
-    let poisOutDoor = null;
-    let poisInDoor = null;
-
-    //initialize mapIndoor load flag
-    let mapIndoorloaded = false;
-    //group contains the structure of smc 
-    //building(layer1), "본관"
-    //floor(layer2), "본관_1F"
-    //zone(layer3-"xx_Depth3"-layer4 ), "본관_1F_Depth3","본관_1F_Depth4", "본관_1F_화재안전", "본관_1F_유해물질" 
-    //detail info(layer3-"xx_Depth4")  "본관_1F_Depth3_판독실"
-
-    async function init () {
-        // const dabeeoMaps = new dabeeo.Maps();
-        await getOutDoorMapData();
-        getOutDoorPois();
-        await renderOutDoorMap();
-        showTagintoOutDoorMap();
-        await getIndoorMapData();
-        initBuilding();
-        initRouteSimulation();
-
-    }
-
-    // fetch a outdoor map data 
-    async function getOutDoorMapData () {
-        mapDataOutDoor = await dabeeoMaps.getMapData({
-            clientId: "47o545DKANS8Jra5FZUXJq",
-            clientSecret: "72671b30f940fc0bcb7225fe2e0b27b7",
-        });
-        // console.log(mapDataOutDoor);
-    }
-    function getOutDoorPois () {
-        poisOutDoor = mapDataOutDoor.dataPoi.getPois();
-    }
-
-    // get outdoormap data & render the map
-    async function renderOutDoorMap () {
-
-        //// render a outdoor map
-        mapContainer = document.createElement("div");
-        mapContainer.classList.add("map");
-        document.querySelector("main").appendChild(mapContainer);
-
-        const mapOption = Object.assign({
-            // set camera to 2d or 3d mode 
-            camera: "3d",
-            controlOption: {
-                rotate: 20,
-                tilt: 60,
+    <script>
+        document.querySelector('.toggle-button').addEventListener('click', (e) => {
+            if (document.querySelector('nav').style.left === '0px') {
+                document.querySelector('nav').style.left = '-250px';
+                e.target.innerHTML = '&#9776;';
+                e.target.style.fontSize = '30px';
+            } else {
+                document.querySelector('nav').style.left = '0px';
+                e.target.innerHTML = '&times;';
+                e.target.style.fontSize = '36px';
+                document.querySelector('.poislist').innerHTML = '※ 길찾기 안내는 본관, 별관, 암병원 내 부서만 가능합니다.';
+                document.querySelector('.origin').value = '';
+                document.querySelector('.dest').value = '';
             }
         });
-        mapOutdoor = await dabeeoMaps.showMap(mapContainer, mapOption, mapDataOutDoor);
 
-        // disable rotation
-        // mapOutdoor.control.setOption({
-        //     mouseOption: {
-        //         enableRotate: false,
-        //         enableTilt: false,
-        //         enablePan: false,
-        //     },
-        // })
-        // mapContainer.addEventListener('on-mouse-click', (e) => {
-        //     console.log('on mouse click 에 대한 결과값', e.detail);
-        // });
-    }
+        const dabeeoMaps = new dabeeo.Maps();
+        // indoor map data, map context
+        let mapDataIndoor = null;
+        let mapIndoor = null;
 
-    //add tag into the outdoor map
-    function showTagintoOutDoorMap () {
-        poisOutDoor.forEach(poi => {
-            const tag = addTagintoMap(poi);
-            // tag click => 
-            // get a building name(layer1), 
-            // change select building menu
-            // make floor menu
-            tag.addEventListener("click", e => {
-                //get a building name
-                const building = e.target.parentElement.querySelector('.tag-title').innerHTML
-                console.log('tag clicked');
+        // outdoor map data, map context
+        let mapDataOutdoor = null;
+        let mapOutdoor = null;
 
-                //change select building menu
-                document.querySelector("[name='building']").value = building;
+        let mapContainer = null;
+        let poisOutDoor = null;
+        let poisInDoor = null;
 
-                //make floor menu
-                initFloor(building);
+        //initialize mapIndoor load flag
+        let mapIndoorloaded = false;
+        //group contains the structure of smc
+        //building(layer1), "본관"
+        //floor(layer2), "본관_1F"
+        //zone(layer3-"xx_Depth3"-layer4 ), "본관_1F_Depth3","본관_1F_Depth4", "본관_1F_화재안전", "본관_1F_유해물질"
+        //detail info(layer3-"xx_Depth4")  "본관_1F_Depth3_판독실"
 
-                showMarker(building); //show marker
-            })
-        });
-    }
-    //add tag into a outdoor map
-    function addTagintoMap (poi) {
-        const tag = document.createElement('div');
-        //poi.title == building name
-        tag.innerHTML = `<div class="tag-container">
+        async function init() {
+            // const dabeeoMaps = new dabeeo.Maps();
+            await getOutDoorMapData();
+            getOutDoorPois();
+            await renderOutDoorMap();
+            showTagintoOutDoorMap();
+            await getIndoorMapData();
+            initBuilding();
+            initRouteSimulation();
+        }
+
+        // fetch a outdoor map data
+        async function getOutDoorMapData() {
+            mapDataOutDoor = await dabeeoMaps.getMapData({
+                clientId: '47o545DKANS8Jra5FZUXJq',
+                clientSecret: '72671b30f940fc0bcb7225fe2e0b27b7',
+            });
+            // console.log(mapDataOutDoor);
+        }
+        function getOutDoorPois() {
+            poisOutDoor = mapDataOutDoor.dataPoi.getPois();
+        }
+
+        // get outdoormap data & render the map
+        async function renderOutDoorMap() {
+            //// render a outdoor map
+            mapContainer = document.createElement('div');
+            mapContainer.classList.add('map');
+            document.querySelector('main').appendChild(mapContainer);
+
+            const mapOption = Object.assign({
+                // set camera to 2d or 3d mode
+                camera: '3d',
+                controlOption: {
+                    rotate: 20,
+                    tilt: 60,
+                },
+            });
+            mapOutdoor = await dabeeoMaps.showMap(mapContainer, mapOption, mapDataOutDoor);
+
+            // disable rotation
+            // mapOutdoor.control.setOption({
+            //     mouseOption: {
+            //         enableRotate: false,
+            //         enableTilt: false,
+            //         enablePan: false,
+            //     },
+            // })
+            // mapContainer.addEventListener('on-mouse-click', (e) => {
+            //     console.log('on mouse click 에 대한 결과값', e.detail);
+            // });
+        }
+
+        //add tag into the outdoor map
+        function showTagintoOutDoorMap() {
+            poisOutDoor.forEach((poi) => {
+                const tag = addTagintoMap(poi);
+                // tag click =>
+                // get a building name(layer1),
+                // change select building menu
+                // make floor menu
+                tag.addEventListener('click', (e) => {
+                    //get a building name
+                    const building = e.target.parentElement.querySelector('.tag-title').innerHTML;
+                    console.log('tag clicked');
+
+                    //change select building menu
+                    document.querySelector("[name='building']").value = building;
+
+                    //make floor menu
+                    initFloor(building);
+
+                    showMarker(building); //show marker
+                });
+            });
+        }
+        //add tag into a outdoor map
+        function addTagintoMap(poi) {
+            const tag = document.createElement('div');
+            //poi.title == building name
+            tag.innerHTML = `<div class="tag-container">
                         <div class="tag-title">${poi.title}</div>
                         <div class="tag-body">재직 506</div>
                         <div class="tag-body">근무 149 </div>
                         </div>`;
-        const poiTag = mapOutdoor.tag.setPOITag({ parentId: poi.id, pos: 'TOP', tag: tag });
+            const poiTag = mapOutdoor.tag.setPOITag({ parentId: poi.id, pos: 'TOP', tag: tag });
 
-        return tag;
-    }
+            return tag;
+        }
 
-    async function getIndoorMapData () {
-        //// fetch a indoor map data
-        mapDataIndoor = await dabeeoMaps.getMapData({
-            clientId: "cmnGuxYqQkV87wHcXXOvfN",
-            clientSecret: "46a9752504f3054998b53adbfb73297e",
-        });
-        console.log(mapDataIndoor.dataGroupCode.getCodes());
-        // console.log(mapDataIndoor);
-        // console.log(mapDataIndoor.dataObject.getObjects().filter(object => object.layerGroupCode != ""));
-    }
+        async function getIndoorMapData() {
+            //// fetch a indoor map data
+            mapDataIndoor = await dabeeoMaps.getMapData({
+                clientId: 'cmnGuxYqQkV87wHcXXOvfN',
+                clientSecret: '46a9752504f3054998b53adbfb73297e',
+            });
+            console.log(mapDataIndoor.dataGroupCode.getCodes());
+            // console.log(mapDataIndoor);
+            // console.log(mapDataIndoor.dataObject.getObjects().filter(object => object.layerGroupCode != ""));
+        }
 
-    function initRouteSimulation () {
-        const groups = mapDataIndoor.dataGroupCode.findAll();
-        const zone = groups.filter(group => group.includes("_Depth3_"));
-        const zoneList = zone.filter(group => group.includes("본관_") || group.includes("별관_") || group.includes("암병원_"));
-        // console.log(zoneList);
+        function initRouteSimulation() {
+            const groups = mapDataIndoor.dataGroupCode.findAll();
+            const zone = groups.filter((group) => group.includes('_Depth3_'));
+            const zoneList = zone.filter((group) => group.includes('본관_') || group.includes('별관_') || group.includes('암병원_'));
+            // console.log(zoneList);
 
-        initRouteMenu(document.querySelector(".origin"), zoneList);
-        initRouteMenu(document.querySelector(".dest"), zoneList);
-    }
+            initRouteMenu(document.querySelector('.origin'), zoneList);
+            initRouteMenu(document.querySelector('.dest'), zoneList);
+        }
 
-    function initRouteMenu (element, zoneList) {
-        element.addEventListener('focus', (e) => {
-            element.value = '';
-            element.name = "";
-            document.querySelector('.poislist').innerHTML = "※ 길찾기 안내는 본관, 별관, 암병원 내 부서만 가능합니다.";
-        });
-        element.addEventListener("keyup", (e) => {
-            const key = event.target.value;
-            // console.log(key);
-            if (key === "") {
-                document.querySelector('.poislist').innerHTML = "※ 길찾기 안내는 본관, 별관, 암병원 내 부서만 가능합니다.";
-                return;
-            }
+        function initRouteMenu(element, zoneList) {
+            element.addEventListener('focus', (e) => {
+                element.value = '';
+                element.name = '';
+                document.querySelector('.poislist').innerHTML = '※ 길찾기 안내는 본관, 별관, 암병원 내 부서만 가능합니다.';
+            });
+            element.addEventListener('keyup', (e) => {
+                const key = event.target.value;
+                // console.log(key);
+                if (key === '') {
+                    document.querySelector('.poislist').innerHTML = '※ 길찾기 안내는 본관, 별관, 암병원 내 부서만 가능합니다.';
+                    return;
+                }
 
-            const foundZone = zoneList.filter(zone => zone.split('_')[3].includes(key));
-            if (!foundZone) return;
-            foundZone.forEach(zone => {
-                const poiElement = document.createElement("div");
-                poiElement.classList.add("poi-container")
-                // console.log(poi.layerGroupCode);
-                const [building, floor, , title] = zone.split('_');
-                poiElement.innerHTML =
-                    `<div class="poi-text">
+                const foundZone = zoneList.filter((zone) => zone.split('_')[3].includes(key));
+                if (!foundZone) return;
+                foundZone.forEach((zone) => {
+                    const poiElement = document.createElement('div');
+                    poiElement.classList.add('poi-container');
+                    // console.log(poi.layerGroupCode);
+                    const [building, floor, , title] = zone.split('_');
+                    poiElement.innerHTML = `<div class="poi-text">
                         <div class="poi-title"> ${title} </div>
                         <div> 
                             <span class="poi-building">${building}</span> 
@@ -308,348 +299,345 @@
                         <img id=${zone} src="https://assets.dabeeomaps.com/image/ico/img_marker-3x.png"> 
                     </div>
                     `;
-                document.querySelector('.poislist').appendChild(poiElement);
+                    document.querySelector('.poislist').appendChild(poiElement);
 
-                poiElement.querySelector('.poi-text').addEventListener("click", async (e) => {
-                    element.value = title;
-                    element.name = zone;
-                    handleZoneSelect(zone);
-                    const origin = document.querySelector(".origin").getAttribute('name');
-                    console.log(origin);
+                    poiElement.querySelector('.poi-text').addEventListener('click', async (e) => {
+                        element.value = title;
+                        element.name = zone;
+                        handleZoneSelect(zone);
+                        const origin = document.querySelector('.origin').getAttribute('name');
+                        console.log(origin);
 
-                    const dest = document.querySelector(".dest").getAttribute('name');
-                    console.log(dest);
+                        const dest = document.querySelector('.dest').getAttribute('name');
+                        console.log(dest);
 
-                    if (origin && dest) {
-                        const poiOrigin = mapDataIndoor.dataPoi.find(origin, { type: 'groupCode' })
-                        console.log(poiOrigin[0]);
+                        if (origin && dest) {
+                            const poiOrigin = mapDataIndoor.dataPoi.find(origin, { type: 'groupCode' });
+                            console.log(poiOrigin[0]);
 
-                        const poiDest = mapDataIndoor.dataPoi.find(dest, { type: 'groupCode' })
-                        console.log(poiDest[0]);
+                            const poiDest = mapDataIndoor.dataPoi.find(dest, { type: 'groupCode' });
+                            console.log(poiDest[0]);
 
-                        const route = mapDataIndoor.getRoute({
-                            origin: {
-                                poiId: poiOrigin[0].id,
-                                floorId: poiOrigin[0].floorId
-                            },
-                            destination: {
-                                poiId: poiDest[0].id,
-                                floorId: poiDest[0].floorId
-                            }
-                        });
-                        console.log(route);
-                        if (route == undefined) alert(`${poiOrigin[0].title} to ${poiDest[0].title} route does not exist`);
+                            const route = mapDataIndoor.getRoute({
+                                origin: {
+                                    poiId: poiOrigin[0].id,
+                                    floorId: poiOrigin[0].floorId,
+                                },
+                                destination: {
+                                    poiId: poiDest[0].id,
+                                    floorId: poiDest[0].floorId,
+                                },
+                            });
+                            console.log(route);
+                            if (route == undefined) alert(`${poiOrigin[0].title} to ${poiDest[0].title} route does not exist`);
+                        }
+                    });
 
-                    }
-                });
-
-                poiElement.querySelector('.poi-icon img').addEventListener("click", async (e) => {
-                    handleZoneSelect(zone);
+                    poiElement.querySelector('.poi-icon img').addEventListener('click', async (e) => {
+                        handleZoneSelect(zone);
+                    });
                 });
             });
-        });
-    }
-    async function handleZoneSelect (zone) {
-        const [building, floor, , title] = zone.split('_');
-        document.querySelector("[name='building']").value = building;//select a building
-        initFloor(building); //make floor menu
-
-        const floors = mapDataIndoor.dataFloor.find(`${building}_${floor}`, { type: 'title' });
-        const floorId = floors[0].id;
-
-        document.querySelector('.floor-select').value = floorId; //select the floor
-        await renderIndoorMap(floorId); //render the floor
-        initLayer3(`${building}_${floor}`);
-
-        document.querySelector('.zone-select').value = zone; //select the floor
-        focusToZone(zone);
-
-    }
-
-    // make up building select menu 
-    function initBuilding () {
-        //root group is the same as building of the outdoor map
-        //get the root group from data group
-        const buildings = mapDataIndoor.dataGroupCode.findAllRoot();
-
-        const element = document.querySelector("[name='building']");
-        buildings.forEach(building => {
-            let newOption = document.createElement("option");
-            newOption.value = building
-            newOption.appendChild(document.createTextNode(building));
-            element.appendChild(newOption);
-        });
-
-        //select building -> init floor
-        element.addEventListener("change", function (e) {
-            const building = e.target.value;
-            initFloor(building);
-            showMarker(building);
-        });
-    }
-    //makeup floor select menu
-    function initFloor (layer1) {
-        if (!mapDataIndoor) return;
-        const elementSelect = initFloorMenu();
-
-        //layer2 is floors of selected layer1(building)
-        const layer2s = mapDataIndoor.dataGroupCode.findChild(layer1);
-        // console.log(layer2s);
-        if (!layer2s) {
-            alert('floors is empty! ');
-            return;
         }
-        //"본관_1F",...
-        layer2s.forEach(layer2 => {
-            let newOption = document.createElement("option");
-            const floors = mapDataIndoor.dataFloor.find(layer2, { type: 'title' });
-            if (floors.legnth > 1) alert('ERROR');
+        async function handleZoneSelect(zone) {
+            const [building, floor, , title] = zone.split('_');
+            document.querySelector("[name='building']").value = building; //select a building
+            initFloor(building); //make floor menu
 
-            newOption.value = floors[0].id;
-            newOption.appendChild(document.createTextNode(layer2));
-            elementSelect.appendChild(newOption);
-        });
+            const floors = mapDataIndoor.dataFloor.find(`${building}_${floor}`, { type: 'title' });
+            const floorId = floors[0].id;
 
-        //select floor -> render floor, init zone
-        elementSelect.addEventListener("change", async function (e) {
-            const floorName = e.target.options[e.target.selectedIndex].text;
-            const floorId = e.target.value;
-            await renderIndoorMap(floorId);
-            initLayer3(floorName);
-        });
-    }
+            document.querySelector('.floor-select').value = floorId; //select the floor
+            await renderIndoorMap(floorId); //render the floor
+            initLayer3(`${building}_${floor}`);
 
-    function initFloorMenu () {
-        let elementFloor = document.querySelector("#floor");
-        elementFloor.innerHTML = '';
-        let elementLayer3 = document.querySelector("#layer3");
-        elementLayer3.innerHTML = '';
+            document.querySelector('.zone-select').value = zone; //select the floor
+            focusToZone(zone);
+        }
 
-        let elementButton = document.createElement("button");
-        elementButton.type = "button";
-        elementButton.innerHTML = 'floor';
-        elementFloor.appendChild(elementButton);
+        // make up building select menu
+        function initBuilding() {
+            //root group is the same as building of the outdoor map
+            //get the root group from data group
+            const buildings = mapDataIndoor.dataGroupCode.findAllRoot();
 
-        let elementSelect = document.createElement("select");
-        elementSelect.classList.add('floor-select');
-        elementSelect.innerHTML = '<option value="">전체</option>';
-        elementFloor.appendChild(elementSelect);
-        return elementSelect;
-    }
-    async function renderIndoorMap (floorId) {
-        if (!mapIndoorloaded) { //if not indoormap loaded before
-            mapIndoorloaded = true;
-            //clean up memory of outdoor map and container 
-            mapOutdoor.context.cleanup();
-            document.querySelector('.map').remove();
-
-            //// render a indoor map
-            mapContainer = document.createElement("div");
-            mapContainer.classList.add("map");
-            document.querySelector("main").appendChild(mapContainer);
-
-            const mapOption = Object.assign({
-                // set camera to 2d mode 
-                camera: "2d",
-                floor: floorId,
-                // poiOption: {
-                //     poiSpriteEnable: false,
-                // }
+            const element = document.querySelector("[name='building']");
+            buildings.forEach((building) => {
+                let newOption = document.createElement('option');
+                newOption.value = building;
+                newOption.appendChild(document.createTextNode(building));
+                element.appendChild(newOption);
             });
-            mapIndoor = await dabeeoMaps.showMap(mapContainer, mapOption, mapDataIndoor);
-            mapIndoor.control.setOption({
-                mouseOption: {
-                    // enableRotate: false,
-                    enableTilt: false,
-                    // enablePan: false,
-                },
-            })
-        } else { //if indoormap loaded before, just change the floor
-            // console.log('changeFloor');
-            await mapIndoor.context.changeFloor(floorId);
+
+            //select building -> init floor
+            element.addEventListener('change', function (e) {
+                const building = e.target.value;
+                initFloor(building);
+                showMarker(building);
+            });
         }
-    }
+        //makeup floor select menu
+        function initFloor(layer1) {
+            if (!mapDataIndoor) return;
+            const elementSelect = initFloorMenu();
 
-    async function showMarker (building) {
-        //clear markers if any
-        mapOutdoor.markers.clearAll();
+            //layer2 is floors of selected layer1(building)
+            const layer2s = mapDataIndoor.dataGroupCode.findChild(layer1);
+            // console.log(layer2s);
+            if (!layer2s) {
+                alert('floors is empty! ');
+                return;
+            }
+            //"본관_1F",...
+            layer2s.forEach((layer2) => {
+                let newOption = document.createElement('option');
+                const floors = mapDataIndoor.dataFloor.find(layer2, { type: 'title' });
+                if (floors.legnth > 1) alert('ERROR');
 
-        const previousMarker = document.querySelector(".marker-container")
-        if (previousMarker) previousMarker.remove();
+                newOption.value = floors[0].id;
+                newOption.appendChild(document.createTextNode(layer2));
+                elementSelect.appendChild(newOption);
+            });
 
-        //find poi with building name
-        const selectedPoi = poisOutDoor.find(poi => poi.title === building);
-        //add marker to a outdoor map 
-        const tag = document.createElement('div');
-        tag.innerHTML = `<div class="marker-container" name="${building}">
+            //select floor -> render floor, init zone
+            elementSelect.addEventListener('change', async function (e) {
+                const floorName = e.target.options[e.target.selectedIndex].text;
+                const floorId = e.target.value;
+                await renderIndoorMap(floorId);
+                initLayer3(floorName);
+            });
+        }
+
+        function initFloorMenu() {
+            let elementFloor = document.querySelector('#floor');
+            elementFloor.innerHTML = '';
+            let elementLayer3 = document.querySelector('#layer3');
+            elementLayer3.innerHTML = '';
+
+            let elementButton = document.createElement('button');
+            elementButton.type = 'button';
+            elementButton.innerHTML = 'floor';
+            elementFloor.appendChild(elementButton);
+
+            let elementSelect = document.createElement('select');
+            elementSelect.classList.add('floor-select');
+            elementSelect.innerHTML = '<option value="">전체</option>';
+            elementFloor.appendChild(elementSelect);
+            return elementSelect;
+        }
+        async function renderIndoorMap(floorId) {
+            if (!mapIndoorloaded) {
+                //if not indoormap loaded before
+                mapIndoorloaded = true;
+                //clean up memory of outdoor map and container
+                mapOutdoor.context.cleanup();
+                document.querySelector('.map').remove();
+
+                //// render a indoor map
+                mapContainer = document.createElement('div');
+                mapContainer.classList.add('map');
+                document.querySelector('main').appendChild(mapContainer);
+
+                const mapOption = Object.assign({
+                    // set camera to 2d mode
+                    camera: '2d',
+                    floor: floorId,
+                    // poiOption: {
+                    //     poiSpriteEnable: false,
+                    // }
+                });
+                mapIndoor = await dabeeoMaps.showMap(mapContainer, mapOption, mapDataIndoor);
+                mapIndoor.control.setOption({
+                    mouseOption: {
+                        // enableRotate: false,
+                        enableTilt: false,
+                        // enablePan: false,
+                    },
+                });
+            } else {
+                //if indoormap loaded before, just change the floor
+                // console.log('changeFloor');
+                await mapIndoor.context.changeFloor(floorId);
+            }
+        }
+
+        async function showMarker(building) {
+            //clear markers if any
+            mapOutdoor.markers.clearAll();
+
+            const previousMarker = document.querySelector('.marker-container');
+            if (previousMarker) previousMarker.remove();
+
+            //find poi with building name
+            const selectedPoi = poisOutDoor.find((poi) => poi.title === building);
+            //add marker to a outdoor map
+            const tag = document.createElement('div');
+            tag.innerHTML = `<div class="marker-container" name="${building}">
                     <img src="https://assets.dabeeomaps.com/image/ico/img_marker-3x.png"">
                         </div>`;
 
-        const markers = await mapOutdoor.markers.set({
-            marker: [{
-                x: selectedPoi.position.x,
-                y: selectedPoi.position.y,
-                data: {
-                    title: selectedPoi.title,
-                },
-                iconOption: {
-                    positionZ: 300,
-                    visibleIcon: false,
-                },
-            }]
-        });
-        const markerTag2 = mapOutdoor.tag.setMarkerTag({ parentId: markers[0], pos: 'TOP', tag: tag });
-
-
-        tag.addEventListener("click", async (e) => {
-            // console.log('tag clicked');
-            // console.log(e.target.parentElement.getAttribute('name'));
-            let layer2 = e.target.parentElement.getAttribute('name') + '_1F';
-            //marker click => get a floor name 
-            // mapContainer.addEventListener('marker-click', async (e) => {
-            // let floorName = e.detail[0].userData.data.title + '_1F';
-
-            if (layer2.includes('원 외')) {
-                alert('원 외 does not have any building');
-                return;
-            }
-            if (layer2.includes('일원역캠퍼스')) {
-                layer2 = layer2.replace('1F', '4F');
-            }
-            const floors = mapDataIndoor.dataFloor.find(layer2, { type: 'title' });
-            const floorId = floors[0].id;
-            document.querySelector('.floor-select').value = floorId; //select the floor
-            await renderIndoorMap(floorId); //render the floor
-            initLayer3(layer2);
-        });
-    }
-
-    function initLayer3 (layer2) {
-        const layer3 = mapDataIndoor.dataGroupCode.findChild(layer2);
-        layer3.sort();
-
-        let elementLayer3 = document.querySelector("#layer3");
-        elementLayer3.innerHTML = '';
-
-        layer3.forEach(code => {
-            let elementButton = document.createElement("button");
-            elementButton.type = "button";
-            elementButton.innerHTML = code;
-            elementButton.className = "button"
-            elementLayer3.appendChild(elementButton);
-            let ishidden = true;
-            mapIndoor.context.hideByCode(code);
-            if (code.includes("Depth3")) {
-                initZone(code);
-            }
-
-            elementButton.addEventListener('click', function (e) {
-                const code = e.target.innerHTML;
-                e.target.classList.toggle('clicked');
-                if (ishidden) {
-                    // console.log(mapDataIndoor.dataObject.find(code, { type: 'groupCode' }));
-                    // console.log(mapDataIndoor.dataPoi.find(code, { type: 'groupCode' }));
-                    mapIndoor.context.showByCode(code);
-                    ishidden = false;
-                } else {
-                    mapIndoor.context.hideByCode(code);
-                    ishidden = true;
-                }
+            const markers = await mapOutdoor.markers.set({
+                marker: [
+                    {
+                        x: selectedPoi.position.x,
+                        y: selectedPoi.position.y,
+                        data: {
+                            title: selectedPoi.title,
+                        },
+                        iconOption: {
+                            positionZ: 300,
+                            visibleIcon: false,
+                        },
+                    },
+                ],
             });
-        });
-        // console.log(mapContainer);
-        // mapContainer.addEventListener("zoom-changed", (e) => console.log(e.detail));
+            const markerTag2 = mapOutdoor.tag.setMarkerTag({ parentId: markers[0], pos: 'TOP', tag: tag });
 
-        mapContainer.addEventListener('object-click', (e) => {
-            const objectsClicked = e.detail;
-            const object = objectsClicked.find(object => object.layerGroupCode !== "");
-            if (!object) return;
-            // console.log(object.layerGroupCode);
-            document.querySelector('.zone-select').value = object.layerGroupCode; //select the floor
-            focusToZone(object.layerGroupCode);
-        });
-        mapContainer.addEventListener('poi-click', (e) => {
-            const pois = e.detail;
-            const poi = pois.find(poi => poi.layerGroupCode !== "");
-            if (!poi) return;
-            // console.log(poi.layerGroupCode);
-            document.querySelector('.zone-select').value = poi.layerGroupCode; //select the floor
-            focusToZone(poi.layerGroupCode);
-        });
-    }
-    function focusToZone (layerGroupCode) {
-        const parent = mapDataIndoor.dataGroupCode.findParent(layerGroupCode);
-        mapIndoor.context.hideByCode(parent);
-        mapIndoor.context.showByCode(layerGroupCode);
-        const objects = mapDataIndoor.dataObject.find(layerGroupCode, { type: 'groupCode' });
-        const objectIds = objects.map(object => object.id);
-        mapIndoor.control.focusTo({
-            focus: {
-                type: 'OBJECT',
-                ids: objectIds
-            },
-            transition: true,
-            padding: {
-                top: 100,
-                left: 100,
-                bottom: 100,
-                right: 100,
-            }
-        });
-        mapIndoor.control.changeZoom({ zoom: 21, transition: true });
-    }
+            tag.addEventListener('click', async (e) => {
+                // console.log('tag clicked');
+                // console.log(e.target.parentElement.getAttribute('name'));
+                let layer2 = e.target.parentElement.getAttribute('name') + '_1F';
+                //marker click => get a floor name
+                // mapContainer.addEventListener('marker-click', async (e) => {
+                // let floorName = e.detail[0].userData.data.title + '_1F';
 
-    function initZone (layer3) {
+                if (layer2.includes('원 외')) {
+                    alert('원 외 does not have any building');
+                    return;
+                }
+                if (layer2.includes('일원역캠퍼스')) {
+                    layer2 = layer2.replace('1F', '4F');
+                }
+                const floors = mapDataIndoor.dataFloor.find(layer2, { type: 'title' });
+                const floorId = floors[0].id;
+                document.querySelector('.floor-select').value = floorId; //select the floor
+                await renderIndoorMap(floorId); //render the floor
+                initLayer3(layer2);
+            });
+        }
 
-        let elementLayer3 = document.querySelector("#layer3");
+        function initLayer3(layer2) {
+            const layer3 = mapDataIndoor.dataGroupCode.findChild(layer2);
+            layer3.sort();
 
-        const zones = mapDataIndoor.dataGroupCode.findChild(layer3);
+            let elementLayer3 = document.querySelector('#layer3');
+            elementLayer3.innerHTML = '';
 
-        let elementSelect = document.createElement("select");
-        elementSelect.classList.add('zone-select');
-        elementSelect.innerHTML = '<option value="">전체</option>';
-        elementLayer3.appendChild(elementSelect);
+            layer3.forEach((code) => {
+                let elementButton = document.createElement('button');
+                elementButton.type = 'button';
+                elementButton.innerHTML = code;
+                elementButton.className = 'button';
+                elementLayer3.appendChild(elementButton);
+                let ishidden = true;
+                mapIndoor.context.hideByCode(code);
+                if (code.includes('Depth3')) {
+                    initZone(code);
+                }
 
-        // make zone menu
-        zones.forEach(zone => {
-            let newOption = document.createElement("option");
-            newOption.value = zone;
-            newOption.appendChild(document.createTextNode(zone));
-            elementSelect.appendChild(newOption);
-        });
+                elementButton.addEventListener('click', function (e) {
+                    const code = e.target.innerHTML;
+                    e.target.classList.toggle('clicked');
+                    if (ishidden) {
+                        // console.log(mapDataIndoor.dataObject.find(code, { type: 'groupCode' }));
+                        // console.log(mapDataIndoor.dataPoi.find(code, { type: 'groupCode' }));
+                        mapIndoor.context.showByCode(code);
+                        ishidden = false;
+                    } else {
+                        mapIndoor.context.hideByCode(code);
+                        ishidden = true;
+                    }
+                });
+            });
+            // console.log(mapContainer);
+            // mapContainer.addEventListener("zoom-changed", (e) => console.log(e.detail));
 
+            mapContainer.addEventListener('object-click', (e) => {
+                const objectsClicked = e.detail;
+                const object = objectsClicked.find((object) => object.layerGroupCode !== '');
+                if (!object) return;
+                // console.log(object.layerGroupCode);
+                document.querySelector('.zone-select').value = object.layerGroupCode; //select the floor
+                focusToZone(object.layerGroupCode);
+            });
+            mapContainer.addEventListener('poi-click', (e) => {
+                const pois = e.detail;
+                const poi = pois.find((poi) => poi.layerGroupCode !== '');
+                if (!poi) return;
+                // console.log(poi.layerGroupCode);
+                document.querySelector('.zone-select').value = poi.layerGroupCode; //select the floor
+                focusToZone(poi.layerGroupCode);
+            });
+        }
+        function focusToZone(layerGroupCode) {
+            const parent = mapDataIndoor.dataGroupCode.findParent(layerGroupCode);
+            mapIndoor.context.hideByCode(parent);
+            mapIndoor.context.showByCode(layerGroupCode);
+            const objects = mapDataIndoor.dataObject.find(layerGroupCode, { type: 'groupCode' });
+            const objectIds = objects.map((object) => object.id);
+            mapIndoor.control.focusTo({
+                focus: {
+                    type: 'OBJECT',
+                    ids: objectIds,
+                },
+                transition: true,
+                padding: {
+                    top: 100,
+                    left: 100,
+                    bottom: 100,
+                    right: 100,
+                },
+            });
+            mapIndoor.control.changeZoom({ zoom: 21, transition: true });
+        }
 
-        //focus to layer3
-        let objectIds = [];
-        zones.forEach(zone => {
-            // console.log(zone);
-            const objects = mapDataIndoor.dataObject.find(zone, { type: 'groupCode' });
-            const objectId = objects.map(object => object.id);
-            objectIds = [...objectIds, ...objectId]
-            // console.log(objectIds);
-        });
-        mapIndoor.control.focusTo({
-            focus: {
-                type: 'OBJECT',
-                ids: objectIds
-            },
-            transition: true,
-            padding: {
-                top: 100,
-                left: 100,
-                bottom: 100,
-                right: 100,
-            }
-        })
-        elementSelect.addEventListener('change', e => {
-            const layerGroupCode = e.target.value
-            // console.log(e.target.value);
-            focusToZone(layerGroupCode);
-        });
+        function initZone(layer3) {
+            let elementLayer3 = document.querySelector('#layer3');
 
-    }
+            const zones = mapDataIndoor.dataGroupCode.findChild(layer3);
 
-    init();
-</script>
+            let elementSelect = document.createElement('select');
+            elementSelect.classList.add('zone-select');
+            elementSelect.innerHTML = '<option value="">전체</option>';
+            elementLayer3.appendChild(elementSelect);
 
+            // make zone menu
+            zones.forEach((zone) => {
+                let newOption = document.createElement('option');
+                newOption.value = zone;
+                newOption.appendChild(document.createTextNode(zone));
+                elementSelect.appendChild(newOption);
+            });
+
+            //focus to layer3
+            let objectIds = [];
+            zones.forEach((zone) => {
+                // console.log(zone);
+                const objects = mapDataIndoor.dataObject.find(zone, { type: 'groupCode' });
+                const objectId = objects.map((object) => object.id);
+                objectIds = [...objectIds, ...objectId];
+                // console.log(objectIds);
+            });
+            mapIndoor.control.focusTo({
+                focus: {
+                    type: 'OBJECT',
+                    ids: objectIds,
+                },
+                transition: true,
+                padding: {
+                    top: 100,
+                    left: 100,
+                    bottom: 100,
+                    right: 100,
+                },
+            });
+            elementSelect.addEventListener('change', (e) => {
+                const layerGroupCode = e.target.value;
+                // console.log(e.target.value);
+                focusToZone(layerGroupCode);
+            });
+        }
+
+        init();
+    </script>
 </html>

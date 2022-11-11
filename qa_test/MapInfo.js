@@ -1,14 +1,14 @@
 export class MapInfo {
     constructor() {
-        this.gui = null; 
-        this.mapData = null; 
-        this.menu = null; 
+        this.gui = null;
+        this.mapData = null;
+        this.menu = null;
     }
 
     init(gui, mapData) {
-        this.gui = gui; 
+        this.gui = gui;
         this.mapData = mapData;
-        this.mapData = this.mapData; 
+        this.mapData = this.mapData;
 
         const mapInfo = {
             northReference: mapData.mapInfo.northReference,
@@ -17,18 +17,17 @@ export class MapInfo {
             scaleCm: mapData.mapInfo.scaleCm,
             name: mapData.mapInfo.name,
             id: mapData.mapInfo.id,
-            version: mapData.mapInfo.versionString
-
+            version: mapData.mapInfo.versionString,
         };
-        this.menu = this.gui.addFolder("mapInfo");
+        this.menu = this.gui.addFolder('mapInfo');
         // mapInfoGui.open();
-        this.menu.add(mapInfo, "northReference");
-        this.menu.add(mapInfo, "width");
-        this.menu.add(mapInfo, "height");
-        this.menu.add(mapInfo, "scaleCm");
-        this.menu.add(mapInfo, "name");
-        this.menu.add(mapInfo, "id");
-        this.menu.add(mapInfo, "version");
+        this.menu.add(mapInfo, 'northReference');
+        this.menu.add(mapInfo, 'width');
+        this.menu.add(mapInfo, 'height');
+        this.menu.add(mapInfo, 'scaleCm');
+        this.menu.add(mapInfo, 'name');
+        this.menu.add(mapInfo, 'id');
+        this.menu.add(mapInfo, 'version');
 
         return this.menu;
     }

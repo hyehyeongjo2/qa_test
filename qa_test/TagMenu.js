@@ -12,24 +12,24 @@ export class TagMenu {
             this.gui.removeFolder(this.menu);
             this.menu = null;
         }
-    }      
+    }
 
     init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
-        this.menu = this.gui.addFolder("Tag Menu");
+        this.menu = this.gui.addFolder('Tag Menu');
         this.initSetting();
         return this.menu;
     }
 
     initSetting() {
         this.setting = {
-            x: "1000",
-            y: "2000",
-            z: "100",
-            floor: "",
+            x: '1000',
+            y: '2000',
+            z: '100',
+            floor: '',
             set: this.set.bind(this),
             clear: this.clear.bind(this),
             setMarkerTag: this.setMarkerTag.bind(this),
@@ -39,35 +39,34 @@ export class TagMenu {
 
         const floorSetting = this.mapData.dataFloor.getFloors().reduce(
             (prev, cur) => {
-                return {...prev, [cur.name[0].text]: cur.id};
+                return { ...prev, [cur.name[0].text]: cur.id };
             },
-            {"not defined": ""},
+            { 'not defined': '' },
         );
 
-        const setting = this.setting; 
+        const setting = this.setting;
         // menu.open();
-        menu.add(this.setting, "x");
-        menu.add(setting, "y");
-        menu.add(setting, "z");
-        menu.add(setting, "floor", floorSetting);
-        menu.add(setting, "set");
-        menu.add(setting, "clear");
-        menu.add(setting, "setMarkerTag");
-        menu.add(setting, "setPoiTag");
+        menu.add(this.setting, 'x');
+        menu.add(setting, 'y');
+        menu.add(setting, 'z');
+        menu.add(setting, 'floor', floorSetting);
+        menu.add(setting, 'set');
+        menu.add(setting, 'clear');
+        menu.add(setting, 'setMarkerTag');
+        menu.add(setting, 'setPoiTag');
     }
 
     createTag = () => {
-        const tag = document.createElement("div");
-        tag.style.width = "100px";
-        tag.style.height = "50px";
-        tag.style.backgroundColor = "grey";
-        (tag.style.textAlign = "center"), (tag.textContent = "test");
+        const tag = document.createElement('div');
+        tag.style.width = '100px';
+        tag.style.height = '50px';
+        tag.style.backgroundColor = 'grey';
+        (tag.style.textAlign = 'center'), (tag.textContent = 'test');
         return tag;
     };
 
-
     set(value) {
-        const setting = this.setting; 
+        const setting = this.setting;
         const tag = this.createTag();
         console.log(value);
         const option = {
@@ -82,7 +81,7 @@ export class TagMenu {
         console.log(option);
         const item = this.map.tag.set(option);
         console.log(item);
-        tag.addEventListener("click", () => {
+        tag.addEventListener('click', () => {
             this.map.tag.clear(item.id); // id에 해당하는 태그 삭제 메소드
         });
     }
@@ -101,12 +100,12 @@ export class TagMenu {
             ],
         });
 
-        const item = this.map.tag.setMarkerTag({parentId: list[0], pos: "BOTTOM", tag: tag});
-        tag.addEventListener("click", () => {
+        const item = this.map.tag.setMarkerTag({ parentId: list[0], pos: 'BOTTOM', tag: tag });
+        tag.addEventListener('click', () => {
             this.map.tag.clear(item.id); // id에 해당하는 태그 삭제 메소드
         });
         let markerTag = null;
-        this.mapContainer.addEventListener("marker-click", (e) => {
+        this.mapContainer.addEventListener('marker-click', (e) => {
             this.map.markers.clear(e.detail[0].userData.id); //클릭삭제
             // markerTag = this.map.tag.setMarkerTag({ parentId: e.detail[0].userData.id, pos: 'TOP', tag: tag})//클릭생성
         });
@@ -116,19 +115,17 @@ export class TagMenu {
         const tag = this.createTag();
         const poi = this.mapData.dataPoi.getPois()[0];
         let poiset;
-        this.mapContainer.addEventListener("poi-click", (e) => {
-            console.log("poi click 에 대한 결과값", e.detail);
+        this.mapContainer.addEventListener('poi-click', (e) => {
+            console.log('poi click 에 대한 결과값', e.detail);
             if (e.detail[0]) {
-                poiset = this.map.tag.setPOITag({parentId: e.detail[0].id, pos: "LEFT", tag: tag});
+                poiset = this.map.tag.setPOITag({ parentId: e.detail[0].id, pos: 'LEFT', tag: tag });
                 return poiset;
             }
         });
-        tag.addEventListener("click", () => {
+        tag.addEventListener('click', () => {
             this.map.tag.clear(poiset.id); // id에 해당하는 태그 삭제 메소드
         });
     }
 
-    async Tagloca(){
-
-    }
+    async Tagloca() {}
 }
