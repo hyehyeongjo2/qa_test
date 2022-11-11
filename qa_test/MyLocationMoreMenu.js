@@ -18,6 +18,7 @@ export class MyLocationMoreMenu {
         this.mapContainer = mapContainer;
         this.menu = menu.addFolder("More");
         this.initlocatest(this.menu);
+        this.initlocatestOn(this.menu);
         return this.menu; 
     }
     initlocatest(gui){
@@ -110,4 +111,79 @@ export class MyLocationMoreMenu {
           };
         gui.add(setting, "mylocatest");
         } 
+
+    initlocatestOn(gui){
+        const mylocatestOn=async ()=>{
+            const myloca1=async ()=>{
+                const locationOption = {
+                    x: 2500,
+                    y: 1000,
+                    iconOption: {
+                        positionZ: 400,
+                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        width: 200,
+                        height: 200,
+                        anchor: {
+                            x: 0.5,
+                            y: 0.5,
+                        }
+                    },
+                    onActive: true,
+                    animate: {
+                        color: "#00ff00",
+                        opacity: 0.4,
+                        desireScale: 4,
+                        duration: 1500,
+                    },
+                };
+                this.map.mylocation.set(locationOption);
+                setTimeout(() => {
+                    this.map.context.changeFloor('FL-vf3q07spbmsw8132');
+                }, 2000);
+                setTimeout(() => {
+                    this.map.context.changeFloor('FL-t4vqgyek3jnb8146');
+                }, 4000);
+            }
+            
+            const myloca2=async ()=>{
+                const locationOption = {
+                    x: 2500,
+                    y: 1000,
+                    iconOption: {
+                        positionZ: 400,
+                        iconUrl: "https://assets.dabeeomaps.com/image/ico/img_person-3x.png",
+                        width: 200,
+                        height: 200,
+                        anchor: {
+                            x: 0.5,
+                            y: 0.5,
+                        }
+                    },
+                    onActive: false,
+                    animate: {
+                        color: "#00ff00",
+                        opacity: 0.4,
+                        desireScale: 4,
+                        duration: 1500,
+                    },
+                };
+                this.map.mylocation.set(locationOption);
+                setTimeout(() => {
+                    this.map.context.changeFloor('FL-vf3q07spbmsw8132');
+                }, 2000);
+                setTimeout(() => {
+                    this.map.context.changeFloor('FL-t4vqgyek3jnb8146');
+                }, 4000);
+            }
+            myloca1();
+            setTimeout(() => {
+               myloca2();
+            }, 8000);
+            
+        }
+        const setting ={
+            mylocatestOn : mylocatestOn
+        }
+        gui.add(setting, "mylocatestOn")
+    }
 }

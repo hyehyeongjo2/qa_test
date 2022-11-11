@@ -18,12 +18,12 @@ export const mapList = [
         clientId: "47o545DKANS8Jra5FZUXJq",
         clientSecret: "72671b30f940fc0bcb7225fe2e0b27b7",
     },
-    // {
-    //     name: "삼성서울병원실내",
-    //     id: "MP-qxqj1sizdtte4942",
-    //     clientId: "cmnGuxYqQkV87wHcXXOvfN",
-    //     clientSecret: "46a9752504f3054998b53adbfb73297e",
-    // },
+    {
+        name: "삼성서울병원실내",
+        id: "MP-qxqj1sizdtte4942",
+        clientId: "cmnGuxYqQkV87wHcXXOvfN",
+        clientSecret: "46a9752504f3054998b53adbfb73297e",
+    },
     {
         name: "인천개항장",
         id: "MP-vbk5nade6uya0710",
@@ -35,5 +35,17 @@ export const mapList = [
         id: "MP-soem95apov8w1825",
         clientId: `fji1sdUNkOz91XEtqArQT8`,
         clientSecret: `b3badc99266da98c4ed55f98ecafb237`,
+    },
+    {
+        name: "롯데백화점 부산본점",
+        id: "MP-s1b549j8eo9w6753",
+        clientId: `coYkAHTg4z2bxuShpBXQqz`,
+        clientSecret: `ab4f09fa161818ab5f8ecdb67f1d8cbf`,
+    },
+    {
+        name: "롯데백화점 본점",
+        id: "MP-vb6bmo50xovt4842",
+        clientId: `7kVpa5FkQ3s8UxPhxCg8pW`,
+        clientSecret: `2ed75e6eb084eb740b46e09924be9d7c`,
     },
 ];
