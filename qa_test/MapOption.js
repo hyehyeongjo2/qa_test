@@ -57,6 +57,8 @@ export class MapOption {
             rotate: '', //회전 3d, 2d
             tilt: '', //기울기 3d
             mergeMesh: false, // mergedMesh 활성화 여부
+            showWaterMarker: true,
+            waterMarkPosition:'LEFT_BOTTOM'
         };
         this.actionSetting = {
             showMap: this.showMap.bind(this),
@@ -93,8 +95,11 @@ export class MapOption {
         menu.add(setting, 'rotate');
         menu.add(setting, 'tilt');
         menu.add(setting, 'mergeMesh');
+        menu.add(setting, 'showWaterMarker');
+        menu.add(setting, 'waterMarkPosition', ['LEFT_TOP','RIGHT_TOP','LEFT_BOTTOM','RIGHT_BOTTOM']);
         menu.add(this.actionSetting, 'showMap');
         menu.add(this.actionSetting, 'deleteMap');
+       
 
         return menu;
     }
@@ -119,6 +124,8 @@ export class MapOption {
                 tilt: Number(setting.tilt), //기울기 3d
             },
             mergeMesh: setting.mergeMesh, // mergedMesh 활성화 여부
+            showWaterMarker: setting.showWaterMarker,
+            waterMarkPosition : setting.waterMarkPosition
         };
         return mapOption;
     }
