@@ -48,6 +48,7 @@ export class ModelMenu {
         };
         const setModel = (option) => {
             map.objects.setModel(option);
+            console.log(option);
         };
         const option = {
             filename: 'https://assets.dabeeomaps.com/upload/models/blender/답동성당',
@@ -69,6 +70,8 @@ export class ModelMenu {
                 },
             },
         };
+        setModel(option);
+
         const fileSetting = {
             file: '',
         };
@@ -127,15 +130,15 @@ export class ModelMenu {
         };
         const scaleMenu = transformMenu.addFolder('scale');
         scaleMenu.open();
-        scaleMenu.add(scaleSetting, 'x', 0, 5, 0.01).onFinishChange((value) => {
+        scaleMenu.add(scaleSetting, 'x', 0, 10, 0.01).onFinishChange((value) => {
             option.transform.scale.x = value;
             setModel(option);
         });
-        scaleMenu.add(scaleSetting, 'y', 0, 5, 0.01).onFinishChange((value) => {
+        scaleMenu.add(scaleSetting, 'y', 0, 10, 0.01).onFinishChange((value) => {
             option.transform.scale.y = value;
             setModel(option);
         });
-        scaleMenu.add(scaleSetting, 'z', 0, 5, 0.01).onFinishChange((value) => {
+        scaleMenu.add(scaleSetting, 'z', 0, 1, 0.01).onFinishChange((value) => {
             option.transform.scale.z = value;
             setModel(option);
         });
