@@ -96,7 +96,7 @@ export class ModelMenu {
             option.transform.translate.y = value;
             setModel(option);
         });
-        translateMenu.add(translateSetting, 'z', 0, 100, 1).onFinishChange((value) => {
+        translateMenu.add(translateSetting, 'z', 0, 100, 0.1).onFinishChange((value) => {
             option.transform.translate.z = value;
             setModel(option);
         });
@@ -130,15 +130,15 @@ export class ModelMenu {
         };
         const scaleMenu = transformMenu.addFolder('scale');
         scaleMenu.open();
-        scaleMenu.add(scaleSetting, 'x', 0, 10, 0.01).onFinishChange((value) => {
+        scaleMenu.add(scaleSetting, 'x', 0, 20, 0.01).onFinishChange((value) => {
             option.transform.scale.x = value;
             setModel(option);
         });
-        scaleMenu.add(scaleSetting, 'y', 0, 10, 0.01).onFinishChange((value) => {
+        scaleMenu.add(scaleSetting, 'y', 0, 20, 0.01).onFinishChange((value) => {
             option.transform.scale.y = value;
             setModel(option);
         });
-        scaleMenu.add(scaleSetting, 'z', 0, 1, 0.01).onFinishChange((value) => {
+        scaleMenu.add(scaleSetting, 'z', 0, 20, 0.01).onFinishChange((value) => {
             option.transform.scale.z = value;
             setModel(option);
         });
