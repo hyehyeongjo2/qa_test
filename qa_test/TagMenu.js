@@ -90,6 +90,9 @@ export class TagMenu {
     }
     async setMarkerTag(value) {
         const tag = this.createTag();
+        const tag2 = this.createTag();
+        const tag3 = this.createTag();
+        const tag4 = this.createTag();
         const list = await this.map.markers.set({
             // 생성된 marker들의 ID List를 저장합니다.
             marker: [
@@ -97,10 +100,25 @@ export class TagMenu {
                     x: 1000,
                     y: 1000,
                 },
+                {
+                    x: 1000,
+                    y: 1500,
+                },
+                {
+                    x: 1000,
+                    y: 2000,
+                },
+                {
+                    x: 1000,
+                    y: 2500,
+                },
             ],
         });
 
         const item = this.map.tag.setMarkerTag({ parentId: list[0], pos: 'BOTTOM', tag: tag });
+        const item2 = this.map.tag.setMarkerTag({ parentId: list[1], pos: 'RIGHT', tag: tag2 });
+        const item3 = this.map.tag.setMarkerTag({ parentId: list[2], pos: 'TOP', tag: tag3 });
+        const item4 = this.map.tag.setMarkerTag({ parentId: list[3], pos: 'LEFT', tag: tag4 });
         tag.addEventListener('click', () => {
             this.map.tag.clear(item.id); // id에 해당하는 태그 삭제 메소드
         });

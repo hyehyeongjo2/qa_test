@@ -17,6 +17,10 @@ export class SimulationMenu {
         this.originMarkerOption = null;
         this.destinationMarkerOptions = null;
         this.destinationLineOptions = null;
+        this.waypointMarkerOptions1 = null;
+        this.waypointLineOptions1 = null;
+        this.waypointMarkerOptions2 = null;
+        this.waypointLineOptions2 = null;
         this.animOption = null;
         this.animMarkerOptions = null;
     }
@@ -50,6 +54,10 @@ export class SimulationMenu {
         this.originMarkerOptions = this.initIconMenu('Origin Icon');
         this.destinationMarkerOptions = this.initIconMenu('Destination Icon');
         this.destinationLineOptions = this.initLineMenu('Destination Line');
+        this.waypointMarkerOptions1 = this.initIconMenu('Waypoint1 Icon');
+        this.waypointLineOptions1 = this.initLineMenu('Waypoint1 Line');
+        this.waypointMarkerOptions2 = this.initIconMenu('Waypoint2 Icon');
+        this.waypointLineOptions2 = this.initLineMenu('Waypoint2 Line');
         this.animOption = this.initAnimationMenu('Animation Option');
         this.animMarkerOptions = this.initIconMenu('Animation Icon');
     }
@@ -192,14 +200,28 @@ export class SimulationMenu {
             return;
         }
         let naviOption = {};
+        let way={};
+        
         naviOption = this.naviOption;
         naviOption.origin = {};
         naviOption.destination = {};
+        naviOption.wayPoints = [
+            {
+                markerOptions: this.waypointMarkerOptions1,
+                lineOptions: this.waypointLineOptions1,
+            },
+            {
+                markerOptions: this.waypointMarkerOptions2,
+                lineOptions: this.waypointLineOptions2,
+            },
+        ];
 
         naviOption.defaultLineOption = this.defaultLineOption;
         naviOption.origin.markerOptions = this.originMarkerOptions;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions = this.destinationLineOptions;
+        
+
         console.log(naviOption);
         await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);
     }
