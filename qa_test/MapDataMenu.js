@@ -190,7 +190,7 @@ export class MapDataMenu {
         }
         function findByID(value) {
             const objects = this.mapData.dataObject.find({ id: value, floorId: setting.findByFloorId });
-            objectsMenu = objectsMenu.options(objects.id).onChange(changeObject);
+            objectsMenu = objectsMenu.options([objects.id]).onChange(changeObject);
         }
 
         async function findByFloorId(value) {
@@ -214,6 +214,7 @@ export class MapDataMenu {
             return [...prev, cur.id];
         }, []);
         const objects = await this.mapData.dataObject.getObjects(currentFloor.id);
+        console.log(objects);
         const objectList = objects.reduce((result, cur) => {
             return [...result, cur.id];
         }, []);
@@ -233,8 +234,8 @@ export class MapDataMenu {
         menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
         menu.add(setting, 'findByID', objectList).onChange(findByID.bind(this));
         menu.add(setting, 'findByGroupCode', groupList).onChange(findByGroupCode.bind(this));
-        menu.add(setting, 'getObjectCenter');
         objectsMenu = menu.add(setting, 'object').onChange(changeObject);
+        menu.add(setting, 'getObjectCenter');
     }
 
     initDataGroupCode(gui) {
