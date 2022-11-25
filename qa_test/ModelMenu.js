@@ -4,143 +4,203 @@ export class ModelMenu {
         this.mapData = null;
         this.map = null;
         this.mapContainer = null;
-        this.menu = null;
-        this.transitionSetting = null;
-        this.objectIds = [];
-        this.poisIds = [];
+        this.modelFolder = null;
+        this.transformFolder = null;
+        this.dropDown = null;
+        this.uploadedModels = {
+            model: '선택',
+            list: ['선택'],
+        };
+        this.currentModelData = {
+            type: '',
+            modelName: '',
+            fileName: '',
+            transform: {
+                position: {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+                rotation: {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+                scale: {
+                    x: 1,
+                    y: 1,
+                    z: 1,
+                },
+            },
+        };
     }
+
     removeMenu() {
-        if (this.menu) {
-            this.gui.removeFolder(this.menu);
-            this.menu = null;
+        if (this.modelFolder) {
+            this.gui.removeFolder(this.modelFolder);
+            this.modelFolder = null;
         }
     }
+
     init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
-        this.menu = this.gui.addFolder('Model');
-        this.initSetOption(this.menu, this.map);
-        return this.menu;
+        this.addModelFolder();
+        this.addDropDown();
+        this.addFileNameInput();
+        this.addTypeInput();
+        this.addModelNameInput();
+        this.addTransformFolder();
+        this.addUploadButton();
+        this.addRemoveButton();
+        this.addExportButton();
+        return this.modelFolder;
     }
 
-    initSetOption(gui, map) {
-        const defaultOption = {
-            filename: 'https://assets.dabeeomaps.com/upload/models/blender/답동성당',
-            transform: {
-                translate: {
-                    x: 5080.33860339969,
-                    y: 2834.249083219735,
-                    z: 2,
-                },
-                rotate: {
-                    x: 90,
-                    y: 170,
-                    z: 0,
-                },
-                scale: {
-                    x: 1.65,
-                    y: 1.65,
-                    z: 1.65,
-                },
+    addModelFolder() {
+        this.modelFolder = this.gui.addFolder('Model');
+        this.modelFolder.open();
+    }
+
+    addFileNameInput() {
+        this.modelFolder.add(this.currentModelData, 'fileName').setValue('https://assets.dabeeomaps.com/upload/models/blender/답동성당');
+    }
+
+    addTypeInput() {
+        this.modelFolder.add(this.currentModelData, 'type').setValue('obj');
+    }
+
+    addModelNameInput() {
+        this.modelFolder.add(this.currentModelData, 'modelName').setValue('답동성당');
+    }
+
+    addTransformFolder() {
+        this.transformFolder = this.modelFolder.addFolder('transform');
+        this.transformFolder.open();
+        this.addPositionFolder();
+        this.addRotationFolder();
+        this.addScaleFolder();
+    }
+
+    addPositionFolder() {
+        const positionFolder = this.transformFolder.addFolder('position');
+        positionFolder.open();
+        positionFolder.add(this.currentModelData.transform.position, 'x', 0, 6000, 0.1).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+        positionFolder.add(this.currentModelData.transform.position, 'y', 0, 5000, 0.1).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+        positionFolder.add(this.currentModelData.transform.position, 'z', 0, 1000, 0.1).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+    }
+
+    addRotationFolder() {
+        const rotateFolder = this.transformFolder.addFolder('rotation');
+        rotateFolder.open();
+        rotateFolder.add(this.currentModelData.transform.rotation, 'x', 0, 360, 1).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+        rotateFolder.add(this.currentModelData.transform.rotation, 'y', 0, 360, 1).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+        rotateFolder.add(this.currentModelData.transform.rotation, 'z', 0, 360, 1).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+    }
+
+    addScaleFolder() {
+        const scaleFolder = this.transformFolder.addFolder('scale');
+        scaleFolder.open();
+        scaleFolder.add(this.currentModelData.transform.scale, 'x', 0, 20, 0.01).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+        scaleFolder.add(this.currentModelData.transform.scale, 'y', 0, 20, 0.01).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+        scaleFolder.add(this.currentModelData.transform.scale, 'z', 0, 20, 0.01).onChange((value) => {
+            this.map.testModel.updateTestModel(this.currentModelData);
+        });
+    }
+
+    addUploadButton() {
+        const button = {
+            upload: async () => {
+                await this.map.testModel.addTestModel(this.currentModelData);
+                this.uploadedModels.list.push(this.currentModelData.modelName);
+                this.uploadedModels.model = this.currentModelData.modelName;
+                this.updateDropDown();
             },
         };
-        const setModel = (option) => {
-            map.objects.setModel(option);
-            console.log(option);
-        };
-        const option = {
-            filename: 'https://assets.dabeeomaps.com/upload/models/blender/답동성당',
-            transform: {
-                translate: {
-                    x: 5080.33860339969,
-                    y: 2834.249083219735,
-                    z: 2,
-                },
-                rotate: {
-                    x: 90,
-                    y: 170,
-                    z: 0,
-                },
-                scale: {
-                    x: 1.65,
-                    y: 1.65,
-                    z: 1.65,
-                },
+        this.modelFolder.add(button, 'upload');
+    }
+
+    addRemoveButton() {
+        const button = {
+            remove: () => {
+                this.map.testModel.removeTestModel(this.currentModelData.modelName);
+                this.uploadedModels.list = this.uploadedModels.list.filter((modelName) => modelName !== this.currentModelData.modelName); // 업로드된 모델들 중에서 현재 선택된 모델만 제거
+                this.uploadedModels.model = this.uploadedModels.list[this.uploadedModels.list.length - 1];
+                this.updateDropDown();
             },
         };
-        setModel(option);
+        this.modelFolder.add(button, 'remove');
+    }
 
-        const fileSetting = {
-            file: '',
+    addExportButton() {
+        const button = {
+            export: () => {
+                const allModelData = this.map.testModel.getAllModelData();
+                const json = 'data:text/json;charset=utf-8,' + JSON.stringify({ models: allModelData });
+                const file = encodeURI(json);
+                const fileName = 'models.json';
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute('href', file);
+                downloadAnchor.setAttribute('download', fileName);
+                downloadAnchor.click();
+            },
         };
+        this.modelFolder.add(button, 'export');
+    }
 
-        gui.add(fileSetting, 'file');
-        const transformMenu = gui.addFolder('transform');
-        transformMenu.open();
+    addDropDown() {
+        this.dropDown = this.modelFolder.add(this.uploadedModels, 'model', this.uploadedModels.list).onChange((modelName) => {
+            this.updateCurrentModelData(modelName);
+        });
+        this.editDropDownDOM();
+    }
 
-        const translateSetting = {
-            x: defaultOption.transform.translate.x,
-            y: defaultOption.transform.translate.y,
-            z: defaultOption.transform.translate.z,
-        };
-        const translateMenu = transformMenu.addFolder('translate');
-        translateMenu.open();
+    editDropDownDOM() {
+        const select = this.dropDown.domElement.children[0];
+        select.style.width = '100%';
+        const li = this.dropDown.domElement.parentNode.parentNode;
+        const ul = li.parentNode;
+        ul.insertBefore(li, ul.childNodes[1]);
+    }
 
-        translateMenu.add(translateSetting, 'x', 0, 6000, 0.1).onFinishChange((value) => {
-            option.transform.translate.x = value;
-            setModel(option);
-        });
-        translateMenu.add(translateSetting, 'y', 0, 5000, 0.1).onFinishChange((value) => {
-            option.transform.translate.y = value;
-            setModel(option);
-        });
-        translateMenu.add(translateSetting, 'z', 0, 100, 0.1).onFinishChange((value) => {
-            option.transform.translate.z = value;
-            setModel(option);
-        });
+    updateDropDown() {
+        this.updateCurrentModelData(this.uploadedModels.model);
+        this.modelFolder.remove(this.dropDown);
+        this.addDropDown();
+    }
 
-        const rotateSetting = {
-            x: defaultOption.transform.rotate.x,
-            y: defaultOption.transform.rotate.y,
-            z: defaultOption.transform.rotate.z,
-        };
-        const rotateMenu = transformMenu.addFolder('rotate');
-        rotateMenu.open();
-        rotateMenu.add(rotateSetting, 'x', 0, 360, 1).onFinishChange((value) => {
-            option.transform.rotate.x = value;
-            setModel(option);
-        });
-        rotateMenu.add(rotateSetting, 'y', 0, 360, 1).onFinishChange((value) => {
-            option.transform.rotate.y = value;
-            setModel(option);
-        });
-        rotateMenu.add(rotateSetting, 'z', 0, 360, 1).onFinishChange((value) => {
-            option.transform.rotate.z = value;
-            setModel(option);
-        });
+    updateCurrentModelData(modelName) {
+        const allModelData = this.map.testModel.getAllModelData();
+        const selectedModelData = allModelData.find((modelData) => modelData.modelName === modelName);
+        if (selectedModelData) this.deepAssignData(this.currentModelData, selectedModelData); // API 에서 가져온 현재 모델의 모델데이터로 this.currentModelData 의 프로퍼티 값 갱신
+        this.gui.updateDisplay();
+    }
 
-        /////////////////////
-
-        const scaleSetting = {
-            x: defaultOption.transform.scale.x,
-            y: defaultOption.transform.scale.y,
-            z: defaultOption.transform.scale.z,
-        };
-        const scaleMenu = transformMenu.addFolder('scale');
-        scaleMenu.open();
-        scaleMenu.add(scaleSetting, 'x', 0, 20, 0.01).onFinishChange((value) => {
-            option.transform.scale.x = value;
-            setModel(option);
-        });
-        scaleMenu.add(scaleSetting, 'y', 0, 20, 0.01).onFinishChange((value) => {
-            option.transform.scale.y = value;
-            setModel(option);
-        });
-        scaleMenu.add(scaleSetting, 'z', 0, 20, 0.01).onFinishChange((value) => {
-            option.transform.scale.z = value;
-            setModel(option);
-        });
+    deepAssignData(targetData, sourceData) {
+        for (const key of Object.keys(targetData)) {
+            if (targetData[key] instanceof Object) {
+                this.deepAssignData(targetData[key], sourceData[key]);
+            } else {
+                targetData[key] = sourceData[key];
+            }
+        }
     }
 }
