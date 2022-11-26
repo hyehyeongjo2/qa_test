@@ -29,29 +29,6 @@ export class MapDataMenu {
     }
 
     initDataFloor(gui) {
-        let ResultFloorId = null;
-        let ResultFloorName = null;
-
-        const changeFloor = async (value) => {
-            await this.map.context.changeFloor(value);
-        };
-
-        function findByTitle(value) {
-            const floors = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
-                return [...result, cur.id];
-            }, []);
-            ResultFloorId = ResultFloorId.options(floors).onChange(changeFloor);
-            const floorsName = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
-                return [...result, cur.name[0].text];
-            }, []);
-            ResultFloorName = ResultFloorName.options(floorsName).onChange(changeFloor);
-        }
-        function findByFloorId(value) {
-            const floors = this.mapData.dataFloor.find({ id: value });
-            console.log(floors);
-            ResultFloorId = ResultFloorId.options([floors.id]).onChange(changeFloor);
-            ResultFloorName = ResultFloorName.options([floors.name[0].text]).onChange(changeFloor);
-        }
         const floorList = this.mapData.dataFloor.getFloors().reduce(
             (prev, cur) => {
                 return [...prev, cur.id];
@@ -71,8 +48,29 @@ export class MapDataMenu {
         menu.add(setting, 'getDefaultFloor');
         menu.add(setting, 'findByFloorId', floorList).onChange(findByFloorId.bind(this));
         menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
-        ResultFloorId = menu.add(setting, 'ResultFloorId').onChange(changeFloor);
-        ResultFloorName = menu.add(setting, 'ResultFloorName').onChange(changeFloor);
+        let ResultFloorId = menu.add(setting, 'ResultFloorId').onChange(changeFloor);
+        let ResultFloorName = menu.add(setting, 'ResultFloorName').onChange(changeFloor.bind(this));
+
+        async function changeFloor(value) {
+            await this.map.context.changeFloor(value);
+        }
+
+        function findByTitle(value) {
+            const floors = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
+                return [...result, cur.id];
+            }, []);
+            ResultFloorId = ResultFloorId.options(floors).onChange(changeFloor);
+            const floorsName = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
+                return [...result, cur.name[0].text];
+            }, []);
+            ResultFloorName = ResultFloorName.options(floorsName).onChange(changeFloor.bind(this));
+        }
+        function findByFloorId(value) {
+            const floors = this.mapData.dataFloor.find({ id: value });
+            console.log(floors);
+            ResultFloorId = ResultFloorId.options([floors.id]).onChange(changeFloor.bind(this));
+            ResultFloorName = ResultFloorName.options([floors.name[0].text]).onChange(changeFloor.bind(this));
+        }
     }
 
     initDataLanguage(gui) {
@@ -95,9 +93,48 @@ export class MapDataMenu {
     }
 
     initDataPoi(gui) {
-        let poisMenu = null;
+        const allPois = this.mapData.dataPoi.getPois();
+        let poisSetting = {
+            선택: -1,
+        };
+        allPois.forEach((element) => {
+            poisSetting[element.floorName + '-' + element.id + '-' + element.title] = element.id;
+        });
+        console.log(allPois);
+        const floorList = this.mapData.dataFloor.getFloors().reduce(
+            (prev, cur) => {
+                return [...prev, cur.id];
+            },
+            [''],
+        );
 
-        const changePoi = async (value) => {
+        const poiList = this.mapData.dataPoi.getPois().reduce(
+            (result, cur) => {
+                return [...result, cur.id];
+            },
+            [''],
+        );
+        console.log(poiList);
+
+        const groupList = this.mapData.dataGroupCode.findAll();
+        const setting = {
+            allPoiList: 0,
+            findByTitle: '',
+            findByID: '',
+            findByFloorId: '',
+            findByGroupCode: '',
+            pois: '',
+        };
+        const menu = gui.addFolder('dataPoi');
+        // menu.open();
+        menu.add(setting, 'allPoiList', poisSetting);
+        menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
+        menu.add(setting, 'findByID', poiList).onChange(findByID.bind(this));
+        menu.add(setting, 'findByFloorId', floorList).onChange(findByFloorId.bind(this));
+        menu.add(setting, 'findByGroupCode', groupList).onChange(findByGroupCode.bind(this));
+        let poisMenu = menu.add(setting, 'pois').name('find poi 결과 ').onChange(changePoi.bind(this));
+
+        async function changePoi(value) {
             console.log(value);
             const option = {
                 ids: value,
@@ -105,22 +142,26 @@ export class MapDataMenu {
                 innerColor: 'red',
                 scale: 1.8,
             };
-            const pois = this.mapData.dataPoi.find(value, { type: 'iD' });
+            const pois = this.mapData.dataPoi.find({ id: value });
             await this.map.context.changeFloor(pois.floorId);
             await this.map.pois.reset();
             console.log(option);
             this.map.pois.set(option);
-        };
+        }
 
         function findByTitle(value) {
             const pois = this.mapData.dataPoi.find({ title: value }).reduce((result, cur) => {
                 return { ...result, [cur.title]: cur.id };
             }, {});
-            poisMenu = poisMenu.options(pois).onChange(changePoi);
+            poisMenu = poisMenu.options(pois).name('find poi 결과 ').onChange(changePoi.bind(this));
         }
+
         function findByID(value) {
             const pois = this.mapData.dataPoi.find({ id: value });
-            poisMenu = poisMenu.options({ [pois.title]: pois.id }).onChange(changePoi);
+            poisMenu = poisMenu
+                .options({ [pois.title]: pois.id })
+                .name('find poi 결과 ')
+                .onChange(changePoi.bind(this));
         }
 
         async function findByFloorId(value) {
@@ -128,38 +169,15 @@ export class MapDataMenu {
             const pois = this.mapData.dataPoi.find({ floorId: value }).reduce((result, cur) => {
                 return { ...result, [cur.title]: cur.id };
             }, {});
-            poisMenu = poisMenu.options(pois).onChange(changePoi);
+            poisMenu = poisMenu.options(pois).name('find poi 결과 ').onChange(changePoi.bind(this));
         }
+
         function findByGroupCode(value) {
             const pois = this.mapData.dataPoi.find({ groupCode: value }).reduce((result, cur) => {
                 return { ...result, [cur.title]: cur.id };
             }, {});
-            poisMenu = poisMenu.options(pois).onChange(changePoi);
+            poisMenu = poisMenu.options(pois).name('find poi 결과 ').onChange(changePoi.bind(this));
         }
-
-        const floorList = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
-            return [...prev, cur.id];
-        }, []);
-        const poiList = this.mapData.dataPoi.getPois().reduce((result, cur) => {
-            return [...result, cur.id];
-        }, []);
-        const groupList = this.mapData.dataGroupCode.findAll();
-
-        const setting = {
-            findByTitle: '',
-            findByID: '',
-            findByFloorId: '',
-            findByGroupCode: '',
-            poi: '',
-        };
-        const menu = gui.addFolder('dataPoi');
-        // menu.open();
-        menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
-        menu.add(setting, 'findByID', poiList).onChange(findByID.bind(this));
-        menu.add(setting, 'findByFloorId', floorList).onChange(findByFloorId.bind(this));
-        menu.add(setting, 'findByGroupCode', groupList).onChange(findByGroupCode.bind(this));
-
-        poisMenu = menu.add(setting, 'poi').onChange(changePoi);
     }
 
     async initDataObject(gui) {
