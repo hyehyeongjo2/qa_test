@@ -1,68 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DabeeoMaps Libray Test</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DabeeoMaps Libray Test</title>
-  <style>
-    * {
-      margin:  0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
-      height:100%;
-    }
-    .header {
-      background-color:wheat;
-    }
-    .item-container {
-      height: 90%;
-      background-color: aqua;
-    }
-    .item {
-      display: inline-block;
-      background-color: whitesmoke;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="header">
-    <h2> DABEEOMAPS API 4 TEST LIST</h2>
-  </div>
-  <div class="item-container">
-    <ul class="item nav">
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test">일반 test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/controlTest/">control test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/eventTest/">event test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/mapDataTest/">mapData test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/markerTest/">marker test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/myLocationTest/">my location test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/objectsTest/">object test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/poisTest/">pois test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/simulationTest/">simulation test</a></li>
-      <li><a href="https://dabeeo.github.io/dabeeomaps_library_test/qa_test/tagTest/">tag test</a></li>
-
-    </ul>
-    <div class="item section">
-
-    </div>
-  </div>
-  <script>
-
-    function init() {
-      const script = document.createElement('script');
-      script.innerHTML = 'console.log("aaa");';
-      document.body.appendChild(script);
-
-    }
-    init(); 
-
-  </script>
-]
-</body>
-
+    <body>
+        <div class="header">DABEEOMAPS API 4 TEST LIST</div>
+        <div class="main">
+            <ul class="nav">
+                <li class="active" name="getMap">지도가져오기</li>
+                <li name="mapInfo">지도정보</li>
+                <li name="mapData">지도데이터</li>
+                <li name="showMap">지도그리기</li>
+                <li name="control">컨트롤</li>
+                <li name="marker">마커</li>
+                <li name="myLocation">내위치</li>
+                <li name="navigation">길찾기</li>
+                <li name="object">오브젝트</li>
+                <li name="poi">POI</li>
+                <li name="tag">Tag</li>
+                <li name="model">모델</li>
+                <li name="event">이벤트</li>
+            </ul>
+            <div class="map">
+                <div class="guiContainer"></div>
+            </div>
+        </div>
+        <script></script>
+    </body>
+    <script type="text/javascript" src="https://assets.dabeeomaps.com/upload/library/dabeeomaps-4.0-pre-release.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+    <script type="module" src="index.js"></script>
 </html>

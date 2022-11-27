@@ -1,4 +1,4 @@
-export class MapInfo {
+export class MapInfoMenu {
     constructor() {
         this.gui = null;
         this.mapData = null;
