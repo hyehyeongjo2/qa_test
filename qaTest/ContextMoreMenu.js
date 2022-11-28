@@ -14,6 +14,7 @@ export class ContextMoreMenu {
         this.initfirstHS(this.menu);
         this.initsecondHS(this.menu);
         this.initthirdHS(this.menu);
+        this.initchangetest(this.menu);
         return this.menu;
     }
 
@@ -106,5 +107,34 @@ export class ContextMoreMenu {
             thirdHS: thirdHS,
         };
         gui.add(setting, 'thirdHS');
+    }
+    initchangetest(gui){
+        const changeTest = async () => {
+            const floorList = this.mapData.dataFloor.getFloors();
+            const langList = this.mapData.dataLanguage.getLanguage();
+            setTimeout( async () => {
+                await this.map.context.changeFloor(floorList[1].id);
+            }, 1000);
+            setTimeout( async () => {
+                await this.map.context.changeFloor(floorList[0].id);
+            }, 2000);
+            setTimeout(() => {
+                this.map.control.changeCamera('2D');
+            }, 3000);
+            setTimeout( () => {
+                this.map.control.changeCamera('3D');
+            }, 4000);
+            setTimeout( () => {
+                this.map.context.changeLanguage(langList[1].lang);
+            }, 5000);
+            setTimeout( () => {
+                this.map.context.changeLanguage(langList[0].lang);
+            }, 6000);
+            
+        };
+        const setting = {
+            changeTest: changeTest,
+        }
+        gui.add(setting,'changeTest')
     }
 }
