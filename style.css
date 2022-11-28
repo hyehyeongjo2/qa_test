@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 60px;
+  padding: auto;
+  margin: auto;
+}
+
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  font-size: 14px;
+  height: 45px;
+}
+.nav li {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.nav li:hover:not(.active) {
+  background-color: #111;
+}
+.nav li.active {
+  background-color: #04aa6d;
+}
+
+.map {
+  position: relative;
+  height: calc(100vh - 120px);
+}
+.map .guiContainer {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,21 @@
+{
+  "name": "dabeeomaps_library_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scss": "sass --watch style.scss style.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dabeeo/dabeeomaps_library_test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dabeeo/dabeeomaps_library_test/issues"
+  },
+  "homepage": "https://github.com/dabeeo/dabeeomaps_library_test#readme"
+}

@@ -20,7 +20,7 @@ export class MapInfo {
             version: mapData.mapInfo.versionString,
         };
         this.menu = this.gui.addFolder('mapInfo');
-        // mapInfoGui.open();
+        this.menu.open();
         this.menu.add(mapInfo, 'northReference');
         this.menu.add(mapInfo, 'width');
         this.menu.add(mapInfo, 'height');
