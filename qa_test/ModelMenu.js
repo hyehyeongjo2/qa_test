@@ -5,6 +5,7 @@ export class ModelMenu {
         this.map = null;
         this.mapContainer = null;
         this.modelFolder = null;
+        this.importFolder = null;
         this.transformFolder = null;
         this.dropDown = null;
         this.uploadedModels = {
@@ -33,6 +34,9 @@ export class ModelMenu {
                 },
             },
         };
+        this.importData = {
+            json: '',
+        };
     }
 
     removeMenu() {
@@ -42,21 +46,33 @@ export class ModelMenu {
         }
     }
 
-    init(gui, mapData, map, mapContainer) {
+    async init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
+        await this.addModelLayer();
         this.addModelFolder();
         this.addDropDown();
         this.addFileNameInput();
         this.addTypeInput();
         this.addModelNameInput();
+        this.addImportFolder();
         this.addTransformFolder();
         this.addUploadButton();
         this.addRemoveButton();
         this.addExportButton();
         return this.modelFolder;
+    }
+
+    async addModelLayer() {
+        // 모델을 OverlayGroup 에서 통합 관리하므로,
+        // 모델 생성을 시작하려면, Overlay 에서 ModelLayer 를 먼저 생성해야 힘.
+        await this.map.overlay.addSource('empty-model', {
+            type: 'json',
+            data: 'https://assets.dabeeomaps.com/upload/models/json/emptyData.json',
+        });
+        await this.map.overlay.addLayer({ type: 'model', source: 'empty-model', paint: {} });
     }
 
     addModelFolder() {
@@ -76,6 +92,35 @@ export class ModelMenu {
         this.modelFolder.add(this.currentModelData, 'modelName').setValue('답동성당');
     }
 
+    addImportFolder() {
+        this.importFolder = this.modelFolder.addFolder('import');
+        this.importFolder.open();
+        this.addJSONInput();
+        this.addImportButton();
+    }
+
+    addJSONInput() {
+        this.importFolder.add(this.importData, 'json').setValue('https://assets.dabeeomaps.com/upload/models/json/models.json');
+    }
+
+    addImportButton() {
+        const button = {
+            import: async () => {
+                const importedModelData = await fetch(this.importData.json).then((response) => {
+                    return response.json();
+                });
+                const promises = importedModelData.models.map(async (modelData) => {
+                    await this.map.testModel.addTestModel(modelData);
+                    this.uploadedModels.list.push(modelData.modelName);
+                    this.uploadedModels.model = modelData.modelName;
+                    this.updateDropDown();
+                });
+                await Promise.all(promises);
+            },
+        };
+        this.importFolder.add(button, 'import');
+    }
+
     addTransformFolder() {
         this.transformFolder = this.modelFolder.addFolder('transform');
         this.transformFolder.open();
@@ -87,13 +132,13 @@ export class ModelMenu {
     addPositionFolder() {
         const positionFolder = this.transformFolder.addFolder('position');
         positionFolder.open();
-        positionFolder.add(this.currentModelData.transform.position, 'x', 0, 6000, 0.1).onChange((value) => {
+        positionFolder.add(this.currentModelData.transform.position, 'x', 0, 10000, 0.1).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
-        positionFolder.add(this.currentModelData.transform.position, 'y', 0, 5000, 0.1).onChange((value) => {
+        positionFolder.add(this.currentModelData.transform.position, 'y', 0, 10000, 0.1).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
-        positionFolder.add(this.currentModelData.transform.position, 'z', 0, 1000, 0.1).onChange((value) => {
+        positionFolder.add(this.currentModelData.transform.position, 'z', 0, 10000, 0.1).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
     }
@@ -115,13 +160,13 @@ export class ModelMenu {
     addScaleFolder() {
         const scaleFolder = this.transformFolder.addFolder('scale');
         scaleFolder.open();
-        scaleFolder.add(this.currentModelData.transform.scale, 'x', 0, 20, 0.01).onChange((value) => {
+        scaleFolder.add(this.currentModelData.transform.scale, 'x', 0, 50, 0.01).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
-        scaleFolder.add(this.currentModelData.transform.scale, 'y', 0, 20, 0.01).onChange((value) => {
+        scaleFolder.add(this.currentModelData.transform.scale, 'y', 0, 50, 0.01).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
-        scaleFolder.add(this.currentModelData.transform.scale, 'z', 0, 20, 0.01).onChange((value) => {
+        scaleFolder.add(this.currentModelData.transform.scale, 'z', 0, 50, 0.01).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
     }
