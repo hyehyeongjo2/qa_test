@@ -1,15 +1,5 @@
 import { mapList } from './test/mapList.js';
-import { MapInfoMenu } from './test/MapInfoMenu.js';
-import { MapDataMenu } from './test/MapDataMenu.js';
-import { ControlMenu } from './test/ControlMenu.js';
-import { MarkerMenu } from './test/MarkerMenu.js';
-import { MyLocationMenu } from './test/MyLocationMenu.js';
-import { SimulationMenu } from './test/SimulationMenu.js';
-import { ObjectsMenu } from './test/ObjectsMenu.js';
-import { PoisMenu } from './test/PoisMenu.js';
-import { TagMenu } from './test/TagMenu.js';
-import { ModelMenu } from './test/ModelMenu.js';
-import { EventMenu } from './test/EventMenu.js';
+import { menuList } from './menuList.js';
 
 async function init() {
     const dabeeoMaps = new dabeeo.Maps();
@@ -21,19 +11,7 @@ async function init() {
     let map = null;
     let mapIndex = 0;
     let getMapMenu = null;
-    let mapInfoMenu = null;
-    let mapDataMenu = null;
     let mapOptionMenu = null;
-    let controlMenu = null;
-    let markerMenu = null;
-    let myLocationMenu = null;
-    let simulationMenu = null;
-    let objectsMenu = null;
-    let poisMenu = null;
-    let tagMenu = null;
-    let modelMenu = null;
-    let eventMenu = null;
-
     let currentMenu = null;
     await getMap(mapIndex);
     initAllMenu();
@@ -52,70 +30,26 @@ async function init() {
         if (e.target.getAttribute('name') === 'getMap') {
             getMapMenu.show();
             currentMenu = getMapMenu;
-        } else if (e.target.getAttribute('name') === 'mapInfo') {
-            mapInfoMenu.show();
-            currentMenu = mapInfoMenu;
-        } else if (e.target.getAttribute('name') === 'mapData') {
-            mapDataMenu.show();
-            currentMenu = mapDataMenu;
         } else if (e.target.getAttribute('name') === 'mapOption') {
             mapOptionMenu.show();
             currentMenu = mapOptionMenu;
-        } else if (e.target.getAttribute('name') === 'control') {
-            controlMenu.show();
-            currentMenu = controlMenu;
-        } else if (e.target.getAttribute('name') === 'marker') {
-            markerMenu.show();
-            currentMenu = markerMenu;
-        } else if (e.target.getAttribute('name') === 'myLocation') {
-            myLocationMenu.show();
-            currentMenu = myLocationMenu;
-        } else if (e.target.getAttribute('name') === 'navigation') {
-            simulationMenu.show();
-            currentMenu = simulationMenu;
-        } else if (e.target.getAttribute('name') === 'object') {
-            objectsMenu.show();
-            currentMenu = objectsMenu;
-        } else if (e.target.getAttribute('name') === 'poi') {
-            poisMenu.show();
-            currentMenu = poisMenu;
-        } else if (e.target.getAttribute('name') === 'tag') {
-            tagMenu.show();
-            currentMenu = tagMenu;
-        } else if (e.target.getAttribute('name') === 'model') {
-            modelMenu.show();
-            currentMenu = modelMenu;
-        } else if (e.target.getAttribute('name') === 'event') {
-            eventMenu.show();
-            currentMenu = eventMenu;
+        } else {
+            const menuFound = menuList.find((element) => element.name === e.target.getAttribute('name'));
+            menuFound.init.show();
+            currentMenu = menuFound.init;
         }
     });
     function initAllMenu() {
         getMapMenu = initGetMap(gui);
-        mapInfoMenu = new MapInfoMenu().init(gui, mapData);
-        mapDataMenu = new MapDataMenu().init(gui, mapData, map, mapContainer);
+        menuList.forEach((element) => {
+            if (element.menu) {
+                element.init = new element.menu().init(gui, mapData, map, mapContainer);
+                element.init.hide();
+            }
+        });
+        console.log(menuList);
         mapOptionMenu = initMapOptionMenu(gui, mapData, mapContainer);
-        controlMenu = new ControlMenu().init(gui, mapData, map, mapContainer);
-        markerMenu = new MarkerMenu().init(gui, mapData, map, mapContainer);
-        myLocationMenu = new MyLocationMenu().init(gui, mapData, map, mapContainer);
-        simulationMenu = new SimulationMenu().init(gui, mapData, map, mapContainer);
-        objectsMenu = new ObjectsMenu().init(gui, mapData, map, mapContainer);
-        poisMenu = new PoisMenu().init(gui, mapData, map, mapContainer);
-        tagMenu = new TagMenu().init(gui, mapData, map, mapContainer);
-        modelMenu = new ModelMenu().init(gui, mapData, map, mapContainer);
-        eventMenu = new EventMenu().init(gui, mapData, map, mapContainer);
-        mapInfoMenu.hide();
-        mapDataMenu.hide();
         mapOptionMenu.hide();
-        controlMenu.hide();
-        markerMenu.hide();
-        myLocationMenu.hide();
-        simulationMenu.hide();
-        objectsMenu.hide();
-        poisMenu.hide();
-        tagMenu.hide();
-        modelMenu.hide();
-        eventMenu.hide();
 
         currentMenu = getMapMenu;
     }
