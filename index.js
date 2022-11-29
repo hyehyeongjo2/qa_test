@@ -91,9 +91,9 @@ function activateMenu(menuName) {
 function initAllMenu(gui, mapData, map, mapContainer) {
     getMapMenu = initGetMap(gui);
     initFloorMenu(gui, mapData, map, mapContainer);
-    menuList.forEach((element) => {
+    menuList.forEach(async (element) => {
         if (element.menu) {
-            element.init = new element.menu().init(gui, mapData, map, mapContainer);
+            element.init = await new element.menu().init(gui, mapData, map, mapContainer);
             element.init.hide();
         }
     });
