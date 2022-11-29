@@ -30,12 +30,13 @@ export class SimulationMenu {
             this.menu = null;
         }
     }
-    async init(gui, mapData, map, mapContainer) {
+    init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Simulation Menu');
+        this.menu.open();
         this.originPoi = this.initPoiSetting('origin');
         this.destinationPoi = this.initPoiSetting('destination');
         this.waypoint1 = this.initWayPoint('waypoint1');
@@ -200,8 +201,8 @@ export class SimulationMenu {
             return;
         }
         let naviOption = {};
-        let way={};
-        
+        let way = {};
+
         naviOption = this.naviOption;
         naviOption.origin = {};
         naviOption.destination = {};
@@ -220,7 +221,6 @@ export class SimulationMenu {
         naviOption.origin.markerOptions = this.originMarkerOptions;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions = this.destinationLineOptions;
-        
 
         console.log(naviOption);
         await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);

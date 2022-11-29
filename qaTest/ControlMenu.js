@@ -23,6 +23,7 @@ export class ControlMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Control');
+        this.menu.open();
         this.initTransition(this.menu);
         this.initSetOption(this.menu);
         this.initChangeZoom(this.menu);
@@ -595,20 +596,20 @@ export class ControlMenu {
         };
 
         this.mapContainer.addEventListener('object-mouse-enter', (e) => {
-            console.log('object enter ', e.detail);
+            // console.log('object enter ', e.detail);
             const id = e.detail.id;
             option = { ...option, ids: [id] };
             this.map.objects.set(option);
         });
 
         this.mapContainer.addEventListener('object-mouse-leave', (e) => {
-            console.log('object leave ', e.detail);
+            // console.log('object leave ', e.detail);
             const id = e.detail.id;
             if (!this.objectIds.includes(id)) this.map.objects.reset(id);
         });
 
         this.mapContainer.addEventListener('object-click', (e) => {
-            console.log('object click ', e.detail);
+            // console.log('object click ', e.detail);
             const id = e.detail[0].id;
             if (this.objectIds.includes(id)) {
                 this.map.objects.reset(id);
@@ -635,20 +636,20 @@ export class ControlMenu {
         };
 
         mapContainer.addEventListener('poi-mouse-enter', async (e) => {
-            console.log('poi enter ', e.detail);
+            // console.log('poi enter ', e.detail);
             const id = e.detail.id;
             option = { ...option, ids: [id] };
             await map.pois.set(option);
         });
 
         mapContainer.addEventListener('poi-mouse-leave', async (e) => {
-            console.log('poi leave ', e.detail);
+            // console.log('poi leave ', e.detail);
             const id = e.detail.id;
             if (!poisIds.includes(id)) await map.pois.reset(id);
         });
 
         mapContainer.addEventListener('poi-click', (e) => {
-            console.log('poi click ', e.detail);
+            // console.log('poi click ', e.detail);
             const id = e.detail[0].id;
             if (poisIds.includes(id)) {
                 map.pois.reset(id);

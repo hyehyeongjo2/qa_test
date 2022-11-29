@@ -39,9 +39,12 @@
     }
 }
 
-.map {
+.section {
     position: relative;
-    height: calc(100vh - 120px);
+    .map {
+        width: 100%;
+        height: calc(100vh - 120px);
+    }
     .guiContainer {
         z-index: 100;
         position: absolute;

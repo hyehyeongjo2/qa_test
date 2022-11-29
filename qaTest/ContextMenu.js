@@ -15,22 +15,17 @@ export class ContextMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Context');
+        this.menu.open();
         this.setting = this.initSetting(this.menu);
-
         new ContextMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
     initSetting(menu) {
         this.mapContainer.addEventListener('floor-changed', (e) => {
             console.log('floor-changed 에 대한 결과값', e.detail);
-            setting.floor = e.detail.id;
             setting.getCurrentFloor = this.map.context.getCurrentFloor().id;
         });
 
-        const floorList = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
-            return { ...prev, [cur.name[0].text]: cur.id };
-        }, {});
-        console.log(floorList);
         const currentFloor = this.map.context.getCurrentFloor();
         const currentCameraMode = this.map.control.getCameraType();
 
@@ -42,7 +37,6 @@ export class ContextMenu {
         const groupList = this.mapData.dataGroupCode.findAll();
 
         const setting = {
-            changeFloor: currentFloor.id,
             changeCamera: currentCameraMode,
             changeLang: '',
             convert2Image: '',
@@ -54,7 +48,6 @@ export class ContextMenu {
         };
 
         // menu.open();
-        menu.add(setting, 'changeFloor', floorList).onChange(this.changeFloor.bind(this)).listen();
         menu.add(setting, 'changeCamera', ['2D', '3D']).onChange(this.changeCamera.bind(this));
         menu.add(setting, 'changeLang', langList).onChange(this.changeLanguage.bind(this));
         menu.add(setting, 'convert2Image', scaleList).onChange(this.convert2Image.bind(this));
@@ -94,10 +87,7 @@ export class ContextMenu {
         const option = this.map.context.getMapOptions();
         console.log(`this.map.context.getMapOptions()`, option);
     }
-    async changeFloor(value) {
-        await this.map.context.changeFloor(value);
-        console.log(`this.map.context.changeFloor(${value})`);
-    }
+
     changeCamera(value) {
         this.map.control.changeCamera(value);
         console.log(`this.map.context.changeCamera(${value})`);

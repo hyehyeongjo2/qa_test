@@ -38,11 +38,14 @@
   background-color: #04aa6d;
 }
 
-.map {
+.section {
   position: relative;
+}
+.section .map {
+  width: 100%;
   height: calc(100vh - 120px);
 }
-.map .guiContainer {
+.section .guiContainer {
   z-index: 100;
   position: absolute;
   top: 0;

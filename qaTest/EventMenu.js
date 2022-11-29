@@ -19,7 +19,7 @@ export class EventMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Event');
-
+        this.menu.open();
         this.initObjectHover();
         this.initSetting();
         this.initHandleEvent();

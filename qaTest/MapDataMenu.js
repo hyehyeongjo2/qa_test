@@ -13,6 +13,7 @@ export class MapDataMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('MapData');
+        this.menu.open();
         this.initDataFloor(this.menu);
         this.initDataLanguage(this.menu);
         this.initDataPoi(this.menu);
@@ -48,28 +49,24 @@ export class MapDataMenu {
         menu.add(setting, 'getDefaultFloor');
         menu.add(setting, 'findByFloorId', floorList).onChange(findByFloorId.bind(this));
         menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
-        let ResultFloorId = menu.add(setting, 'ResultFloorId').onChange(changeFloor);
-        let ResultFloorName = menu.add(setting, 'ResultFloorName').onChange(changeFloor.bind(this));
-
-        async function changeFloor(value) {
-            await this.map.context.changeFloor(value);
-        }
+        let ResultFloorId = menu.add(setting, 'ResultFloorId');
+        let ResultFloorName = menu.add(setting, 'ResultFloorName');
 
         function findByTitle(value) {
             const floors = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
                 return [...result, cur.id];
             }, []);
-            ResultFloorId = ResultFloorId.options(floors).onChange(changeFloor);
+            ResultFloorId = ResultFloorId.options(floors);
             const floorsName = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
                 return [...result, cur.name[0].text];
             }, []);
-            ResultFloorName = ResultFloorName.options(floorsName).onChange(changeFloor.bind(this));
+            ResultFloorName = ResultFloorName.options(floorsName);
         }
         function findByFloorId(value) {
             const floors = this.mapData.dataFloor.find({ id: value });
             console.log(floors);
-            ResultFloorId = ResultFloorId.options([floors.id]).onChange(changeFloor.bind(this));
-            ResultFloorName = ResultFloorName.options([floors.name[0].text]).onChange(changeFloor.bind(this));
+            ResultFloorId = ResultFloorId.options([floors.id]);
+            ResultFloorName = ResultFloorName.options([floors.name[0].text]);
         }
     }
 
@@ -100,7 +97,7 @@ export class MapDataMenu {
         allPois.forEach((element) => {
             poisSetting[element.floorName + '-' + element.id + '-' + element.title] = element.id;
         });
-        console.log(allPois);
+        // console.log(allPois);
         const floorList = this.mapData.dataFloor.getFloors().reduce(
             (prev, cur) => {
                 return [...prev, cur.id];

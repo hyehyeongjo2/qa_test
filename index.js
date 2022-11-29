@@ -1,196 +1,193 @@
-import { mapList } from './test/mapList.js';
+import { mapList } from './qaTest/mapList.js';
 import { menuList } from './menuList.js';
 
-async function init() {
-    const dabeeoMaps = new dabeeo.Maps();
-    const gui = new dat.GUI({ width: 300, right: 0, autoPlace: false });
-    document.querySelector('.guiContainer').append(gui.domElement);
-    const mapContainer = document.querySelector('.map');
+const dabeeoMaps = new dabeeo.Maps();
+const mapContainer = document.querySelector('.map');
+const gui = new dat.GUI({ width: 300, right: 0, autoPlace: false });
+document.querySelector('.guiContainer').append(gui.domElement);
 
-    let mapData = null;
-    let map = null;
-    let mapIndex = 0;
-    let getMapMenu = null;
-    let mapOptionMenu = null;
-    let currentMenu = null;
-    await getMap(mapIndex);
-    initAllMenu();
+let mapData = null;
+let map = null;
+let mapIndex = 0;
+let getMapMenu = null;
+let mapOptionMenu = null;
+let currentMenu = null;
+
+async function init() {
+    // nav menu를 만든다
+    makeNavMenu(menuList);
+
+    // mapData를 fetch하여 rendering한후 메뉴를 생성한다
+    await getMapDataByIndex(mapIndex);
 
     //nav bar active class switching
     document.querySelector('.nav').addEventListener('click', (e) => {
-        // nav 메뉴를 클릭하지 않았거나 이미 active되어 있는 메뉴를 클릭했거나
+        // nav 메뉴를 클릭하지 않았거나 이미 active되어 있는 메뉴를 클릭했으면 return
         if (e.target.parentElement.className !== 'nav' || e.target.classList.contains('active')) return;
 
-        // 다른 메뉴를 선택한 경우
-        // 기존 메뉴를 숨기고 새로운 메뉴를 보여줌.
+        // 현재 메뉴를 숨긴다
         currentMenu.hide();
+
+        //active class에서 active를 제거한다
         e.target.parentElement.querySelector('li.active').classList.remove('active');
+
+        //현재 선택된 element에 active를 붙인다
         e.target.classList.add('active');
 
-        if (e.target.getAttribute('name') === 'getMap') {
-            getMapMenu.show();
-            currentMenu = getMapMenu;
-        } else if (e.target.getAttribute('name') === 'mapOption') {
-            mapOptionMenu.show();
-            currentMenu = mapOptionMenu;
-        } else {
-            const menuFound = menuList.find((element) => element.name === e.target.getAttribute('name'));
-            menuFound.init.show();
-            currentMenu = menuFound.init;
+        //현재 선택된 메뉴를 보여준다
+        currentMenu = activateMenu(e.target.getAttribute('name'));
+    });
+}
+
+// navigation bar를 생성한다
+function makeNavMenu(menuList) {
+    const nav = document.querySelector('.nav');
+    menuList.forEach((element) => {
+        const li = document.createElement('li');
+        li.setAttribute('name', element.name);
+        li.textContent = element.text;
+        nav.appendChild(li);
+    });
+    nav.querySelector('[name="getMap"]').classList.add('active');
+}
+
+// mapList의 0번째 지도를 가져온다
+async function getMapDataByIndex(index) {
+    if (index < 0) {
+        alert('map을 선택하세요. ');
+        return;
+    }
+    const option = {
+        clientId: mapList[index].clientId,
+        clientSecret: mapList[index].clientSecret,
+        serverType: 'SERVER_REAL',
+    };
+    getMapData(option);
+}
+
+async function getMapData(option) {
+    mapData = await dabeeoMaps.getMapData(option);
+    if (map) map.context.cleanup();
+    map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
+    gui.destroy();
+    initAllMenu(gui, mapData, map, mapContainer);
+}
+
+function activateMenu(menuName) {
+    let currentMenu = null;
+    if (menuName === 'getMap') {
+        getMapMenu.show();
+        currentMenu = getMapMenu;
+    } else if (menuName === 'mapOption') {
+        mapOptionMenu.show();
+        currentMenu = mapOptionMenu;
+    } else {
+        const menuFound = menuList.find((element) => element.name === menuName);
+        menuFound.init.show();
+        currentMenu = menuFound.init;
+    }
+    return currentMenu;
+}
+function initAllMenu(gui, mapData, map, mapContainer) {
+    getMapMenu = initGetMap(gui);
+    initFloorMenu(gui, mapData, map, mapContainer);
+    menuList.forEach((element) => {
+        if (element.menu) {
+            element.init = new element.menu().init(gui, mapData, map, mapContainer);
+            element.init.hide();
         }
     });
-    function initAllMenu() {
-        getMapMenu = initGetMap(gui);
-        menuList.forEach((element) => {
-            if (element.menu) {
-                element.init = new element.menu().init(gui, mapData, map, mapContainer);
-                element.init.hide();
-            }
-        });
-        console.log(menuList);
-        mapOptionMenu = initMapOptionMenu(gui, mapData, mapContainer);
-        mapOptionMenu.hide();
+    console.log(menuList);
+    mapOptionMenu = initMapOptionMenu(gui);
+    mapOptionMenu.hide();
 
-        currentMenu = getMapMenu;
+    currentMenu = getMapMenu;
+}
+function initFloorMenu(gui, mapData, map, mapContainer) {
+    mapContainer.addEventListener('floor-changed', (e) => {
+        console.log('floor-changed 에 대한 결과값', e.detail);
+        setting.floor = e.detail.id;
+    });
+
+    const floorList = mapData.dataFloor.getFloors().reduce((prev, cur) => {
+        return { ...prev, [cur.name[0].text]: cur.id };
+    }, {});
+    console.log(floorList);
+    const currentFloor = map.context.getCurrentFloor();
+
+    async function changeFloor(value) {
+        await map.context.changeFloor(value);
+        console.log(`this.map.context.changeFloor(${value})`);
     }
+    const setting = {
+        changeFloor: currentFloor.id,
+    };
+    gui.add(setting, 'changeFloor', floorList).onChange(changeFloor).listen();
+}
 
-    function initGetMap(parentGui) {
-        const menu = parentGui.addFolder('getMap Menu ');
-        menu.open();
-        initGetMapByInput(menu);
-        initGetMapByList(menu);
-        return menu;
-    }
+function initGetMap(parentGui) {
+    const menu = parentGui.addFolder('getMap Menu ');
+    menu.open();
+    initGetMapByInput(menu);
+    initGetMapByList(menu);
+    return menu;
+}
 
-    function initGetMapByInput(parentMenu) {
-        const setting = {
-            clientId: '',
-            clientSecret: '',
-            serverType: 'SERVER_REAL',
-            getMap: getMap,
+function initGetMapByInput(parentMenu) {
+    const setting = {
+        clientId: '',
+        clientSecret: '',
+        serverType: 'SERVER_REAL',
+        getMap: getMap,
+    };
+    const menu = parentMenu.addFolder('get Map by client info ');
+    menu.add(setting, 'clientId');
+    menu.add(setting, 'clientSecret');
+    menu.add(setting, 'serverType', ['SERVER_REAL', 'SERVER_STAGE']);
+    menu.add(setting, 'getMap');
+
+    async function getMap() {
+        const option = {
+            clientId: setting.clientId,
+            clientSecret: setting.clientSecret,
+            serverType: setting.serverType,
         };
-        const menu = parentMenu.addFolder('get Map by client info ');
-        menu.add(setting, 'clientId');
-        menu.add(setting, 'clientSecret');
-        menu.add(setting, 'serverType', ['SERVER_REAL', 'SERVER_STAGE']);
-        menu.add(setting, 'getMap');
-
-        async function getMap() {
-            mapData = await dabeeoMaps.getMapData({
-                clientId: setting.clientId,
-                clientSecret: setting.clientSecret,
-                serverType: setting.serverType,
-            });
-            map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
-        }
-        return menu;
+        await getMapData(option);
     }
-    async function getMap(value) {
-        if (value < 0) {
-            alert('map을 선택하세요. ');
-            return;
-        }
+    return menu;
+}
 
-        mapData = await dabeeoMaps.getMapData({
-            clientId: mapList[value].clientId,
-            clientSecret: mapList[value].clientSecret,
-            serverType: 'SERVER_REAL',
-        });
-        map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
+function initGetMapByList(parentMenu) {
+    let mapSetting = { 선택: -1 };
+    mapList.forEach((element, index) => {
+        mapSetting[element.name] = index;
+    });
+
+    const setting = { mapIndex: mapIndex };
+    parentMenu.add(setting, 'mapIndex', mapSetting).onChange(initGetMapDataByIndex);
+    async function initGetMapDataByIndex(value) {
+        mapIndex = value;
+        await getMapDataByIndex(value);
     }
+}
 
-    function initGetMapByList(parentMenu) {
-        let mapSetting = { 선택: -1 };
-        mapList.forEach((element, index) => {
-            mapSetting[element.name] = index;
-        });
-
-        const setting = { mapIndex: mapIndex };
-        parentMenu.add(setting, 'mapIndex', mapSetting).onChange(getMap);
+function initMapOptionMenu(parentMenu) {
+    const setting = initSetting();
+    const menu = initMenu(setting, parentMenu);
+    const actionSetting = {
+        showMap: showMap,
+    };
+    menu.add(actionSetting, 'showMap');
+    async function showMap() {
+        const option = getOption(setting);
+        if (map) map.context.cleanup();
+        map = await dabeeoMaps.showMap(mapContainer, option, mapData);
+        gui.destroy();
+        initAllMenu(gui, mapData, map, mapContainer);
+        getMapMenu.hide();
+        mapOptionMenu.show();
+        currentMenu = mapOptionMenu;
     }
-    function initMapOptionMenu(gui) {
-        const setting = initSetting();
-        const menu = initMenu(setting, gui);
-        const actionSetting = {
-            showMap: showMap,
-            deleteMap: deleteMap,
-        };
-        menu.add(actionSetting, 'showMap');
-        menu.add(actionSetting, 'deleteMap');
-        async function showMap(value) {
-            if (!mapData) {
-                alert('mapData is not available');
-                return;
-            }
-            const option = getOption(setting);
-            deleteMap();
-            menu.close();
-            if (this.menuClass !== null) this.menuClass.removeMenu();
-            map = await this.dabeeoMaps.showMap(mapContainer, option, mapData);
-            console.log(`await this.dabeeoMaps.showMap(${mapContainer}, ${option}, ${mapData});`);
-            console.log('this.mapContainer:', this.mapContainer);
-            console.log('option: ', option);
-            console.log('this.mapData : ', mapData);
-        }
-        function deleteMap() {
-            if (map) {
-                map.context.cleanup();
-                map = null;
-            }
-        }
-
-        return menu;
-    }
-
-    function initSetting() {
-        const defaultFloorId = mapData.dataFloor.getDefaultFloor().id;
-        const defaultLang = mapData.dataLanguage.getDefaultLanguage().lang;
-
-        const setting = {
-            camera: '3d', // 초기 카메라 모드 3d
-            floor: defaultFloorId,
-            language: defaultLang, // 초기 poi 언어 설정
-            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
-            spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
-            spriteKeepRotation: false, // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
-            zoom: '', //초기줌
-            x: '',
-            y: '',
-            rotate: '', //회전 3d, 2d
-            tilt: '', //기울기 3d
-            mergeMesh: false, // mergedMesh 활성화 여부
-            showWaterMarker: true,
-            waterMarkPosition: 'LEFT_BOTTOM',
-        };
-        return setting;
-    }
-
-    function initMenu(setting, gui) {
-        const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
-            return { ...prev, [cur.name[0].text]: cur.id };
-        }, {});
-        const langSetting = mapData.dataLanguage.getLanguage().map((data) => data.lang);
-
-        const menu = gui.addFolder('mapOption');
-        // menu.open();
-        menu.add(setting, 'camera', ['2d', '3d']);
-        menu.add(setting, 'floor', floorSetting);
-        menu.add(setting, 'language', langSetting);
-        menu.add(setting, 'showPoi');
-        menu.add(setting, 'spriteEnable');
-        menu.add(setting, 'spriteKeepRotation');
-        menu.add(setting, 'zoom');
-        menu.add(setting, 'x');
-        menu.add(setting, 'y');
-        menu.add(setting, 'rotate');
-        menu.add(setting, 'tilt');
-        menu.add(setting, 'mergeMesh');
-        menu.add(setting, 'showWaterMarker');
-        menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
-
-        return menu;
-    }
-
     function getOption(setting) {
         const mapOption = {
             camera: setting.camera, // 초기 카메라 모드 3d
@@ -215,6 +212,57 @@ async function init() {
         };
         return mapOption;
     }
+
+    return menu;
+}
+
+function initSetting() {
+    const defaultFloorId = mapData.dataFloor.getDefaultFloor().id;
+    const defaultLang = mapData.dataLanguage.getDefaultLanguage().lang;
+
+    const setting = {
+        camera: '3d', // 초기 카메라 모드 3d
+        floor: defaultFloorId,
+        language: defaultLang, // 초기 poi 언어 설정
+        showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
+        spriteKeepRotation: false, // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
+        zoom: '', //초기줌
+        x: '',
+        y: '',
+        rotate: '', //회전 3d, 2d
+        tilt: '', //기울기 3d
+        mergeMesh: false, // mergedMesh 활성화 여부
+        showWaterMarker: true,
+        waterMarkPosition: 'LEFT_BOTTOM',
+    };
+    return setting;
+}
+
+function initMenu(setting, gui) {
+    const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
+        return { ...prev, [cur.name[0].text]: cur.id };
+    }, {});
+    const langSetting = mapData.dataLanguage.getLanguage().map((data) => data.lang);
+
+    const menu = gui.addFolder('mapOption');
+    menu.open();
+    menu.add(setting, 'camera', ['2d', '3d']);
+    menu.add(setting, 'floor', floorSetting);
+    menu.add(setting, 'language', langSetting);
+    menu.add(setting, 'showPoi');
+    menu.add(setting, 'spriteEnable');
+    menu.add(setting, 'spriteKeepRotation');
+    menu.add(setting, 'zoom');
+    menu.add(setting, 'x');
+    menu.add(setting, 'y');
+    menu.add(setting, 'rotate');
+    menu.add(setting, 'tilt');
+    menu.add(setting, 'mergeMesh');
+    menu.add(setting, 'showWaterMarker');
+    menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
+
+    return menu;
 }
 
 window.addEventListener('load', (event) => {

@@ -25,6 +25,7 @@ export class PoisMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Pois Menu');
+        this.menu.open();
         this.initSetting();
         this.currentSetting = this.initCurrentSetting();
         new PoisMoreMenu().init(this.menu, mapData, map, mapContainer);

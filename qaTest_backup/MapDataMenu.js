@@ -13,7 +13,6 @@ export class MapDataMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('MapData');
-        this.menu.open();
         this.initDataFloor(this.menu);
         this.initDataLanguage(this.menu);
         this.initDataPoi(this.menu);

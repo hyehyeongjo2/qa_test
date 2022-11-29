@@ -20,6 +20,7 @@ export class TagMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Tag Menu');
+        this.menu.open();
         this.initSetting();
         return this.menu;
     }
@@ -69,6 +70,10 @@ export class TagMenu {
         const setting = this.setting;
         const tag = this.createTag();
         console.log(value);
+        if (setting.floor === '') {
+            alert('층을 선택해주세요');
+            return;
+        }
         const option = {
             position: {
                 x: setting.x,

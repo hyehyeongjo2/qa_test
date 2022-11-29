@@ -21,6 +21,7 @@ export class MarkerMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Marker Menu');
+        this.menu.open();
         this.initSetting();
         this.initMarkerFolder();
         return this.menu;

@@ -29,6 +29,7 @@ export class MyLocationMenu {
         this.map = map;
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('My Location Menu');
+        this.menu.open();
         this.setting = this.initSetting();
         this.iconSetting = this.initIconSetting();
         this.anchorSetting = this.initAnchorSetting();
