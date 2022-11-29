@@ -12,6 +12,7 @@ let mapIndex = 0;
 let getMapMenu = null;
 let mapOptionMenu = null;
 let currentMenu = null;
+let floorMenu = null;
 
 async function init() {
     // nav menu를 만든다
@@ -69,6 +70,7 @@ async function getMapData(option) {
     mapData = await dabeeoMaps.getMapData(option);
     if (map) map.context.cleanup();
     map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
+    if (floorMenu) gui.remove(floorMenu);
     gui.destroy();
     initAllMenu(gui, mapData, map, mapContainer);
 }
@@ -88,9 +90,9 @@ function activateMenu(menuName) {
     }
     return currentMenu;
 }
-function initAllMenu(gui, mapData, map, mapContainer) {
-    getMapMenu = initGetMap(gui);
-    initFloorMenu(gui, mapData, map, mapContainer);
+function initAllMenu(parentMenu, mapData, map, mapContainer) {
+    getMapMenu = initGetMap(parentMenu);
+    floorMenu = initFloorMenu(parentMenu, mapData, map, mapContainer);
     menuList.forEach(async (element) => {
         if (element.menu) {
             element.init = await new element.menu().init(gui, mapData, map, mapContainer);
@@ -98,7 +100,7 @@ function initAllMenu(gui, mapData, map, mapContainer) {
         }
     });
     console.log(menuList);
-    mapOptionMenu = initMapOptionMenu(gui);
+    mapOptionMenu = initMapOptionMenu(parentMenu);
     mapOptionMenu.hide();
 
     currentMenu = getMapMenu;
@@ -122,11 +124,11 @@ function initFloorMenu(gui, mapData, map, mapContainer) {
     const setting = {
         changeFloor: currentFloor.id,
     };
-    gui.add(setting, 'changeFloor', floorList).onChange(changeFloor).listen();
+    return gui.add(setting, 'changeFloor', floorList).onChange(changeFloor).listen();
 }
 
-function initGetMap(parentGui) {
-    const menu = parentGui.addFolder('getMap Menu ');
+function initGetMap(parentMenu) {
+    const menu = parentMenu.addFolder('getMap Menu ');
     menu.open();
     initGetMapByInput(menu);
     initGetMapByList(menu);
@@ -182,6 +184,7 @@ function initMapOptionMenu(parentMenu) {
         const option = getOption(setting);
         if (map) map.context.cleanup();
         map = await dabeeoMaps.showMap(mapContainer, option, mapData);
+        gui.remove(floorMenu);
         gui.destroy();
         initAllMenu(gui, mapData, map, mapContainer);
         getMapMenu.hide();
@@ -239,13 +242,13 @@ function initSetting() {
     return setting;
 }
 
-function initMenu(setting, gui) {
+function initMenu(setting, parentMenu) {
     const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
     const langSetting = mapData.dataLanguage.getLanguage().map((data) => data.lang);
 
-    const menu = gui.addFolder('mapOption');
+    const menu = parentMenu.addFolder('mapOption');
     menu.open();
     menu.add(setting, 'camera', ['2d', '3d']);
     menu.add(setting, 'floor', floorSetting);

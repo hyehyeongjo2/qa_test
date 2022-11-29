@@ -16,7 +16,7 @@ export class ObjectsMenu {
             this.menu = null;
         }
     }
-    init(gui, mapData, map, mapContainer) {
+    async init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
         this.map = map;
@@ -24,8 +24,7 @@ export class ObjectsMenu {
         this.menu = this.gui.addFolder('Object Menu');
         this.menu.open();
         this.setting = this.initSetting(this.menu);
-        // this.actionSetting = await this.initActionSetting(this.menu);
-        this.actionSetting = this.initActionSetting(this.menu);
+        this.actionSetting = await this.initActionSetting(this.menu);
         new ObjectsMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
@@ -50,8 +49,7 @@ export class ObjectsMenu {
 
         return setting;
     }
-    // async initActionSetting(menu) {
-    initActionSetting(menu) {
+    async initActionSetting(menu) {
         let objectSetting = null;
         this.mapContainer.addEventListener('floor-changed', async (e) => {
             console.log('floor-changed 에 대한 결과값', e.detail);
