@@ -24,6 +24,7 @@ export class MarkerMenu {
         this.menu.open();
         this.initSetting();
         this.initMarkerFolder();
+        this.clickClear();
         return this.menu;
     }
 
@@ -35,10 +36,14 @@ export class MarkerMenu {
             floor: '',
             set: this.set.bind(this),
             start: this.start.bind(this),
+            clickClear: false,
             clearAll: this.clearAll.bind(this),
             anctest: this.anctest.bind(this),
             deltest: this.deltest.bind(this),
         };
+        let menu = this.menu;
+        const setting = this.setting;
+        menu.add(setting, 'clickClear');
     }
     start() {
         console.log('start');
@@ -142,6 +147,14 @@ export class MarkerMenu {
         setTimeout(() => {
             this.map.markers.clear(this.markerlist);
         }, 8000);
+    }
+
+    clickClear(){
+        const mapContainer = this.mapContainer;
+        const setting = this.setting;
+            mapContainer.addEventListener('marker-click', (e) => {
+                if (setting['clickClear']) this.map.markers.clear(e.detail[0].userData.id);
+            });
     }
 
     async anctest() {
