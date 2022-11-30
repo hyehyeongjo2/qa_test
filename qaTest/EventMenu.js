@@ -20,7 +20,7 @@ export class EventMenu {
         this.mapContainer = mapContainer;
         this.menu = this.gui.addFolder('Event');
         this.menu.open();
-        this.initObjectHover();
+        // this.initObjectHover();
         this.initSetting();
         this.initHandleEvent();
         return this.menu;
@@ -87,7 +87,7 @@ export class EventMenu {
         mapContainer.addEventListener('object-mouse-enter', (e) => {
             const option = {
                 activeDest: true,
-                color: '#ffff00',
+                color: '#00ff00',
                 opacity: 1.0,
                 isAnimate: false,
                 ids: [e.detail.id],
