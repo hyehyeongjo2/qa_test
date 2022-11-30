@@ -38,6 +38,10 @@
   background-color: #04aa6d;
 }
 
+.function {
+  text-align: center;
+}
+
 .section {
   position: relative;
 }

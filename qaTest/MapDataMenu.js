@@ -30,43 +30,44 @@ export class MapDataMenu {
     }
 
     initDataFloor(gui) {
+        const allFloors = this.mapData.dataFloor.getFloors();
+        console.log(allFloors);
+        const allFloorList = allFloors.map((floor) => floor.id + '-' + floor.name[0].text);
+        let poisSetting = {
+            선택: -1,
+        };
         const floorList = this.mapData.dataFloor.getFloors().reduce(
             (prev, cur) => {
                 return [...prev, cur.id];
             },
             [''],
         );
+
         const defaultFloor = this.mapData.dataFloor.getDefaultFloor();
         const setting = {
+            allFloorData: allFloorList,
             getDefaultFloor: defaultFloor.id,
             findByFloorId: '',
             findByTitle: '',
-            ResultFloorId: '',
-            ResultFloorName: '',
+            ResultFloor: '',
         };
         const menu = gui.addFolder('dataFloor');
         // menu.open();
+        menu.add(setting, 'allFloorData', allFloorList);
         menu.add(setting, 'getDefaultFloor');
         menu.add(setting, 'findByFloorId', floorList).onChange(findByFloorId.bind(this));
         menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
-        let ResultFloorId = menu.add(setting, 'ResultFloorId');
-        let ResultFloorName = menu.add(setting, 'ResultFloorName');
+        let ResultFloor = menu.add(setting, 'ResultFloor').name('find floor 결과 ');
 
         function findByTitle(value) {
             const floors = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
-                return [...result, cur.id];
+                return [...result, cur.id + '-' + cur.name[0].text];
             }, []);
-            ResultFloorId = ResultFloorId.options(floors);
-            const floorsName = this.mapData.dataFloor.find({ title: value }).reduce((result, cur) => {
-                return [...result, cur.name[0].text];
-            }, []);
-            ResultFloorName = ResultFloorName.options(floorsName);
+            ResultFloor = ResultFloor.options(floors);
         }
         function findByFloorId(value) {
-            const floors = this.mapData.dataFloor.find({ id: value });
-            console.log(floors);
-            ResultFloorId = ResultFloorId.options([floors.id]);
-            ResultFloorName = ResultFloorName.options([floors.name[0].text]);
+            const floor = this.mapData.dataFloor.find({ id: value });
+            ResultFloor = ResultFloor.options([floor.id + '-' + floor.name[0].text]);
         }
     }
 
@@ -111,7 +112,7 @@ export class MapDataMenu {
             },
             [''],
         );
-        console.log(poiList);
+        // console.log(poiList);
 
         const groupList = this.mapData.dataGroupCode.findAll();
         const setting = {
@@ -192,47 +193,69 @@ export class MapDataMenu {
                 duration: 1200, // 애니메이션 complete까지의 시간 ms단위로 default는 1000입니다
                 isRepeat: true, // 애니메이션 반복 여부 true는 반복, false는 반복 x입니다. default는 false
                 isYoyo: false, // 애니메이션이 complete됬을때 isRepeat 옵션이 true인 경우 반복 방법, true인 경우 역순징행되며 default는 false입니다.
-                ids: value, // 오브젝트의 ID 또는 오브젝트가 연결된 poi ID 배열. poi ID의 경우 연결된 오브젝트가 없을 경우 건너뛰고 진행합니다. ID 를 지정하지 않으면 모든 오브젝트 속성을 변경합니다.
+                ids: [value], // 오브젝트의 ID 또는 오브젝트가 연결된 poi ID 배열. poi ID의 경우 연결된 오브젝트가 없을 경우 건너뛰고 진행합니다. ID 를 지정하지 않으면 모든 오브젝트 속성을 변경합니다.
             };
             this.map.objects.set(option);
         };
 
         function findByTitle(value) {
-            const objects = this.mapData.dataObject.find({ title: value, floorId: setting.findByFloorId }).reduce((result, cur) => {
+            const objectsFound = this.mapData.dataObject.find({ title: value });
+            if (objectsFound === undefined) {
+                alert('찾고자하는 object가 없습니다. ');
+                return;
+            }
+            const objects = objectsFound.reduce((result, cur) => {
                 return [...result, cur.id];
             }, []);
-            objectsMenu = objectsMenu.options(objects).onChange(changeObject);
+            objectsMenu = objectsMenu.options(objects).name('find object 결과').onChange(changeObject);
         }
         function findByID(value) {
-            const objects = this.mapData.dataObject.find({ id: value, floorId: setting.findByFloorId });
-            objectsMenu = objectsMenu.options([objects.id]).onChange(changeObject);
+            const objectsFound = this.mapData.dataObject.find({ id: value });
+            if (objectsFound === undefined) {
+                alert('찾고자하는 object가 없습니다. ');
+                return;
+            }
+            objectsMenu = objectsMenu.options([objectsFound.id]).name('find object 결과').onChange(changeObject);
         }
 
         async function findByFloorId(value) {
             await this.map.context.changeFloor(value); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
-            const objects = this.mapData.dataObject.find({ floorId: value }).reduce((result, cur) => {
+            const objectsFound = this.mapData.dataObject.find({ floorId: value });
+            if (objectsFound === undefined) {
+                alert('찾고자하는 object가 없습니다. ');
+                return;
+            }
+            const objects = objectsFound.reduce((result, cur) => {
                 return [...result, cur.id];
             }, []);
-            objectsMenu = objectsMenu.options(objects).onChange(changeObject);
+            objectsMenu = objectsMenu.options(objects).name('find object 결과').onChange(changeObject);
         }
         function findByGroupCode(value) {
-            const objects = this.mapData.dataObject.find({ groupCode: value, floor: setting.findByFloorId });
-            objectsMenu = objectsMenu
-                .options(objects)
-                .onChange(changeObject)
-                .reduce((result, cur) => {
-                    return [...result, cur.id];
-                }, []);
+            const objectsFound = this.mapData.dataObject.find({ groupCode: value });
+            if (objectsFound === undefined) {
+                alert('찾고자하는 object가 없습니다. ');
+                return;
+            }
+            const objects = objectsFound.reduce((result, cur) => {
+                return [...result, cur.id];
+            }, []);
+            objectsMenu = objectsMenu.options(objects).name('find object 결과').onChange(changeObject);
         }
         const currentFloor = this.map.context.getCurrentFloor();
-        const floorList = this.mapData.dataFloor.getFloors().reduce((prev, cur) => {
-            return [...prev, cur.id];
-        }, []);
+        const floorList = this.mapData.dataFloor.getFloors().reduce(
+            (prev, cur) => {
+                return [...prev, cur.id];
+            },
+            [''],
+        );
         const objects = await this.mapData.dataObject.getObjects(currentFloor.id);
         console.log(objects);
-        const objectList = objects.reduce((result, cur) => {
-            return [...result, cur.id];
-        }, []);
+        const objectList = objects.reduce(
+            (result, cur) => {
+                return [...result, cur.id];
+            },
+            [''],
+        );
         const groupList = this.mapData.dataGroupCode.findAll();
 
         const setting = {
@@ -249,7 +272,7 @@ export class MapDataMenu {
         menu.add(setting, 'findByTitle').onFinishChange(findByTitle.bind(this));
         menu.add(setting, 'findByID', objectList).onChange(findByID.bind(this));
         menu.add(setting, 'findByGroupCode', groupList).onChange(findByGroupCode.bind(this));
-        objectsMenu = menu.add(setting, 'object').onChange(changeObject);
+        objectsMenu = menu.add(setting, 'object').name('find object 결과').onChange(changeObject);
         menu.add(setting, 'getObjectCenter');
     }
 

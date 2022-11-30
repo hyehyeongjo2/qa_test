@@ -217,24 +217,24 @@ function activateMenu(menuName) {
 function initFloorMenu(gui, mapData, map, mapContainer) {
     const menu = gui.addFolder('Floor');
     menu.open();
+    const currentFloor = map.context.getCurrentFloor();
+    const setting = {
+        changeFloor: currentFloor.id,
+    };
     mapContainer.addEventListener('floor-changed', (e) => {
         console.log('floor-changed 에 대한 결과값', e.detail);
-        setting.floor = e.detail.id;
+        setting.changeFloor = e.detail.id;
     });
 
     const floorList = mapData.dataFloor.getFloors().reduce((prev, cur) => {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
     console.log(floorList);
-    const currentFloor = map.context.getCurrentFloor();
 
     async function changeFloor(value) {
         await map.context.changeFloor(value);
         console.log(`this.map.context.changeFloor(${value})`);
     }
-    const setting = {
-        changeFloor: currentFloor.id,
-    };
     menu.add(setting, 'changeFloor', floorList).onChange(changeFloor).listen();
     return menu;
 }
