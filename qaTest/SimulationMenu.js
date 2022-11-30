@@ -1,3 +1,5 @@
+import { SimulationMoreMenu } from './SimulationMoreMenu.js';
+
 export class SimulationMenu {
     constructor() {
         this.gui = null;
@@ -6,12 +8,10 @@ export class SimulationMenu {
         this.mapContainer = null;
         this.menu = null;
         this.setting = null;
-
         this.originPoi = null;
         this.destinationPoi = null;
         this.waypoint1 = null;
         this.waypoint2 = null;
-
         this.naviOption = null;
         this.defaultLineOption = null;
         this.originMarkerOption = null;
@@ -46,7 +46,7 @@ export class SimulationMenu {
         this.mapContainer.addEventListener('on-mouse-click', (e) => {
             console.log('on mouse click 에 대한 결과값', e.detail);
         });
-
+        new SimulationMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
     initNaviOptions() {
@@ -221,6 +221,7 @@ export class SimulationMenu {
         naviOption.origin.markerOptions = this.originMarkerOptions;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions = this.destinationLineOptions;
+        
 
         console.log(naviOption);
         await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);
