@@ -23,13 +23,41 @@ export class SimulationMoreMenu {
 
     initMoreSetting() {
         const setting = {
-            doubleFloortest:this.doubleFloortest.bind(this),
+            doubleFloortestSet:this.doubleFloortestSet.bind(this),
+            doubleFloortestStart:this.doubleFloortestStart.bind(this),
         };
         const menu = this.menu;
-        menu.add(setting, 'doubleFloortest');
+        menu.add(setting, 'doubleFloortestSet');
+        menu.add(setting, 'doubleFloortestStart');
     }
   
-    async doubleFloortest (){
+    doubleFloortestStart (){
+        const animOption = {
+            destOption: {
+                // 도착지 애니메이션 옵션
+                activeDest: true, // active 여부
+                color: '#000000', // 변경하고자 하는 색상값
+                opacity: 0.5, // 변경하고자하는 투명도 값
+                isAnimate: true, // 색상 애니메이션 효과 적용 여부
+                duration: 1200, // 애니메이션 complete까지의 시간 ms단위로 default는 1000입니다
+                isRepeat: true, // 애니메이션 반복 여부 true는 반복, false는 반복 x입니다. default는 false
+                isYoyo: true, // 애니메이션이 complete됬을때 isRepeat 옵션이 true인 경우 반복 방법, true인 경우 역순징행되며 default는 false입니다.
+            },
+            zoom: 22, // 애니메이션 동작 시 zoom Level
+            changeFloorDelay: 3000, // 층 변경시 delay time
+            speedRate: 20, // 모의주행 속도 지정. 예를 들어 1.5로 지정한 경우 default대비 1.5배 속도
+            removeIcon: true, // 모의주행 완료 또는 stop 시, 모의주행 icon 제거 옵션. 기본값은 true
+            markerOptions: {
+                iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png', // 모의주행의 icon의 url을 지정합니다.
+                width: 50, // 모의주행의 icon의 width값을 설정합니다.
+                height: 50, // 모의주행의 icon의 height값을 설정합니다.
+                positionZ: 120, // 모의주행 아이콘의 z축 값을 지정합니다. 입력하지 않을 경우 default값으로 자동생성 됩니다.
+            },
+        };
+        this.map.routeSimulation.start(animOption);
+    }
+
+    async doubleFloortestSet (){
         const floorList = this.mapData.dataFloor.getFloors();
         const locationOption = {
             x: 2068,
@@ -81,12 +109,12 @@ export class SimulationMoreMenu {
                 floorId: floorList[0].id,
             },
             type: ['recommendation'],
-            waypoints: [
-                {
-                    position: { x: 4883, y: 1285, z: 50 }, 
-                    floorId: floorList[1].id,
-                }
-            ],
+            // waypoints: [
+            //     {
+            //         position: { x: 4883, y: 1285, z: 50 }, 
+            //         floorId: floorList[1].id,
+            //     }
+            // ],
         };
         const naviOption = {
             lineZ: 100, // 주행선의 z축 값을 지정합니다.
@@ -145,31 +173,8 @@ export class SimulationMoreMenu {
                         }
                     ]
         }
-        const animOption = {
-            destOption: {
-                // 도착지 애니메이션 옵션
-                activeDest: true, // active 여부
-                color: '#000000', // 변경하고자 하는 색상값
-                opacity: 0.5, // 변경하고자하는 투명도 값
-                isAnimate: true, // 색상 애니메이션 효과 적용 여부
-                duration: 1200, // 애니메이션 complete까지의 시간 ms단위로 default는 1000입니다
-                isRepeat: true, // 애니메이션 반복 여부 true는 반복, false는 반복 x입니다. default는 false
-                isYoyo: true, // 애니메이션이 complete됬을때 isRepeat 옵션이 true인 경우 반복 방법, true인 경우 역순징행되며 default는 false입니다.
-            },
-            zoom: 22, // 애니메이션 동작 시 zoom Level
-            changeFloorDelay: 3000, // 층 변경시 delay time
-            speedRate: 20, // 모의주행 속도 지정. 예를 들어 1.5로 지정한 경우 default대비 1.5배 속도
-            removeIcon: true, // 모의주행 완료 또는 stop 시, 모의주행 icon 제거 옵션. 기본값은 true
-            markerOptions: {
-                iconUrl: 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png', // 모의주행의 icon의 url을 지정합니다.
-                width: 50, // 모의주행의 icon의 width값을 설정합니다.
-                height: 50, // 모의주행의 icon의 height값을 설정합니다.
-                positionZ: 120, // 모의주행 아이콘의 z축 값을 지정합니다. 입력하지 않을 경우 default값으로 자동생성 됩니다.
-            },
-        };
         this.map.mylocation.set(locationOption);
         const naviResponse = await this.mapData.getRoute(route);
         await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
-        this.map.routeSimulation.start(animOption);
     }
 }
