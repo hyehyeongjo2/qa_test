@@ -1,4 +1,5 @@
 import { IconMenu } from './IconMenu.js';
+import { MarkerMoreMenu } from './MarkerMoreMenu.js';
 
 export class MarkerMenu {
     constructor() {
@@ -25,6 +26,7 @@ export class MarkerMenu {
         this.initSetting();
         this.initMarkerFolder();
         this.clickClear();
+        new MarkerMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
 
@@ -38,7 +40,6 @@ export class MarkerMenu {
             start: this.start.bind(this),
             clickClear: false,
             clearAll: this.clearAll.bind(this),
-            anctest: this.anctest.bind(this),
             deltest: this.deltest.bind(this),
         };
         let menu = this.menu;
@@ -157,47 +158,6 @@ export class MarkerMenu {
             });
     }
 
-    async anctest() {
-        const lists = await this.map.markers.set({
-            // 생성된 marker들의 ID List를 저장합니다.
-            marker: [
-                {
-                    x: 1000,
-                    y: 1000,
-                    iconOption: {
-                        positionZ: 100,
-                        anchor: {
-                            x: 0.1,
-                            y: 0.1,
-                        },
-                    },
-                },
-                {
-                    x: 1000,
-                    y: 1000,
-                    iconOption: {
-                        positionZ: 100,
-                        anchor: {
-                            x: 0.5,
-                            y: 0.5,
-                        },
-                    },
-                },
-                {
-                    x: 1000,
-                    y: 1000,
-                    iconOption: {
-                        positionZ: 100,
-                        anchor: {
-                            x: 1,
-                            y: 1,
-                        },
-                    },
-                },
-            ],
-        });
-    }
-
     initMarkerFolder() {
         const setting = this.setting;
         this.iconMenu = new IconMenu(this.menu);
@@ -213,8 +173,7 @@ export class MarkerMenu {
         menu.add(setting, 'x');
         menu.add(setting, 'y');
         menu.add(setting, 'data');
-        menu.add(setting, 'floor', floorSetting);
-        menu.add(setting, 'anctest');
+        menu.add(setting, 'floor', floorSetting);;
         menu.add(setting, 'deltest');
         menu.add(setting, 'set');
         menu.add(setting, 'start');
