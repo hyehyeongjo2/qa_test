@@ -35,10 +35,30 @@ export class ControlMenu {
         this.initZoomIn(this.menu);
         this.initZoomOut(this.menu);
         this.initReset(this.menu);
+        this.initgetCurrentZoomLevel(this.menu);
+        this.initgetCameraType(this.menu);
         new ControlMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
 
+    initgetCurrentZoomLevel(gui){
+        const getCurrentZoomLevel = (value) =>{
+            console.log('currentZoomLevel:', this.map.control.getCurrentZoomLevel());
+        }
+        const setting ={
+            getCurrentZoomLevel : getCurrentZoomLevel,
+        };
+        gui.add(setting, 'getCurrentZoomLevel');
+    }
+    initgetCameraType(gui){
+        const getCameraType = (value) =>{
+            console.log('getCameraType:', this.map.control.getCameraType());
+        }
+        const setting ={
+            getCameraType : getCameraType,
+        };
+        gui.add(setting, 'getCameraType');
+    }
     initTransition(gui) {
         this.transitionSetting = {
             transition: false,

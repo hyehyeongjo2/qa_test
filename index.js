@@ -309,7 +309,7 @@ function initOptionSetting() {
         tilt: '', //기울기 3d
         mergeMesh: false, // mergedMesh 활성화 여부
         showWaterMarker: true,
-        enableFloorMotion:false,
+        enableFloorMotion: true,
         waterMarkPosition: 'LEFT_BOTTOM',
     };
     return setting;
@@ -337,7 +337,7 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'mergeMesh');
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
-    menu.add(setting, 'FloorAnienableFloorMotionmation');
+    menu.add(setting, 'enableFloorMotion');
     return menu;
 }
 
