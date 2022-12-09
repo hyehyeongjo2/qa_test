@@ -23,6 +23,7 @@ export class SimulationMenu {
         this.waypointLineOptions2 = null;
         this.animOption = null;
         this.animMarkerOptions = null;
+        this.destOption = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -61,6 +62,7 @@ export class SimulationMenu {
         this.waypointLineOptions2 = this.initLineMenu('Waypoint2 Line');
         this.animOption = this.initAnimationMenu('Animation Option');
         this.animMarkerOptions = this.initIconMenu('Animation Icon');
+        this.destOption = this.initdestMenu('destOption');
     }
     makeFloorSetting() {
         return this.mapData.dataFloor.getFloors().reduce(
@@ -233,6 +235,7 @@ export class SimulationMenu {
     start() {
         let animOption = Object.assign({}, this.animOption);
         animOption.markerOptions = this.animMarkerOptions;
+        animOption.destOption = this.destOption;
         console.log(animOption);
         this.map.routeSimulation.start(animOption);
     }
@@ -293,6 +296,28 @@ export class SimulationMenu {
         menu.add(setting, 'height');
         menu.add(setting, 'positionZ');
         menu.add(setting, 'visibleIcon');
+        return setting;
+    }
+
+    initdestMenu(menuName) {
+        const setting = {
+            activeDest: true,
+            color: '#00ffff',
+            opacity: 0.3,
+            isAnimate: true,
+            duration: 1200,
+            isRepeat: true,
+            isYoyo: false
+        };
+
+        const menu = this.menu.addFolder(menuName);
+        menu.add(setting, 'activeDest');
+        menu.add(setting, 'color');
+        menu.add(setting, 'opacity');
+        menu.add(setting, 'isAnimate');
+        menu.add(setting, 'duration');
+        menu.add(setting, 'isRepeat');
+        menu.add(setting, 'isYoyo');
         return setting;
     }
 
