@@ -178,18 +178,15 @@ export class MapDataMenu {
         }
     }
 
-    async initDataObject(gui, mapData) {
+    async initDataObject(gui) {
         let objectsMenu = null;
-        console.log('hi',this.mapData)
-        let MapData = this.mapData;
         function getObjectCenter() {
             console.log('getObjectCenter');
         }
-        async function getFloorData(mapData) {
-            this.mapData = MapData
+        async function getFloorData() {
             const floorList = this.mapData.dataFloor.getFloors();
-            console.log('getFloorData',  await this.mapData.getFloorData(floorList[0].id));
-            console.log('getFloorData',  await this.mapData.getFloorData(floorList[1].id));
+            console.log('getFloorData',  await this.mapData.getFloorData(floorList[0].id), floorList[0].name[0]);
+            console.log('getFloorData',  await this.mapData.getFloorData(floorList[1].id), floorList[1].name[0]);
         }
         const changeObject = async (value) => {
             console.log(value);
@@ -272,7 +269,7 @@ export class MapDataMenu {
             findByID: '',
             findByGroupCode: '',
             getObjectCenter: getObjectCenter,
-            getFloorData: getFloorData,
+            getFloorData: getFloorData.bind(this),
             object: '',
         };
         const menu = gui.addFolder('dataObject');
