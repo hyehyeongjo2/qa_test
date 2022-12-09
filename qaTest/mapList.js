@@ -48,4 +48,10 @@ export const mapList = [
         clientId: `7kVpa5FkQ3s8UxPhxCg8pW`,
         clientSecret: `2ed75e6eb084eb740b46e09924be9d7c`,
     },
+    {
+        name: '잠실역주변_크롭 2022.08.09',
+        id: 'MP-qxzf3floe14p8745',
+        clientId: `9-NFevAEk3V8APHT7Z9TT-`,
+        clientSecret: `43c1e4a0e7d5ddfeab9f6d57c32683aa`,
+    },
 ];
