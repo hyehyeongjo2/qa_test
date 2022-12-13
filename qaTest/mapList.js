@@ -54,4 +54,22 @@ export const mapList = [
         clientId: `9-NFevAEk3V8APHT7Z9TT-`,
         clientSecret: `43c1e4a0e7d5ddfeab9f6d57c32683aa`,
     },
+    {
+        name: '김제시 광역지도',
+        id: 'MP-qeff6s8vljs22554',
+        clientId: `4pKrFxmaAdH9Qvb_8wpnvH`,
+        clientSecret: `17b34eddc217e62bd44f42bdde5979ca`,
+    },
+    {
+        name: '[Park] Everland',
+        id: 'MP-urmcfikxfdk23442',
+        clientId: `bMwXDEMcQ7Obpik6SvtMF8`,
+        clientSecret: `a8d6a10fd50e352499cccc6487bd1548`,
+    },
+    {
+        name: '[GPS]전북여행길(부안 직소폭포길)',
+        id: 'MP-t8cy6cmso8jc6777',
+        clientId: `dTsthfQeQDaa2LQtOHIK7r`,
+        clientSecret: `1d05dd7d4bbfffb2f8ed4882c2d16df8`,
+    },
 ];
