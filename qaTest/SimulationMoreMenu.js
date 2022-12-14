@@ -109,12 +109,12 @@ export class SimulationMoreMenu {
                 floorId: floorList[0].id,
             },
             type: ['recommendation'],
-            // waypoints: [
-            //     {
-            //         position: { x: 4883, y: 1285, z: 50 }, 
-            //         floorId: floorList[1].id,
-            //     }
-            // ],
+            waypoints: [
+                {
+                    position: { x: 4883, y: 1285, z: 50 }, 
+                    floorId: floorList[1].id,
+                }
+            ],
         };
         const naviOption = {
             lineZ: 100, // 주행선의 z축 값을 지정합니다.
