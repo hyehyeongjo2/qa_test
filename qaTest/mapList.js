@@ -72,4 +72,10 @@ export const mapList = [
         clientId: `dTsthfQeQDaa2LQtOHIK7r`,
         clientSecret: `1d05dd7d4bbfffb2f8ed4882c2d16df8`,
     },
+    {
+        name: '[DEV] 더현대 대구_마이크로사이트용',
+        id: 'MP-1h82ixehe3m7m4214',
+        clientId: `2DoH5-MwAAAb8X6xui1Xhs`,
+        clientSecret: `1ed4aefe9ca43bf014e50068e8de5b86`,
+    },
 ];
