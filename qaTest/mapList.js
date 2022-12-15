@@ -78,4 +78,10 @@ export const mapList = [
         clientId: `2DoH5-MwAAAb8X6xui1Xhs`,
         clientSecret: `1ed4aefe9ca43bf014e50068e8de5b86`,
     },
+    {
+        name: '[HD맵] 잠실 역사 (송파구청) 데모용',
+        id: 'MP-s16368lgvvj81483',
+        clientId: `86HsyVt34IbavirrVt2Pdb`,
+        clientSecret: `b351c3eb9d4aa5f49f22e7095546e72d`,
+    },
 ];
