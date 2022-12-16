@@ -160,13 +160,13 @@ export class ModelMenu {
     addScaleFolder() {
         const scaleFolder = this.transformFolder.addFolder('scale');
         scaleFolder.open();
-        scaleFolder.add(this.currentModelData.transform.scale, 'x', 0, 50, 0.01).onChange((value) => {
+        scaleFolder.add(this.currentModelData.transform.scale, 'x', 0, 50, 0.001).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
-        scaleFolder.add(this.currentModelData.transform.scale, 'y', 0, 50, 0.01).onChange((value) => {
+        scaleFolder.add(this.currentModelData.transform.scale, 'y', 0, 50, 0.001).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
-        scaleFolder.add(this.currentModelData.transform.scale, 'z', 0, 50, 0.01).onChange((value) => {
+        scaleFolder.add(this.currentModelData.transform.scale, 'z', 0, 50, 0.001).onChange((value) => {
             this.map.testModel.updateTestModel(this.currentModelData);
         });
     }
