@@ -90,4 +90,10 @@ export const mapList = [
         clientId: `fB7UpLmXkdeaI65Fwmz786`,
         clientSecret: `26322b6cf77edd20afbd01e7b61ab10d`,
     },
+    {
+        name: '롯데백화점 잠실점_전체(22.11)',
+        id: 'MP-sobu38c74ab64218',
+        clientId: `doNtfa49AUc9SnUf2_1jfy`,
+        clientSecret: `7d6fc7be0b0387aab6dca29268f6a379`,
+    },
 ];
