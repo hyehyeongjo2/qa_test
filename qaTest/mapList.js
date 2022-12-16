@@ -84,4 +84,10 @@ export const mapList = [
         clientId: `86HsyVt34IbavirrVt2Pdb`,
         clientSecret: `b351c3eb9d4aa5f49f22e7095546e72d`,
     },
+    {
+        name: '[GPS]서촌,경복궁,북촌',
+        id: 'MP-1jecp9y2less02323',
+        clientId: `fB7UpLmXkdeaI65Fwmz786`,
+        clientSecret: `26322b6cf77edd20afbd01e7b61ab10d`,
+    },
 ];
