@@ -93,8 +93,9 @@ export class ObjectsMenu {
 
     set() {
         const option = Object.assign({}, this.setting);
-        if (this.actionSetting.ids) option.ids = [this.actionSetting.ids];
-
+        if (this.actionSetting.ids) {
+            option.ids = [this.actionSetting.ids];
+        }
         console.log(option);
         this.map.objects.set(option);
     }
