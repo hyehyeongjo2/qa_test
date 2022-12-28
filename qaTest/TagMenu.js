@@ -59,10 +59,12 @@ export class TagMenu {
 
     createTag = () => {
         const tag = document.createElement('div');
-        tag.style.width = '100px';
-        tag.style.height = '50px';
-        tag.style.backgroundColor = 'grey';
-        (tag.style.textAlign = 'center'), (tag.textContent = 'test');
+        tag.className = 'tag';
+        // tag.style.width = '100px';
+        // tag.style.height = '50px';
+        // tag.style.backgroundColor = 'grey';
+        // tag.style.textAlign = 'center',
+        tag.innerHTML = '<div>침구류</div><div>욕실용품</div><div>벽장식</div>';
         return tag;
     };
 
