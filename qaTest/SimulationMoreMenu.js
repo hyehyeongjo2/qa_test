@@ -25,10 +25,14 @@ export class SimulationMoreMenu {
         const setting = {
             doubleFloortestSet:this.doubleFloortestSet.bind(this),
             doubleFloortestStart:this.doubleFloortestStart.bind(this),
+            PosLineSet:this.PosLineSet.bind(this),
+            IdPointSet:this.IdPointSet.bind(this)
         };
         const menu = this.menu;
         menu.add(setting, 'doubleFloortestSet');
         menu.add(setting, 'doubleFloortestStart');
+        menu.add(setting, 'PosLineSet');
+        menu.add(setting, 'IdPointSet');
     }
   
     doubleFloortestStart (){
@@ -174,6 +178,209 @@ export class SimulationMoreMenu {
                     ]
         }
         this.map.mylocation.set(locationOption);
+        const naviResponse = await this.mapData.getRoute(route);
+        await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
+    }
+
+    async PosLineSet (){
+        const floorList = this.mapData.dataFloor.getFloors();
+        
+        const route = {
+            origin: {
+                position: { x: 2068, y: 1467, z: 50 },
+                floorId: floorList[0].id,
+            },
+            destination: {
+                position: { x: 4393, y: 1332, z: 50 },
+                floorId: floorList[0].id,
+            },
+            type: ['recommendation'],
+            waypoints: [
+                {
+                    position: { x: 3083, y: 1285, z: 50 }, 
+                    floorId: floorList[0].id,
+                },
+                {
+                    position: { x: 4583, y: 1285, z: 50 }, 
+                    floorId: floorList[0].id,
+                }
+            ],
+        };
+        const naviOption = {
+            lineZ: 100, // 주행선의 z축 값을 지정합니다.
+                    lineDivide: true, // 주행선을 경유지 기준으로 분할 여부를 결정합니다.
+                    defaultLineOption: {
+                        lineColor: '#0000ff', // navigation 주행 라인의 색상을 지정
+                        solidLineEnabled: true,
+                        solidLineWidth: 10,
+                        solidLineJoin: 'bevel',
+                        solidLineCap: 'butt',
+                    },
+                    origin: {
+                        // 출발지 마커 옵션
+                        markerOptions: {
+                            // 출발지 마커 옵션
+                            // iconUrl: string,                                  // 출발지 마커 이미지 url
+                            width: 50, // 출발지 마커 width
+                            height: 50, // 출발지 마커 height
+                            positionZ: 100, // 출발지 마커 높이
+                            visibleIcon: true, // 출발지 마커 보여줄지 말지 여부. default 는 true.
+                            anchor: {
+                                x: 1,
+                                y: 0.5,
+                            },
+                        },
+                    },
+                    destination: {
+                        // 도착지 마커 및 주행선 옵션
+                        showTag: true, // 도착지 말풍선 생성 여부 (기본값 true)
+                        markerOptions: {
+                            // 도착지 마커 옵션 (출발지 마커 옵션과 동일)
+                            // iconUrl: string,
+                            width: 50,
+                            height: 50,
+                            positionZ: 100,
+                            visibleIcon: true,
+                        },
+                        lineOptions: {
+                            lineColor: '#000000',
+                            solidLineEnabled: true,
+                            solidLineWidth: 20,
+                            solidLineJoin: 'round',
+                            solidLineCap: 'round',
+                        },
+                    },
+                    wayPoints: [
+                        // 경유지 마커 및 주행선 옵션 배열
+                        {
+                            markerOptions: {
+                                width: 50,
+                                height: 50,
+                                positionZ: 100,
+                                visibleIcon: false,
+                            }
+                        },
+                        {
+                            markerOptions: {
+                                width: 50,
+                                height: 50,
+                                positionZ: 100,
+                                visibleIcon: false,
+                            },
+                            lineOptions: {
+                                // 경유지 주행선 옵션 (기본 주행선 옵션과 동일)
+                                lineColor: '#ff00ff',
+                                solidLineEnabled: true,
+                                solidLineWidth: 30,
+                                solidLineJoin: 'miter',
+                                solidLineCap: 'square',
+                            }
+                        }
+                    ]
+        }
+        const naviResponse = await this.mapData.getRoute(route);
+        await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
+    }
+
+    async IdPointSet (){
+        const floorList = this.mapData.dataFloor.getFloors();
+        
+        const route = {
+            origin: {
+                position: { x: 2068, y: 1467, z: 50 },
+                floorId: floorList[0].id,
+            },
+            destination: {
+                position: { x: 4393, y: 1332, z: 50 },
+                floorId: floorList[0].id,
+            },
+            type: ['recommendation'],
+            waypoints: [
+                {
+                    position: { x: 3083, y: 1285, z: 50 }, 
+                    floorId: floorList[0].id,
+                },
+                {
+                    position: { x: 4583, y: 1285, z: 50 }, 
+                    floorId: floorList[0].id,
+                }
+            ],
+        };
+        const naviOption = {
+            lineZ: 100, // 주행선의 z축 값을 지정합니다.
+                    lineDivide: true, // 주행선을 경유지 기준으로 분할 여부를 결정합니다.
+                    defaultLineOption: {
+                        lineColor: '#0000ff', // navigation 주행 라인의 색상을 지정
+                        lineSpotSize: 10,                             
+                        lineSpotInterval: 10,                         
+                        lineSpotCount: 10,                           
+                        lineSpotAnimate: true,                        
+                        lineSpotAnimateSpeed: 0.1,  
+                    },
+                    origin: {
+                        // 출발지 마커 옵션
+                        markerOptions: {
+                            // 출발지 마커 옵션
+                            // iconUrl: string,                                  // 출발지 마커 이미지 url
+                            width: 50, // 출발지 마커 width
+                            height: 50, // 출발지 마커 height
+                            positionZ: 100, // 출발지 마커 높이
+                            visibleIcon: true, // 출발지 마커 보여줄지 말지 여부. default 는 true.
+                            anchor: {
+                                x: 1,
+                                y: 0.5,
+                            },
+                        },
+                    },
+                    destination: {
+                        // 도착지 마커 및 주행선 옵션
+                        showTag: true, // 도착지 말풍선 생성 여부 (기본값 true)
+                        markerOptions: {
+                            // 도착지 마커 옵션 (출발지 마커 옵션과 동일)
+                            // iconUrl: string,
+                            width: 50,
+                            height: 50,
+                            positionZ: 100,
+                            visibleIcon: true,
+                        },
+                        lineOptions: {
+                            lineColor: '#000000',
+                            lineSpotSize: 10,                             
+                            lineSpotInterval: 10,                         
+                            lineSpotCount: 10,                           
+                            lineSpotAnimate: true,                        
+                            lineSpotAnimateSpeed: 0.1,  
+                        },
+                    },
+                    wayPoints: [
+                        // 경유지 마커 및 주행선 옵션 배열
+                        {
+                            markerOptions: {
+                                width: 50,
+                                height: 50,
+                                positionZ: 100,
+                                visibleIcon: false,
+                            }
+                        },
+                        {
+                            markerOptions: {
+                                width: 50,
+                                height: 50,
+                                positionZ: 100,
+                                visibleIcon: false,
+                            },
+                            lineOptions: {
+                                // 경유지 주행선 옵션 (기본 주행선 옵션과 동일)
+                                lineColor: '#ff00ff',
+                                lineSpotSize: 10,                             
+                                lineSpotInterval: 10,                         
+                                lineSpotCount: 10,                           
+                                lineSpotAnimate: true,                        
+                                lineSpotAnimateSpeed: 0.1,  
+                            }
+                        }
+                    ]
+        }
         const naviResponse = await this.mapData.getRoute(route);
         await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
     }
