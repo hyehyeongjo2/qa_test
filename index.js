@@ -309,7 +309,7 @@ function initOptionSetting() {
         tilt: '', //기울기 3d
         mergeMesh: false, // mergedMesh 활성화 여부
         showWaterMarker: true,
-        enableFloorMotion: true,
+        enableFloorMotion: false,
         waterMarkPosition: 'LEFT_BOTTOM',
     };
     return setting;
