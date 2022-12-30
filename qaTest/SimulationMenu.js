@@ -278,7 +278,7 @@ export class SimulationMenu {
         menu.add(setting, 'solidLineEnabled');
         menu.add(setting, 'solidLineWidth');
         menu.add(setting, 'solidLineJoin', ['round', 'bevel', 'miter']);
-        menu.add(setting, 'solidLineCap', ['round', 'butt', 'square']);
+        menu.add(setting, 'solidLineCap', ['round', 'butt']);
         return setting;
     }
     initIconMenu(menuName) {
