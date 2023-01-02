@@ -267,6 +267,7 @@ function initMapOptionMenu(parentMenu) {
             camera: setting.camera, // 초기 카메라 모드 3d
             floor: setting.floor, // 적용할 층 정보
             language: setting.language, // 초기 poi 언어 설정
+            theme: setting.theme,
             showPoi: setting.showPoi, // map상에 poi 보여줄지 말지 결정 여부. default는 true
             spriteEnable: setting.spriteEnable, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
             spriteKeepRotation: setting.spriteKeepRotation, // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
@@ -294,11 +295,13 @@ function initMapOptionMenu(parentMenu) {
 function initOptionSetting() {
     const defaultFloorId = mapData.dataFloor.getDefaultFloor().id;
     const defaultLang = mapData.dataLanguage.getDefaultLanguage().lang;
+    const theme = mapData.dataNode.mapInfo.themes[0].id;
 
     const setting = {
         camera: '3d', // 초기 카메라 모드 3d
         floor: defaultFloorId,
         language: defaultLang, // 초기 poi 언어 설정
+        theme: theme,
         showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
         spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
         spriteKeepRotation: false, // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
@@ -321,11 +324,15 @@ function initOptionMenu(setting, parentMenu) {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
     const langSetting = mapData.dataLanguage.getLanguage().map((data) => data.lang);
+    const theme = mapData.dataNode.mapInfo.themes.reduce((prev, cur) => {
+        return { ...prev, [cur.name]: cur.id };
+    }, {});
 
     menu.open();
     menu.add(setting, 'camera', ['2d', '3d']);
     menu.add(setting, 'floor', floorSetting);
     menu.add(setting, 'language', langSetting);
+    menu.add(setting, 'theme', theme);
     menu.add(setting, 'showPoi');
     menu.add(setting, 'spriteEnable');
     menu.add(setting, 'spriteKeepRotation');
