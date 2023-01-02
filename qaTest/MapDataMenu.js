@@ -312,6 +312,10 @@ export class MapDataMenu {
             const groups = this.mapData.dataGroupCode.findAll();
             groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);
         }
+        function getCodes(){
+            const getCodes = this.mapData.dataGroupCode.getCodes();
+            console.log(getCodes)
+        }
 
         const groupList = this.mapData.dataGroupCode.findAll();
         const setting = {
@@ -321,6 +325,7 @@ export class MapDataMenu {
             findRootParent: '',
             findAllRoot: findAllRoot.bind(this),
             findAll: findAll.bind(this),
+            getCodes: getCodes.bind(this),
             groupCode: '',
         };
         const menu = gui.addFolder('dataGroupCode');
@@ -331,6 +336,7 @@ export class MapDataMenu {
         menu.add(setting, 'findRootParent', groupList).onFinishChange(findRootParent.bind(this));
         menu.add(setting, 'findAllRoot');
         menu.add(setting, 'findAll');
+        menu.add(setting, 'getCodes');
         groupCodeMenu = menu.add(setting, 'groupCode').onChange(changeGroupCode);
     }
 }
