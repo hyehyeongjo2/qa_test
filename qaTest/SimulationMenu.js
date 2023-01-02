@@ -15,6 +15,7 @@ export class SimulationMenu {
         this.naviOption = null;
         this.defaultLineOption = null;
         this.originMarkerOption = null;
+        this.destTagOption = null;
         this.destinationMarkerOptions = null;
         this.destinationLineOptions = null;
         this.waypointMarkerOptions1 = null;
@@ -54,6 +55,7 @@ export class SimulationMenu {
         this.naviOption = this.initOptions();
         this.defaultLineOption = this.initLineMenu('Default Line');
         this.originMarkerOptions = this.initIconMenu('Origin Icon');
+        this.destTagOption = this.initdestTagMenu('destTag');
         this.destinationMarkerOptions = this.initIconMenu('Destination Icon');
         this.destinationLineOptions = this.initLineMenu('Destination Line');
         this.waypointMarkerOptions1 = this.initIconMenu('Waypoint1 Icon');
@@ -223,7 +225,7 @@ export class SimulationMenu {
         naviOption.origin.markerOptions = this.originMarkerOptions;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions = this.destinationLineOptions;
-        
+        naviOption.destination = this.destTagOption;
 
         console.log(naviOption);
         await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);
@@ -243,7 +245,14 @@ export class SimulationMenu {
     stop() {
         this.map.routeSimulation.stop();
     }
-
+    initdestTagMenu(){
+        const setting = {
+            showTag:true
+        };
+        const menu = this.menu;
+        menu.add(setting, 'showTag');
+        return setting;
+    }
     initOptions() {
         const setting = {
             lineZ: 2, // 주행선의 z축 값을 지정합니다.
