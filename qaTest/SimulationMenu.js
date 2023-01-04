@@ -16,7 +16,7 @@ export class SimulationMenu {
         this.defaultLineOption = null;
         this.originMarkerOption = null;
         this.destTagOption = null;
-        this.destinationMarkerOptions = null;
+        this.destinationMarkerOption = null;
         this.destinationLineOptions = null;
         this.waypointMarkerOptions1 = null;
         this.waypointLineOptions1 = null;
@@ -223,10 +223,10 @@ export class SimulationMenu {
 
         naviOption.defaultLineOption = this.defaultLineOption;
         naviOption.origin.markerOptions = this.originMarkerOptions;
+        naviOption.destination = this.destTagOption;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions = this.destinationLineOptions;
-        naviOption.destination = this.destTagOption;
-
+        
         console.log(naviOption);
         await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);
     }

@@ -96,4 +96,10 @@ export const mapList = [
         clientId: `doNtfa49AUc9SnUf2_1jfy`,
         clientSecret: `7d6fc7be0b0387aab6dca29268f6a379`,
     },
+    {
+        name: '2023 CES 전시회',
+        id: 'MP-1jefyzaukiaet3876',
+        clientId: '8alJMDYGAof9hmYaDU6ELd',
+        clientSecret: '34aaa0e5738aa81ef4445abe5215a40c',
+    },
 ];
