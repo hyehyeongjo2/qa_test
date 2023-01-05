@@ -147,7 +147,7 @@ export class SimulationMenu {
         };
 
         const menu = this.menu;
-        menu.add(setting, 'type', ['recommendation', 'stairs', 'escalator', 'elevator']);
+        menu.add(setting, 'type', ['recommendation', 'stairs', 'escalator', 'elevator',['recommendation', 'stairs', 'elevator']]);
         menu.add(setting, 'set');
         menu.add(setting, 'clear');
         menu.add(setting, 'start');
