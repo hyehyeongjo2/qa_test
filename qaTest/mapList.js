@@ -108,4 +108,10 @@ export const mapList = [
         clientId: '9XZFz2uqQTh8aCCrOcNczI',
         clientSecret: '31ce08ae707a7a37e49f0cee38298ab1',
     },
+    {
+        name: '롯데백화점 청량리점',
+        id: 'MP-tnz0xq9mvx2q7098',
+        clientId: 'bT3uryJqQzRbnmohAqpWRV',
+        clientSecret: '6d3d5bbb6e4a1dd1a2951533d89800f6',
+    },
 ];
