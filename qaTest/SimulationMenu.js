@@ -147,7 +147,7 @@ export class SimulationMenu {
         };
 
         const menu = this.menu;
-        menu.add(setting, 'type', ['recommendation', 'stairs', 'escalator', 'elevator',['recommendation', 'stairs', 'elevator']]);
+        menu.add(setting, 'type', ['recommendation', 'stairs', 'escalator', 'elevator']);
         menu.add(setting, 'set');
         menu.add(setting, 'clear');
         menu.add(setting, 'start');
@@ -199,7 +199,7 @@ export class SimulationMenu {
         console.log(option);
 
         const naviResponse = await this.mapData.getRoute(option);
-        console.log(naviResponse);
+        console.log("checkit",naviResponse);
         if (naviResponse.totalDistance === 0) {
             alert('경로에 대한 거리가 0입니다! ');
             return;
