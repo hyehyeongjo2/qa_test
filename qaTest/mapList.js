@@ -114,4 +114,10 @@ export const mapList = [
         clientId: 'bT3uryJqQzRbnmohAqpWRV',
         clientSecret: '6d3d5bbb6e4a1dd1a2951533d89800f6',
     },
+    {
+        name: '경주',
+        id: 'MP-1ib99qh85lu903573',
+        clientId: '8sQFPWruAUGbcZt7OyxFX0',
+        clientSecret: '120ad2959d5533e44cc24905d8af0da4',
+    },
 ];
