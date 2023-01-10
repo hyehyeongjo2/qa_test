@@ -45,9 +45,6 @@ export class SimulationMenu {
         this.waypoint2 = this.initWayPoint('waypoint2');
         this.setting = this.initSetting();
         this.initNaviOptions();
-        this.mapContainer.addEventListener('on-mouse-click', (e) => {
-            console.log('on mouse click 에 대한 결과값', e.detail);
-        });
         new SimulationMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
