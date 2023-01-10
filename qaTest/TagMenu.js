@@ -1,3 +1,5 @@
+import { TagMoreMenu } from './TagMoreMenu.js';
+
 export class TagMenu {
     constructor() {
         this.gui = null;
@@ -23,6 +25,7 @@ export class TagMenu {
         this.menu.open();
         this.initSetting();
         this.TagFolder = this.initTagFolder('tag');
+        new TagMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
 
@@ -36,7 +39,7 @@ export class TagMenu {
             PoiPos:"CENTER",
             ClickPos:"CENTER",
             set: this.set.bind(this),
-            clear: this.clear.bind(this),
+            clearALL: this.clear.bind(this),
             setMarkerTag_마커_클릭하여_생성: this.setMarkerclickTag.bind(this),
             setMarkerTag_마커와_같이_생성: this.setMarkerWithTag.bind(this),
             setPoiTag_POI_클릭하여_생성: this.setPoiTag.bind(this),
@@ -57,7 +60,7 @@ export class TagMenu {
         menu.add(setting, 'z');
         menu.add(setting, 'floor', floorSetting);
         menu.add(setting, 'set');
-        menu.add(setting, 'clear');
+        menu.add(setting, 'clearALL');
         menu.add(setting, 'setMarkerTag_마커_클릭하여_생성');
         menu.add(setting, 'setMarkerTag_마커와_같이_생성');
         menu.add(setting, 'setPoiTag_POI_클릭하여_생성');

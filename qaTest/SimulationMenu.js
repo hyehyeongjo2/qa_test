@@ -294,6 +294,10 @@ export class SimulationMenu {
             height: '',
             positionZ: 0,
             visibleIcon: true,
+            anchor:{
+                x:'0.5',
+                y:'0.5'
+            }
         };
 
         const menu = this.menu.addFolder(menuName);
@@ -302,6 +306,8 @@ export class SimulationMenu {
         menu.add(setting, 'height');
         menu.add(setting, 'positionZ');
         menu.add(setting, 'visibleIcon');
+        menu.add(setting.anchor, 'x');
+        menu.add(setting.anchor, 'y');
         return setting;
     }
 

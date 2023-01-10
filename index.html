@@ -7,18 +7,17 @@
         <title>DabeeoMaps Libray Test</title>
         <link rel="stylesheet" href="style.css" />
         <style>
-            .tag {
-                background-color: rgb(255, 255, 255);
-                border: 1px solid rgb(72, 138, 216);
-                padding: 14px 12px;
-                min-width: 135px;
-                border-radius: 8px;
-                cursor: pointer;
-                display: flex;
-                gap: 6px;
-                flex-direction: column;
-                -webkit-box-align: center;
-                align-items: center;
+            .tag-container {
+                z-index: 2;
+                border-radius: 15px;
+                outline: 1px solid gray;
+                padding: 10px;
+                text-align: center;
+                background-color: rgba(250, 250, 250, 0.8);
+                height: 30px;
+            }
+            .tag-container:hover {
+                z-index: 200 !important;
             }
         </style>
     </head>
