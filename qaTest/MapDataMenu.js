@@ -5,6 +5,7 @@ export class MapDataMenu {
         this.map = null;
         this.mapContainer = null;
         this.menu = null;
+        this.objectIds = [];
     }
 
     init(gui, mapData, map, mapContainer) {
@@ -180,8 +181,23 @@ export class MapDataMenu {
 
     async initDataObject(gui) {
         let objectsMenu = null;
-        function getObjectCenter() {
-            console.log('getObjectCenter');
+        this.mapContainer.addEventListener('object-click', (e) => {
+            // console.log('object click ', e.detail);
+            const id = e.detail[0].id;
+            if (this.objectIds.includes(id)) {
+                this.map.objects.reset(id);
+                this.objectIds = this.objectIds.filter((item) => item !== id); //화살표 함수로 필터 함수를 단순화
+            } else {
+                this.objectIds.push(id);
+            }
+            console.log(this.objectIds);
+        });
+        async function getObjectCenter() {
+            const objectCenter = this.mapData.dataObject.getObjectsCenter(
+                this.objectIds
+            );
+            console.log('mapData.dataObject.getObjectsCenter() 에 대한 결과값', objectCenter);
+            if (objectCenter) await this.map.markers.set({ marker: [{ x: objectCenter.x, y: objectCenter.y }] });
         }
         async function getFloorData() {
             const floorList = this.mapData.dataFloor.getFloors();
@@ -268,7 +284,7 @@ export class MapDataMenu {
             findByTitle: '',
             findByID: '',
             findByGroupCode: '',
-            getObjectCenter: getObjectCenter,
+            getObjectCenter: getObjectCenter.bind(this),
             getFloorData: getFloorData.bind(this),
             object: '',
         };
