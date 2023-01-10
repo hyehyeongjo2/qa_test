@@ -5,6 +5,7 @@ export class TagMoreMenu {
         this.mapContainer = null;
         this.menu = null;
         this.setting = null;
+        this.poiList = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -18,6 +19,14 @@ export class TagMoreMenu {
         this.mapContainer = mapContainer;
         this.menu = menu.addFolder('More');
         this.initMoreSetting();
+        const currentFloor = this.map.context.getCurrentFloor().id;
+        this.poiList = this.mapData.dataPoi.getPois().reduce(
+            (result, cur) => {
+                if (currentFloor == cur.floorId) result.push(cur.id);
+                return result;
+            },
+            [''],
+        );
         return this.menu;
     }
     initMoreSetting() {
@@ -28,7 +37,7 @@ export class TagMoreMenu {
         menu.add(setting, 'TagPostest');
     }
     async TagPostest(){
-        const markers1 = await this.map.markers.set({ 
+        const markers = await this.map.markers.set({ 
             marker: [
                 { x: 2000, y: 1000 },
                 { x: 2000, y: 1000 },
@@ -52,10 +61,31 @@ export class TagMoreMenu {
         tag3.textContent = 'POI EVENT Created at beggining';
         tag4.className = 'tag-container';
         tag4.textContent = 'POI EVENT Created at beggining';
-        this.map.tag.setMarkerTag({ parentId: markers1[0], pos: 'LEFT', tag: tag });
-        this.map.tag.setMarkerTag({ parentId: markers1[1], pos: 'RIGHT', tag: tag1 });
-        this.map.tag.setMarkerTag({ parentId: markers1[2], pos: 'TOP', tag: tag2 });
-        this.map.tag.setMarkerTag({ parentId: markers1[3], pos: 'CENTER', tag: tag3 });
-        this.map.tag.setMarkerTag({ parentId: markers1[4], pos: 'BOTTOM', tag: tag4 });
+        this.map.tag.setMarkerTag({ parentId: markers[0], pos: 'LEFT', tag: tag });
+        this.map.tag.setMarkerTag({ parentId: markers[1], pos: 'RIGHT', tag: tag1 });
+        this.map.tag.setMarkerTag({ parentId: markers[2], pos: 'TOP', tag: tag2 });
+        this.map.tag.setMarkerTag({ parentId: markers[3], pos: 'CENTER', tag: tag3 });
+        this.map.tag.setMarkerTag({ parentId: markers[4], pos: 'BOTTOM', tag: tag4 });
+
+        const tag5 = document.createElement('div');
+        const tag6 = document.createElement('div');
+        const tag7 = document.createElement('div');
+        const tag8 = document.createElement('div');
+        const tag9  = document.createElement('div');
+        tag5.className = 'tag-container';
+        tag5.textContent = 'POI EVENT Created at beggining';
+        tag6.className = 'tag-container';
+        tag6.textContent = 'POI EVENT Created at beggining';
+        tag7.className = 'tag-container';
+        tag7.textContent = 'POI EVENT Created at beggining';
+        tag8.className = 'tag-container';
+        tag8.textContent = 'POI EVENT Created at beggining';
+        tag9.className = 'tag-container';
+        tag9.textContent = 'POI EVENT Created at beggining';
+        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'TOP', tag: tag5 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'BOTTOM', tag: tag6 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'RIGHT', tag: tag7 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'LEFT', tag: tag8 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'CENTER', tag: tag9 });
     }
 }
