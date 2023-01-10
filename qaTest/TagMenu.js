@@ -58,9 +58,9 @@ export class TagMenu {
         menu.add(setting, 'floor', floorSetting);
         menu.add(setting, 'set');
         menu.add(setting, 'clear');
-        menu.add(setting, 'MarkerClick');
-        menu.add(setting, 'SetMarkerWith');
-        menu.add(setting, 'setPoiTag');
+        menu.add(setting, 'setMarkerTag_마커_클릭하여_생성');
+        menu.add(setting, 'setMarkerTag_마커와_같이_생성');
+        menu.add(setting, 'setPoiTag_POI_클릭하여_생성');
         menu.add(setting, 'PoiPos',[ "TOP" ,"BOTTOM" ,"LEFT", "RIGHT" ,"CENTER"]);
         menu.add(setting, 'MarkerWithPos',[ "TOP" ,"BOTTOM" ,"LEFT", "RIGHT" ,"CENTER"]);
         menu.add(setting, 'ClickPos',[ "TOP" ,"BOTTOM" ,"LEFT", "RIGHT" ,"CENTER"]);
