@@ -285,6 +285,7 @@ function initMapOptionMenu(parentMenu) {
             showWaterMarker: setting.showWaterMarker,
             enableFloorMotion: setting.enableFloorMotion,
             waterMarkPosition: setting.waterMarkPosition,
+            enableTiling:setting.enableTiling,
         };
         return mapOption;
     }
@@ -313,6 +314,7 @@ function initOptionSetting() {
         mergeMesh: false, // mergedMesh 활성화 여부
         showWaterMarker: true,
         enableFloorMotion: false,
+        enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
     };
     return setting;
@@ -345,6 +347,7 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableFloorMotion');
+    menu.add(setting, 'enableTiling');
     return menu;
 }
 
