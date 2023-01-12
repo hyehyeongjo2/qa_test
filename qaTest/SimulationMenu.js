@@ -335,7 +335,7 @@ export class SimulationMenu {
 
     initAnimationMenu(menuName) {
         const setting = {
-            zoom: 20,
+            zoom: '',
             changeFloorDelay: 1000,
             speedRate: 50,
             removeIcon: true,
