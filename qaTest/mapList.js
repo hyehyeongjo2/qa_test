@@ -103,10 +103,10 @@ export const mapList = [
         clientSecret: '34aaa0e5738aa81ef4445abe5215a40c',
     },
     {
-        name: '2023 NRF 전시회',
-        id: 'MP-1ji1nsy8k8y8y0340',
-        clientId: '9XZFz2uqQTh8aCCrOcNczI',
-        clientSecret: '31ce08ae707a7a37e49f0cee38298ab1',
+        name: '2023 NRF 전시회_최종',
+        id: 'MP-1jy5g6bvpwxut9781',
+        clientId: 'adUMJfRm4DyaX9H-D89QCS',
+        clientSecret: '9ff4b86d87f791e3a3d9fa45f87dcf3a',
     },
     {
         name: '롯데백화점 청량리점',
