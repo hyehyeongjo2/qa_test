@@ -120,4 +120,28 @@ export const mapList = [
         clientId: '8sQFPWruAUGbcZt7OyxFX0',
         clientSecret: '120ad2959d5533e44cc24905d8af0da4',
     },
+    {
+        name: '[GPS[전북여행길(고창 운곡습지생태길)',
+        id:'MP-qxwn8t4d3qsi2986',
+        clientId:'6Rh2Qvlq4SH95lpR_I-0ku',
+        clientSecret:'2d0b994ca841a48d14e800a9e16acaaf',
+    },
+    {
+        name: '[GPS[전북여행길(군산 청암산둘레길)',
+        id:'MP-ts1w7ewmpm5f2952',
+        clientId:'2E9sHc-fkoh9507s7xVgFu',
+        clientSecret:'cf2a835f7be9bc325b66764cea3b93db',
+    },
+    {
+        name: '[GPS[전북여행길(김제 새만금바람길)',
+        id:'MP-rhodw5x4hfzp4091',
+        clientId:'5_LfM2lhQ7Z87cOoNw1NSZ',
+        clientSecret:'abaed0080321f9553628ee022461281e',
+    },
+    {
+        name: '[GPS[전북여행길(부안 직소폭포길)',
+        id:'MP-t8cy6cmso8jc6777',
+        clientId:'dTsthfQeQDaa2LQtOHIK7r',
+        clientSecret:'1d05dd7d4bbfffb2f8ed4882c2d16df8',
+    },
 ];

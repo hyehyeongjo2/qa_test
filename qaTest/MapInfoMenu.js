@@ -10,19 +10,19 @@ export class MapInfoMenu {
         this.mapData = mapData;
         this.mapData = this.mapData;
         console.log(this.mapData);
-        const georeferencingEast = mapData.mapInfo.georeferencingEast || '';
-        const georeferencingNorth = mapData.mapInfo.georeferencingNorth || '';
-        const georeferencingSouth = mapData.mapInfo.georeferencingSouth || '';
-        const georeferencingWest = mapData.mapInfo.georeferencingWest || '';
+        const georeferencingEast = mapData.dataMapInfo.mapInfo.georeferencingEast || '';
+        const georeferencingNorth = mapData.dataMapInfo.mapInfo.georeferencingNorth || '';
+        const georeferencingSouth = mapData.dataMapInfo.mapInfo.georeferencingSouth || '';
+        const georeferencingWest = mapData.dataMapInfo.mapInfo.georeferencingWest || '';
 
         const mapInfo = {
-            northReference: mapData.mapInfo.northReference,
-            width: mapData.mapInfo.size.width,
-            height: mapData.mapInfo.size.height,
-            scaleCm: mapData.mapInfo.scaleCm,
-            name: mapData.mapInfo.name,
-            id: mapData.mapInfo.id,
-            version: mapData.mapInfo.versionString,
+            northReference: mapData.dataMapInfo.mapInfo.northReference,
+            width: mapData.dataMapInfo.mapInfo.size.width,
+            height: mapData.dataMapInfo.mapInfo.size.height,
+            scaleCm: mapData.dataMapInfo.mapInfo.scaleCm,
+            name: mapData.dataMapInfo.mapInfo.name,
+            id: mapData.dataMapInfo.mapInfo.id,
+            version: mapData.dataMapInfo.mapInfo.versionString,
             geoReferencingEast: georeferencingEast,
             georeferencingNorth: georeferencingNorth,
             georeferencingSouth: georeferencingSouth,

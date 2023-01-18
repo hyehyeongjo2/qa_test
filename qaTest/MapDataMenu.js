@@ -1,3 +1,5 @@
+import { MapDataMoreMenu } from './MapDataMoreMenu.js';
+
 export class MapDataMenu {
     constructor() {
         this.gui = null;
@@ -20,6 +22,7 @@ export class MapDataMenu {
         this.initDataPoi(this.menu);
         this.initDataObject(this.menu);
         this.initDataGroupCode(this.menu);
+        new MapDataMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
 

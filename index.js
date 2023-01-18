@@ -296,7 +296,7 @@ function initMapOptionMenu(parentMenu) {
 function initOptionSetting() {
     const defaultFloorId = mapData.dataFloor.getDefaultFloor().id;
     const defaultLang = mapData.dataLanguage.getDefaultLanguage().lang;
-    const theme = mapData.dataNode.mapInfo.themes[0].id;
+    const theme = mapData.dataMapInfo.mapInfo.themes[0].id;
 
     const setting = {
         camera: '3d', // 초기 카메라 모드 3d
@@ -326,7 +326,7 @@ function initOptionMenu(setting, parentMenu) {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
     const langSetting = mapData.dataLanguage.getLanguage().map((data) => data.lang);
-    const theme = mapData.dataNode.mapInfo.themes.reduce((prev, cur) => {
+    const theme = mapData.dataMapInfo.mapInfo.themes.reduce((prev, cur) => {
         return { ...prev, [cur.name]: cur.id };
     }, {});
 
