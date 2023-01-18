@@ -138,10 +138,4 @@ export const mapList = [
         clientId:'5_LfM2lhQ7Z87cOoNw1NSZ',
         clientSecret:'abaed0080321f9553628ee022461281e',
     },
-    {
-        name: '[GPS[전북여행길(부안 직소폭포길)',
-        id:'MP-t8cy6cmso8jc6777',
-        clientId:'dTsthfQeQDaa2LQtOHIK7r',
-        clientSecret:'1d05dd7d4bbfffb2f8ed4882c2d16df8',
-    },
 ];
