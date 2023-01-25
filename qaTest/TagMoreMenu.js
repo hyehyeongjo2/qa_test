@@ -1,5 +1,5 @@
 export class TagMoreMenu {
-    constructor(){
+    constructor() {
         this.mapData = null;
         this.map = null;
         this.mapContainer = null;
@@ -31,21 +31,21 @@ export class TagMoreMenu {
     }
     initMoreSetting() {
         const setting = {
-            TagPostest:this.TagPostest.bind(this),
+            TagPostest: this.TagPostest.bind(this),
         };
         const menu = this.menu;
         menu.add(setting, 'TagPostest');
     }
-    async TagPostest(){
-        const markers = await this.map.markers.set({ 
+    async TagPostest() {
+        const markers = await this.map.markers.set({
             marker: [
                 { x: 2000, y: 1000 },
                 { x: 2000, y: 1000 },
                 { x: 2000, y: 1000 },
                 { x: 2000, y: 1000 },
-                { x: 2000, y: 1000 }
-            ]
-         });
+                { x: 2000, y: 1000 },
+            ],
+        });
         const tag = document.createElement('div');
         const tag1 = document.createElement('div');
         const tag2 = document.createElement('div');
@@ -71,7 +71,7 @@ export class TagMoreMenu {
         const tag6 = document.createElement('div');
         const tag7 = document.createElement('div');
         const tag8 = document.createElement('div');
-        const tag9  = document.createElement('div');
+        const tag9 = document.createElement('div');
         tag5.className = 'tag-container';
         tag5.textContent = 'POI EVENT Created at beggining';
         tag6.className = 'tag-container';
@@ -87,5 +87,16 @@ export class TagMoreMenu {
         this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'RIGHT', tag: tag7 });
         this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'LEFT', tag: tag8 });
         this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'CENTER', tag: tag9 });
+
+        const floorList = this.mapData.dataFloor.getDefaultFloor();
+        const tag0 = document.createElement('div');
+        tag0.className = 'tag-container';
+        tag0.textContent = 'POI EVENT Created at beggining';
+        const option = {
+            position: { x: 100, y: 100, z: 50 },
+            tag: tag0,
+            floorId: floorList.id,
+        };
+        this.map.tag.set(option);
     }
 }
