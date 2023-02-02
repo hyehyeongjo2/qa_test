@@ -5,6 +5,7 @@ export class SimulationMoreMenu {
         this.mapContainer = null;
         this.menu = null;
         this.setting = null;
+        this.poiList = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -27,12 +28,14 @@ export class SimulationMoreMenu {
             doubleFloortestStart: this.doubleFloortestStart.bind(this),
             PosLineSet: this.PosLineSet.bind(this),
             IdPointSet: this.IdPointSet.bind(this),
+            routetype: this.routetype.bind(this),
         };
         const menu = this.menu;
         menu.add(setting, 'doubleFloortestSet');
         menu.add(setting, 'doubleFloortestStart');
         menu.add(setting, 'PosLineSet');
         menu.add(setting, 'IdPointSet');
+        menu.add(setting, 'routetype');
     }
 
     doubleFloortestStart() {
@@ -182,25 +185,32 @@ export class SimulationMoreMenu {
     }
 
     async PosLineSet() {
+        const currentFloor = this.map.context.getCurrentFloor().id;
+        this.poiList = this.mapData.dataPoi.getPois().reduce(
+            (result, cur) => {
+                if (currentFloor == cur.floorId) result.push(cur.id);
+                return result;
+            },
+            [''],
+        );
         const floorList = this.mapData.dataFloor.getFloors();
-
         const route = {
             origin: {
-                position: { x: 2068, y: 1467, z: 50 },
+                poiId: this.poiList[1],
                 floorId: floorList[0].id,
             },
             destination: {
-                position: { x: 4393, y: 1332, z: 50 },
+                poiId: this.poiList[11],
                 floorId: floorList[0].id,
             },
             type: ['recommendation'],
             waypoints: [
                 {
-                    position: { x: 3083, y: 1285, z: 50 },
+                    poiId: this.poiList[5],
                     floorId: floorList[0].id,
                 },
                 {
-                    position: { x: 4583, y: 1285, z: 50 },
+                    poiId: this.poiList[7],
                     floorId: floorList[0].id,
                 },
             ],
@@ -384,5 +394,97 @@ export class SimulationMoreMenu {
         };
         const naviResponse = await this.mapData.getRoute(route);
         await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
+    }
+    async routetype() {
+        const floorList = this.mapData.dataFloor.getFloors();
+        const naviOption = {
+            lineZ: 100, // 주행선의 z축 값을 지정합니다.
+            lineDivide: true, // 주행선을 경유지 기준으로 분할 여부를 결정합니다.
+            defaultLineOption: {
+                lineColor: '#0000ff', // navigation 주행 라인의 색상을 지정
+                solidLineEnabled: true,
+                solidLineWidth: 10,
+                solidLineJoin: 'bevel',
+                solidLineCap: 'butt',
+            },
+        };
+
+        const route = {
+            origin: {
+                position: { x: 2068, y: 1467, z: 50 },
+                floorId: floorList[0].id,
+            },
+            destination: {
+                position: { x: 4393, y: 1332, z: 50 },
+                floorId: floorList[1].id,
+            },
+            type: ['recommendation'],
+        };
+        const route2 = {
+            origin: {
+                position: { x: 2068, y: 1467, z: 50 },
+                floorId: floorList[0].id,
+            },
+            destination: {
+                position: { x: 4393, y: 1332, z: 50 },
+                floorId: floorList[1].id,
+            },
+            type: ['stairs'],
+        };
+        const route3 = {
+            origin: {
+                position: { x: 2068, y: 1467, z: 50 },
+                floorId: floorList[0].id,
+            },
+            destination: {
+                position: { x: 4393, y: 1332, z: 50 },
+                floorId: floorList[1].id,
+            },
+            type: ['escalator'],
+        };
+        const route4 = {
+            origin: {
+                position: { x: 2068, y: 1467, z: 50 },
+                floorId: floorList[0].id,
+            },
+            destination: {
+                position: { x: 4393, y: 1332, z: 50 },
+                floorId: floorList[1].id,
+            },
+            type: ['elevator'],
+        };
+        const naviResponse = await this.mapData.getRoute(route);
+        const naviResponse2 = await this.mapData.getRoute(route2);
+        const naviResponse3 = await this.mapData.getRoute(route3);
+        const naviResponse4 = await this.mapData.getRoute(route4);
+        setTimeout(async () => {
+            await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
+            console.log('추천');
+        }, 2000);
+        setTimeout(async () => {
+            if (naviResponse2.stairs) {
+                await this.map.routeSimulation.set(naviResponse2.stairs, naviOption);
+                console.log('계단');
+            } else {
+                console.log('계단없음');
+            }
+        }, 4000);
+
+        setTimeout(async () => {
+            if (naviResponse3.escalator) {
+                await this.map.routeSimulation.set(naviResponse3.escalator, naviOption);
+                console.log('에스컬레이터');
+            } else {
+                console.log('에스컬레이터없음');
+            }
+        }, 6000);
+        setTimeout(async () => {
+            if (naviResponse4.elevator) {
+                await this.map.routeSimulation.set(naviResponse4.elevator, naviOption);
+                console.log('엘리베이터');
+            } else {
+                console.log('엘리베이터없음');
+            }
+        }, 8000);
     }
 }

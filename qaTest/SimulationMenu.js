@@ -196,7 +196,7 @@ export class SimulationMenu {
         console.log(option);
 
         const naviResponse = await this.mapData.getRoute(option);
-        console.log("checkit",naviResponse);
+        console.log('checkit', naviResponse);
         if (naviResponse.totalDistance === 0) {
             alert('경로에 대한 거리가 0입니다! ');
             return;
@@ -223,7 +223,7 @@ export class SimulationMenu {
         naviOption.destination = this.destTagOption;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
         naviOption.destination.lineOptions = this.destinationLineOptions;
-        
+
         console.log(naviOption);
         await this.map.routeSimulation.set(naviResponse[this.setting.type], naviOption);
     }
@@ -242,9 +242,9 @@ export class SimulationMenu {
     stop() {
         this.map.routeSimulation.stop();
     }
-    initdestTagMenu(){
+    initdestTagMenu() {
         const setting = {
-            showTag:true
+            showTag: true,
         };
         const menu = this.menu;
         menu.add(setting, 'showTag');
@@ -264,8 +264,8 @@ export class SimulationMenu {
         const setting = {
             lineColor: '#ffbb00',
             lineSpotSize: 10,
-            lineSpotInterval: 10,
-            lineSpotCount: 10,
+            lineSpotInterval: '',
+            lineSpotCount: '',
             lineSpotAnimate: true,
             lineSpotAnimateSpeed: 0.1,
             solidLineEnabled: true,
@@ -294,10 +294,10 @@ export class SimulationMenu {
             height: '',
             positionZ: 0,
             visibleIcon: true,
-            anchor:{
-                x:'0.5',
-                y:'0.5'
-            }
+            anchor: {
+                x: '0.5',
+                y: '0.5',
+            },
         };
 
         const menu = this.menu.addFolder(menuName);
@@ -319,7 +319,7 @@ export class SimulationMenu {
             isAnimate: true,
             duration: 1200,
             isRepeat: true,
-            isYoyo: false
+            isYoyo: false,
         };
 
         const menu = this.menu.addFolder(menuName);
