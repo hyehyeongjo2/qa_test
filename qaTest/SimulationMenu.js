@@ -264,11 +264,11 @@ export class SimulationMenu {
         const setting = {
             lineColor: '#ffbb00',
             lineSpotSize: 10,
-            lineSpotInterval: '',
+            lineSpotInterval: 10,
             lineSpotCount: '',
             lineSpotAnimate: true,
             lineSpotAnimateSpeed: 0.1,
-            solidLineEnabled: true,
+            solidLineEnabled: false,
             solidLineWidth: 10,
             solidLineJoin: 'round',
             solidLineCap: 'round',
