@@ -6,6 +6,7 @@ export class SimulationMoreMenu {
         this.menu = null;
         this.setting = null;
         this.poiList = null;
+        this.complete = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -29,6 +30,7 @@ export class SimulationMoreMenu {
             PosLineSet: this.PosLineSet.bind(this),
             IdPointSet: this.IdPointSet.bind(this),
             routetype: this.routetype.bind(this),
+            // test: this.createNaviListContainer.bind(this),
         };
         const menu = this.menu;
         menu.add(setting, 'doubleFloortestSet');
@@ -36,9 +38,12 @@ export class SimulationMoreMenu {
         menu.add(setting, 'PosLineSet');
         menu.add(setting, 'IdPointSet');
         menu.add(setting, 'routetype');
+        // menu.add(setting, 'test');
     }
 
     doubleFloortestStart() {
+        const mapContainer = this.mapContainer;
+        this.complete = true;
         const animOption = {
             destOption: {
                 // 도착지 애니메이션 옵션
@@ -62,6 +67,36 @@ export class SimulationMoreMenu {
             },
         };
         this.map.routeSimulation.start(animOption);
+        mapContainer.addEventListener('navi-complete', (e) => {
+            if (this.complete) {
+                console.log('navi-complete 에 대한 결과값', e.detail);
+                this.complete = false;
+            }
+        });
+        mapContainer.addEventListener('floor-changed', (e) => {
+            // this.complete = true;
+            if (this.complete) {
+                console.log('floor-changed 에 대한 결과값', e.detail);
+                this.complete = false;
+            }
+        });
+
+        // floor-changing
+        mapContainer.addEventListener('floor-changing', (e) => {
+            // this.complete = true;
+            if (this.complete) {
+                console.log('floor-changing 에 대한 결과값', e.detail);
+                this.complete = false;
+            }
+        });
+        mapContainer.addEventListener('render-complete', (e) => {
+            // this.complete = true;
+            if (this.complete) {
+                console.log('render-complete 에 대한 결과값', e.detail);
+                this.complete = false;
+            }
+        });
+        console.log(this.complete);
     }
 
     async doubleFloortestSet() {
@@ -183,7 +218,6 @@ export class SimulationMoreMenu {
         const naviResponse = await this.mapData.getRoute(route);
         await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
     }
-
     async PosLineSet() {
         const currentFloor = this.map.context.getCurrentFloor().id;
         this.poiList = this.mapData.dataPoi.getPois().reduce(
@@ -242,7 +276,6 @@ export class SimulationMoreMenu {
             },
             destination: {
                 // 도착지 마커 및 주행선 옵션
-                showTag: true, // 도착지 말풍선 생성 여부 (기본값 true)
                 markerOptions: {
                     // 도착지 마커 옵션 (출발지 마커 옵션과 동일)
                     // iconUrl: string,
@@ -323,7 +356,7 @@ export class SimulationMoreMenu {
                 lineSpotSize: 10,
                 lineSpotInterval: 10,
                 lineSpotCount: 10,
-                lineSpotAnimate: true,
+                lineSpotAnimate: false,
                 lineSpotAnimateSpeed: 0.1,
             },
             origin: {
@@ -343,7 +376,7 @@ export class SimulationMoreMenu {
             },
             destination: {
                 // 도착지 마커 및 주행선 옵션
-                showTag: true, // 도착지 말풍선 생성 여부 (기본값 true)
+                showTag: false, // 도착지 말풍선 생성 여부 (기본값 true)
                 markerOptions: {
                     // 도착지 마커 옵션 (출발지 마커 옵션과 동일)
                     // iconUrl: string,

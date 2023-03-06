@@ -41,21 +41,21 @@ export class ControlMenu {
         return this.menu;
     }
 
-    initgetCurrentZoomLevel(gui){
-        const getCurrentZoomLevel = (value) =>{
+    initgetCurrentZoomLevel(gui) {
+        const getCurrentZoomLevel = (value) => {
             console.log('currentZoomLevel:', this.map.control.getCurrentZoomLevel());
-        }
-        const setting ={
-            getCurrentZoomLevel : getCurrentZoomLevel,
+        };
+        const setting = {
+            getCurrentZoomLevel: getCurrentZoomLevel,
         };
         gui.add(setting, 'getCurrentZoomLevel');
     }
-    initgetCameraType(gui){
-        const getCameraType = (value) =>{
+    initgetCameraType(gui) {
+        const getCameraType = (value) => {
             console.log('getCameraType:', this.map.control.getCameraType());
-        }
-        const setting ={
-            getCameraType : getCameraType,
+        };
+        const setting = {
+            getCameraType: getCameraType,
         };
         gui.add(setting, 'getCameraType');
     }
@@ -230,7 +230,6 @@ export class ControlMenu {
         };
         gui.add(setting, 'reset');
     }
-
 
     //initMoveTo
     initMoveTo(gui) {

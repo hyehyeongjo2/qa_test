@@ -6,6 +6,7 @@ export class ControlMoreMenu {
         this.menu = null;
         this.objectList = null;
         this.poiList = null;
+        this.event = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -55,6 +56,8 @@ export class ControlMoreMenu {
     }
 
     initztest(gui) {
+        const mapContainer = this.mapContainer;
+        this.event = true;
         const ztest = (value) => {
             let cameraType = this.map.control.getCameraType();
             console.log('cameraType : ', cameraType);
@@ -70,24 +73,29 @@ export class ControlMoreMenu {
             console.log('currentZoomLevel:', this.map.control.getCurrentZoomLevel());
             setTimeout(() => {
                 this.map.control.changeZoom({ zoom: 24, transition: false });
+                this.event = true;
                 console.log('changeZoom', this.map.control.getCurrentZoomLevel());
             }, 1000);
             setTimeout(() => {
                 this.map.control.set({ zoom: 20, rotation: 0, tilt: 0, transition: false });
+                this.event = true;
                 console.log('set', this.map.control.getCurrentZoomLevel());
             }, 3000);
             setTimeout(() => {
                 this.map.control.set({ zoom: 24, rotation: 0, tilt: 0, transition: false });
+                this.event = true;
                 console.log('set', this.map.control.getCurrentZoomLevel());
             }, 4000);
             setTimeout(() => {
                 // this.map.control.changeZoom({ zoom: 20 });
                 this.map.control.zoomIn({ transition: false });
+                this.event = true;
                 console.log('set', this.map.control.getCurrentZoomLevel());
             }, 6000);
             setTimeout(() => {
                 // this.map.control.changeZoom({ zoom: 24 });
                 this.map.control.zoomOut({ transition: false });
+                this.event = true;
                 console.log('Zoomin/ Out', this.map.control.getCurrentZoomLevel());
             }, 7000);
             setTimeout(() => {
@@ -105,6 +113,12 @@ export class ControlMoreMenu {
                 this.map.control.reset({ transition: true });
                 console.log('reset');
             }, 10000);
+            mapContainer.addEventListener('zoom-changed', (e) => {
+                if (this.event) {
+                    console.log('zoom-changed 에 대한 결과값', e.detail);
+                    this.event = false;
+                }
+            });
         };
         const setting = {
             ztest: ztest,
@@ -114,7 +128,6 @@ export class ControlMoreMenu {
 
     initMtest(gui) {
         let cameraType = this.map.control.getCameraType();
-        console.log('cameraType : ', cameraType);
         const Mtest = (value) => {
             const option = {
                 transition: true,
@@ -153,8 +166,9 @@ export class ControlMoreMenu {
     }
 
     initRotest(gui) {
+        this.event = true;
+        const mapContainer = this.mapContainer;
         let cameraType = this.map.control.getCameraType();
-        console.log('cameraType : ', cameraType);
         const Rotest = (value) => {
             this.map.control.setOption({
                 controlRangeOption: {
@@ -166,14 +180,22 @@ export class ControlMoreMenu {
             });
             setTimeout(() => {
                 this.map.control.set({ zoom: 20, rotation: -180, tilt: 0 });
+                this.event = true;
             }, 1000);
             setTimeout(() => {
                 this.map.control.set({ zoom: 20, rotation: 180, tilt: 0 });
+                this.event = true;
                 console.log('set');
             }, 2000);
             setTimeout(() => {
                 console.log('scroll plz');
             }, 3000);
+            mapContainer.addEventListener('rotation-changed', (e) => {
+                if (this.event) {
+                    console.log('rotation-changed 에 대한 결과값', e.detail);
+                    this.event = false;
+                }
+            });
         };
         const setting = {
             Rotest: Rotest,
@@ -183,7 +205,6 @@ export class ControlMoreMenu {
 
     initStest(gui) {
         let cameraType = this.map.control.getCameraType();
-        console.log('cameraType : ', cameraType);
         const Stest = (value) => {
             const option = {
                 transition: true,
@@ -229,6 +250,8 @@ export class ControlMoreMenu {
     }
 
     inittitest(gui) {
+        const mapContainer = this.mapContainer;
+        this.event = true;
         const titest = (value) => {
             this.map.control.setOption({
                 controlRangeOption: {
@@ -240,14 +263,22 @@ export class ControlMoreMenu {
             });
             setTimeout(() => {
                 this.map.control.set({ zoom: 20, rotation: 0, tilt: 10 });
+                this.event = true;
             }, 1000);
             setTimeout(() => {
                 this.map.control.set({ zoom: 20, rotation: 0, tilt: 80 });
+                this.event = true;
                 console.log('set');
             }, 2000);
             setTimeout(() => {
                 console.log('scroll plz');
             }, 3000);
+            mapContainer.addEventListener('tilt-changed', (e) => {
+                if (this.event) {
+                    console.log('tilt-changed 에 대한 결과값', e.detail);
+                    this.event = false;
+                }
+            });
         };
         const setting = {
             titest: titest,
@@ -410,8 +441,8 @@ export class ControlMoreMenu {
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
-                            type: 'OBJECT',
-                            ids: [],
+                            type: 'OBJECT_ALL',
+                            // ids: [],
                             //ids : OB-3PdRZ1rzi5625- 2층계단, OB-u-GoTosOj64029-남자화장실, OB-EwYTaOTNj4029- 화장실-여
                             // ids: ['OB-mxanpdYA1T2410', 'OB-aN7fGeVoze1959', 'OB-ccjURqW8hq1959']
                         },
@@ -431,8 +462,8 @@ export class ControlMoreMenu {
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
-                            type: 'OBJECT',
-                            ids: [],
+                            type: 'OBJECT_ALL',
+                            // ids: [],
                             //ids : OB-3PdRZ1rzi5625- 2층계단, OB-u-GoTosOj64029-남자화장실, OB-EwYTaOTNj4029- 화장실-여
                             // ids: ['OB-mxanpdYA1T2410', 'OB-aN7fGeVoze1959', 'OB-ccjURqW8hq1959']
                         },
@@ -450,7 +481,7 @@ export class ControlMoreMenu {
             floorChangedTest_2F();
             setTimeout(() => {
                 floorChangedTest_11F();
-            }, 2000);
+            }, 10000);
         };
         const setting = {
             focustestob2: focustestob2,
@@ -507,6 +538,7 @@ export class ControlMoreMenu {
                 floorChangedTest_11F();
             }, 2000);
         };
+
         const setting = {
             focustestob3: focustestob3,
         };

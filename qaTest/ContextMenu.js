@@ -22,7 +22,6 @@ export class ContextMenu {
     }
     initSetting(menu) {
         this.mapContainer.addEventListener('floor-changed', (e) => {
-            console.log('floor-changed 에 대한 결과값', e.detail);
             setting.getCurrentFloor = this.map.context.getCurrentFloor().id;
         });
 

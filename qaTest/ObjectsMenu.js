@@ -9,6 +9,7 @@ export class ObjectsMenu {
         this.menu = null;
         this.setting = null;
         this.actionSetting = null;
+        this.objectIds = [];
     }
     removeMenu() {
         if (this.menu) {
@@ -52,7 +53,6 @@ export class ObjectsMenu {
     async initActionSetting(menu) {
         let objectSetting = null;
         this.mapContainer.addEventListener('floor-changed', async (e) => {
-            console.log('floor-changed 에 대한 결과값', e.detail);
             const currentFloor = e.detail.id;
             const objects = await this.mapData.dataObject.getObjects(currentFloor);
             const objectList = objects.reduce(
@@ -64,6 +64,15 @@ export class ObjectsMenu {
             // console.log(objectList);
             objectSetting = objectSetting.options(objectList);
         });
+        // this.mapContainer.addEventListener('object-click', (e) => {
+        //     // console.log('object click ', e.detail);
+        //     const id = e.detail[0].id;
+        //     if (this.objectIds.includes(id)) {
+        //         this.objectIds = this.objectIds.filter((item) => item !== id); //화살표 함수로 필터 함수를 단순화
+        //     } else {
+        //         this.objectIds.push(id);
+        //     }
+        // });
 
         const currentFloor = this.map.context.getCurrentFloor().id;
         // const objects = await this.mapData.dataObject.getObjects(currentFloor);

@@ -15,6 +15,7 @@ export class ContextMoreMenu {
         this.initsecondHS(this.menu);
         this.initthirdHS(this.menu);
         this.initchangetest(this.menu);
+        this.initconvertImg(this.menu);
         return this.menu;
     }
 
@@ -135,5 +136,20 @@ export class ContextMoreMenu {
             changeTest: changeTest,
         };
         gui.add(setting, 'changeTest');
+    }
+    initconvertImg(gui) {
+        const imgTest = async () => {
+            this.map.context.convertToImg({ ratio: 5 });
+            setTimeout(() => {
+                this.map.context.convertToImg({ ratio: 5 });
+            }, 3000);
+            setTimeout(() => {
+                this.map.context.convertToImg({ ratio: 5 });
+            }, 6000);
+        };
+        const setting = {
+            imgTest: imgTest,
+        };
+        gui.add(setting, 'imgTest');
     }
 }

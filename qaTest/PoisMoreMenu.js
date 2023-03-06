@@ -40,6 +40,7 @@ export class PoisMoreMenu {
             arr_s_to_h: this.arr_s_to_h.bind(this),
             all_s_to_h: this.all_s_to_h.bind(this),
             getCurrent: this.getCurrent.bind(this),
+            distense: this.initGetCategoryDistance.bind(this),
         };
 
         const menu = this.menu;
@@ -50,6 +51,7 @@ export class PoisMoreMenu {
         menu.add(setting, 'arr_s_to_h');
         menu.add(setting, 'all_s_to_h');
         menu.add(setting, 'getCurrent');
+        menu.add(setting, 'distense');
     }
 
     single_h_to_s(value) {
@@ -320,4 +322,36 @@ export class PoisMoreMenu {
             });
         }, 4000);
     }
+    // async initGetCategoryDistance() {
+    //     // const { mapData, map } = arg;
+    //     const floorList = this.mapData.dataFloor.getFloors();
+
+    //     const option = {
+    //         position: { x: 3000, y: 1000 },
+    //         floorId: floorList[1], // 11층
+    //     };
+    //     const categoryCode = {
+    //         refund: 'S011',
+    //         elevator: 'S001',
+    //         restRoom: 'S002',
+    //         escalator: 'S003',
+    //         helpDesk: 'S004',
+    //         keepCarrier: 'S005',
+    //         nursuryRoom: 'S008',
+    //         customerService: 'S009',
+    //         exchange: 'S010',
+    //     };
+    //     const pois = await this.mapData.getCategoryDistance(option, categoryCode.restRoom);
+    //     if (!pois) return;
+    //     console.log(pois);
+    //     const poisList = pois.map((poi) => {
+    //         return { x: poi.position.x, y: poi.position.y, floorId: poi.floorId };
+    //     });
+    //     console.log(poisList);
+
+    //     const optionMarker = {
+    //         marker: poisList,
+    //     };
+    //     map.markers.set(optionMarker);
+    // }
 }
