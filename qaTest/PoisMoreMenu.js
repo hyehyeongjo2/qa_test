@@ -40,7 +40,7 @@ export class PoisMoreMenu {
             arr_s_to_h: this.arr_s_to_h.bind(this),
             all_s_to_h: this.all_s_to_h.bind(this),
             getCurrent: this.getCurrent.bind(this),
-            distense: this.initGetCategoryDistance.bind(this),
+            // distense: this.initGetCategoryDistance.bind(this),
         };
 
         const menu = this.menu;
@@ -51,7 +51,7 @@ export class PoisMoreMenu {
         menu.add(setting, 'arr_s_to_h');
         menu.add(setting, 'all_s_to_h');
         menu.add(setting, 'getCurrent');
-        menu.add(setting, 'distense');
+        // menu.add(setting, 'distense');
     }
 
     single_h_to_s(value) {

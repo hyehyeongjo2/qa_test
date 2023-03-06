@@ -314,8 +314,8 @@ export class SimulationMoreMenu {
                         lineColor: '#ff00ff',
                         solidLineEnabled: true,
                         solidLineWidth: 30,
-                        solidLineJoin: 'miter',
-                        solidLineCap: 'square',
+                        solidLineJoin: 'bevel',
+                        solidLineCap: 'butt',
                     },
                 },
             ],
@@ -352,6 +352,7 @@ export class SimulationMoreMenu {
             lineZ: 100, // 주행선의 z축 값을 지정합니다.
             lineDivide: true, // 주행선을 경유지 기준으로 분할 여부를 결정합니다.
             defaultLineOption: {
+                solidLineEnabled: false,
                 lineColor: '#0000ff', // navigation 주행 라인의 색상을 지정
                 lineSpotSize: 10,
                 lineSpotInterval: 10,
@@ -386,6 +387,7 @@ export class SimulationMoreMenu {
                     visibleIcon: true,
                 },
                 lineOptions: {
+                    solidLineEnabled: false,
                     lineColor: '#000000',
                     lineSpotSize: 10,
                     lineSpotInterval: 10,
@@ -415,6 +417,7 @@ export class SimulationMoreMenu {
                     },
                     lineOptions: {
                         // 경유지 주행선 옵션 (기본 주행선 옵션과 동일)
+                        solidLineEnabled: false,
                         lineColor: '#ff00ff',
                         lineSpotSize: 10,
                         lineSpotInterval: 10,
