@@ -146,8 +146,8 @@ export const mapList = [
     },
     {
         name: '이마트 연수점',
-        id: 'MP-1iev226pi8f1v0652',
-        clientId: ' c_VGxATtQ_M9uxz1YdsWDj',
+        // id: 'MP-1iev226pi8f1v0652',
+        clientId: 'c_VGxATtQ_M9uxz1YdsWDj',
         clientSecret: 'ed2dbb75cd356b8a44ffa9d9993bc922',
     },
     {
