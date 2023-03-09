@@ -146,8 +146,26 @@ export const mapList = [
     },
     {
         name: '이마트 연수점',
-        id: 'MP-u8e0obukp54m2614',
-        clientId: 'e8R6QFlnAvg8H8M2vCd-Ye',
-        clientSecret: '91c8d775f43c25fc3fcbd2d06644ece2',
+        id: 'MP-1iev226pi8f1v0652',
+        clientId: ' c_VGxATtQ_M9uxz1YdsWDj',
+        clientSecret: 'ed2dbb75cd356b8a44ffa9d9993bc922',
+    },
+    {
+        name: '현대백화점-압구정본점',
+        id: 'MP-qe1lhmrimoh11132',
+        clientId: 'GunQ1v3kke9QWoga6WVvz',
+        clientSecret: '2053d84e3046e188be782a84b8840eae',
+    },
+    {
+        name: '[배포]현대백화점-더현대서울점',
+        id: 'MP-qe6m98422alw0347',
+        clientId: 'byQdkBiK4_qbW3lNRooB_Q',
+        clientSecret: '2e77b65e659705891c0ca2e66d74e285',
+    },
+    {
+        name: '롯데프리미엄아울렛 타임빌라스점',
+        id: 'MP-1hbahxvbv9ctu6863',
+        clientId: 'dz2s86wUQXU97PLERePEqz',
+        clientSecret: '1230c6a9ccfcf0ddd960b14082f1bbb5',
     },
 ];
