@@ -91,7 +91,7 @@ function initGetMapByInput(parentMenu) {
     const setting = {
         clientId: '',
         clientSecret: '',
-        serverType: 'SERVER_REAL',
+        serverType: 'SERVER_STAGE',
         getMapByInput: getMapByInput,
         getMapReal_Stage: getMapReal_Stage,
     };
@@ -176,7 +176,7 @@ async function getMapDataByIndex(index) {
     const option = {
         clientId: mapList[index].clientId,
         clientSecret: mapList[index].clientSecret,
-        serverType: 'SERVER_REAL',
+        serverType: 'SERVER_STAGE',
     };
     getMapData(option);
 }
