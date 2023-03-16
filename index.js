@@ -91,15 +91,17 @@ function initGetMapByInput(parentMenu) {
     const setting = {
         clientId: '',
         clientSecret: '',
-        serverType: 'SERVER_STAGE',
+        serverType: 'REAL',
         getMapByInput: getMapByInput,
         getMapReal_Stage: getMapReal_Stage,
+        local: local,
     };
     menu.add(setting, 'clientId');
     menu.add(setting, 'clientSecret');
     menu.add(setting, 'serverType', ['SERVER_REAL', 'SERVER_STAGE']);
     menu.add(setting, 'getMapByInput');
     menu.add(setting, 'getMapReal_Stage');
+    menu.add(setting, 'local');
 
     async function getMapByInput() {
         const option = {
@@ -108,6 +110,66 @@ function initGetMapByInput(parentMenu) {
             serverType: setting.serverType,
         };
         await getMapData(option);
+    }
+
+    async function local() {
+        const dabeeoMaps = new dabeeo.Maps();
+
+        //mapDataOption 정의
+        const path = `./MP-1jydrhzb11sh17965`;
+
+        const mapDataOption = {
+            baseUrl: path,
+            mapId: 'MP-1jydrhzb11sh17965',
+            serverType: 'SERVER_LOCAL',
+        };
+        //mapData 가져오기
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        console.log(mapData);
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        //mapContainer
+        const mapContainer = makeMapElement();
+
+        //mapOption 정의
+        const mapOption = Object.assign({
+            // camera: '2d' | '3d',                        // 초기 카메라 모드 3d
+            // floor: string,                              // 적용할 층 정보
+            // theme: string,                              // 적용할 테마의 ID
+            language: 'en', // 초기 poi 언어 설정
+            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+            spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
+            // spriteKeepRotation: true,                      // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
+            // controlOption: {
+            //     // zoom: 0,                             // 초기 줌
+            //     // pan: {                               // 중심좌표
+            //     //     // x: number,
+            //     //     // y: number
+            //     // },
+            //     // rotate: 0,                           // 회전 3d, 2d
+            //     // tilt: 0                              // 기울기 3d
+            // },
+            // poiLevel: any[]                             // poi 중요도에 따라 설정한 지도 확대 백분율에 맞게 보이게 설정.
+            // fontWeight: {                               // poi title font style
+            //   // normal:number,
+            //   // bold:number
+            // },
+            // mergeMesh: boolean,                         // mergedMesh 활성화 여부
+            waterMarkPosition: 'RIGHT_TOP',
+        });
+
+        // mapContainer에 mapOption으로 mapData의 지도데이터를 그리기
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        gui.removeFolder(mapOptionMenu);
+        removeAllMenu();
+
+        // 메뉴 다시 만들기
+        mapOptionMenu = initMapOptionMenu(gui);
+        mapOptionMenu.hide();
+
+        initAllMenu(gui, mapData, map, mapContainer);
+        console.log(map);
+        console.log('test: dabeeoMaps');
     }
 
     async function getMapReal_Stage() {
@@ -176,7 +238,7 @@ async function getMapDataByIndex(index) {
     const option = {
         clientId: mapList[index].clientId,
         clientSecret: mapList[index].clientSecret,
-        serverType: 'SERVER_STAGE',
+        serverType: 'SERVER_REAL',
     };
     getMapData(option);
 }
@@ -570,8 +632,16 @@ function initMapOptionMenu(parentMenu, map, option) {
             mergeMesh: setting.mergeMesh, // mergedMesh 활성화 여부
             showWaterMarker: setting.showWaterMarker,
             enableFloorMotion: setting.enableFloorMotion,
+            floorMotionSpeed: {
+                rotateSpeed: setting.rotateSpeed,
+                fadeSpeed: setting.fadeSpeed,
+            },
+            canvasSize: {
+                width: setting.canvasSizewidth,
+                height: setting.canvasSizeheight,
+            },
             waterMarkPosition: setting.waterMarkPosition,
-            // enableTiling: setting.enableTiling,
+            enableTiling: setting.enableTiling,
         };
         return mapOption;
     }
@@ -600,6 +670,10 @@ function initOptionSetting() {
         mergeMesh: false, // mergedMesh 활성화 여부
         showWaterMarker: true,
         enableFloorMotion: false,
+        rotateSpeed: 0.3,
+        fadeSpeed: 0.3,
+        canvasSizewidth: '',
+        canvasSizeheight: '',
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
     };
@@ -629,6 +703,10 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'y');
     menu.add(setting, 'rotate');
     menu.add(setting, 'tilt');
+    menu.add(setting, 'rotateSpeed');
+    menu.add(setting, 'fadeSpeed');
+    menu.add(setting, 'canvasSizewidth');
+    menu.add(setting, 'canvasSizeheight');
     menu.add(setting, 'mergeMesh');
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
