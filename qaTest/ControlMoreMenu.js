@@ -7,6 +7,7 @@ export class ControlMoreMenu {
         this.objectList = null;
         this.poiList = null;
         this.event = null;
+        this.floorList = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -37,6 +38,7 @@ export class ControlMoreMenu {
             },
             [''],
         );
+        this.floorList = this.mapData.dataFloor.getFloors();
         this.initztest(this.menu);
         this.initStest(this.menu);
         this.initMtest(this.menu);
@@ -381,13 +383,15 @@ export class ControlMoreMenu {
 
     initfocustestob1(gui) {
         const focustestob1 = async (value) => {
+            const floorList = this.mapData.dataFloor.getFloors();
             const floorChangedTest_2F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const second = this.mapData.dataObject.getObjects(floorList[1].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'OBJECT',
-                            ids: ['OB-u-GoTosOj64029'],
+                            ids: [second[5].id],
                             //ids : OB-3PdRZ1rzi5625- 2층계단, OB-u-GoTosOj64029-남자화장실, OB-EwYTaOTNj4029- 화장실-여
                             // ids: ['OB-mxanpdYA1T2410', 'OB-aN7fGeVoze1959', 'OB-ccjURqW8hq1959']
                         },
@@ -400,15 +404,16 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-vf3q07spbmsw8132'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(floorList[1].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             const floorChangedTest_11F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const first = this.mapData.dataObject.getObjects(floorList[0].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'OBJECT',
-                            ids: ['OB-3Uf1pIZXd2409'],
+                            ids: [first[5].id],
                             //ids : OB-3PdRZ1rzi5625- 2층계단, OB-u-GoTosOj64029-남자화장실, OB-EwYTaOTNj4029- 화장실-여
                             // ids: ['OB-mxanpdYA1T2410', 'OB-aN7fGeVoze1959', 'OB-ccjURqW8hq1959']
                         },
@@ -421,7 +426,7 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-t4vqgyek3jnb8146'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(floorList[0].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             floorChangedTest_2F();
             setTimeout(() => {
@@ -491,15 +496,17 @@ export class ControlMoreMenu {
 
     initfocustestob3(gui) {
         const focustestob3 = async (value) => {
+            const floorList = this.mapData.dataFloor.getFloors();
             const floorChangedTest_2F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const second = this.mapData.dataObject.getObjects(floorList[1].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'OBJECT',
                             // ids: []
                             //ids : OB-3PdRZ1rzi5625- 2층계단, OB-u-GoTosOj64029-남자화장실, OB-EwYTaOTNj4029- 화장실-여
-                            ids: ['OB-9-3QKxtuSO8077', 'OB-saqgik_0l4094', 'OB-EwYTaOTNj4029'],
+                            ids: [second[5].id, second[4].id, second[2].id],
                         },
                         transition: true,
                         padding: {
@@ -510,17 +517,18 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-vf3q07spbmsw8132'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(floorList[1].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             const floorChangedTest_11F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const first = this.mapData.dataObject.getObjects(floorList[0].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'OBJECT',
                             // ids: []
                             //ids : OB-3PdRZ1rzi5625- 2층계단, OB-u-GoTosOj64029-남자화장실, OB-EwYTaOTNj4029- 화장실-여
-                            ids: ['OB-mxanpdYA1T2410', 'OB-aN7fGeVoze1959', 'OB-ccjURqW8hq1959'],
+                            ids: [first[5].id, first[4].id, first[2].id],
                         },
                         transition: true,
                         padding: {
@@ -531,7 +539,7 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-t4vqgyek3jnb8146'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(floorList[0].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             floorChangedTest_2F();
             setTimeout(() => {
@@ -547,13 +555,15 @@ export class ControlMoreMenu {
 
     initfocustestpoi1(gui) {
         const focustestpoi1 = async (value) => {
+            const floorList = this.mapData.dataFloor.getFloors();
             const floorChangedTest_2F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const second = this.mapData.dataPoi.getPois(floorList[1].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'POI',
-                            ids: ['PO-9InVzIGv20417'],
+                            ids: [second[4].id],
                         },
                         transition: true,
                         padding: {
@@ -564,15 +574,16 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-vf3q07spbmsw8132'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(floorList[1].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             const floorChangedTest_11F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const first = this.mapData.dataPoi.getPois(floorList[0].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'POI',
-                            ids: ['PO-4JvSQCWHC2270'],
+                            ids: [first[5].id],
                         },
                         transition: true,
                         padding: {
@@ -583,7 +594,7 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-t4vqgyek3jnb8146'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(floorList[0].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             floorChangedTest_2F();
             setTimeout(() => {
@@ -603,7 +614,7 @@ export class ControlMoreMenu {
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
-                            type: 'POI',
+                            type: 'POI_ALL',
                             ids: [],
                         },
                         transition: true,
@@ -615,14 +626,14 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-vf3q07spbmsw8132'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(this.floorList[0].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             const floorChangedTest_11F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
-                            type: 'POI',
+                            type: 'POI_ALL',
                             ids: [],
                         },
                         transition: true,
@@ -634,7 +645,7 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-t4vqgyek3jnb8146'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(this.floorList[1].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             floorChangedTest_2F();
             setTimeout(() => {
@@ -651,11 +662,12 @@ export class ControlMoreMenu {
         const focustestpoi3 = async (value) => {
             const floorChangedTest_2F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const second = this.mapData.dataObject.getObjects(floorList[1].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'POI',
-                            ids: ['PO-9InVzIGv20417', 'PO-bG8eepPeB2502'],
+                            ids: [second[5].id, second[4].id, second[2].id],
                         },
                         transition: true,
                         padding: {
@@ -666,15 +678,16 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-vf3q07spbmsw8132'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(this.floorList[1].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             const floorChangedTest_11F = async () => {
                 this.mapContainer.addEventListener('floor-changed', (e) => {
+                    const first = this.mapData.dataObject.getObjects(floorList[0].id);
                     console.log('floor changed 에 대한 결과값', e.detail);
                     this.map.control.focusTo({
                         focus: {
                             type: 'POI',
-                            ids: ['PO-4JvSQCWHC2270', 'PO-gy5U7uRVH9908', 'PO-NMvw3E0pe1690'],
+                            ids: [first[5].id, first[4].id, first[2].id],
                         },
                         transition: true,
                         padding: {
@@ -685,7 +698,7 @@ export class ControlMoreMenu {
                         },
                     });
                 });
-                await this.map.context.changeFloor('FL-t4vqgyek3jnb8146'); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
+                await this.map.context.changeFloor(this.floorList[0].id); // 지도를 입력한 층 아이디에 맞는 층으로 전환합니다.
             };
             floorChangedTest_2F();
             setTimeout(() => {

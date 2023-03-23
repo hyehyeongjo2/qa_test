@@ -145,8 +145,8 @@ export const mapList = [
         clientSecret: 'bbcfca4d5e6f844698687b3ab3c66176',
     },
     {
-        name: '이마트 연수점',
-        // id: 'MP-1iev226pi8f1v0652',
+        name: '이마트_연수점',
+        id: 'MP-1iev226pi8f1v0652',
         clientId: 'c_VGxATtQ_M9uxz1YdsWDj',
         clientSecret: 'ed2dbb75cd356b8a44ffa9d9993bc922',
     },
@@ -167,5 +167,11 @@ export const mapList = [
         id: 'MP-1hbahxvbv9ctu6863',
         clientId: 'dz2s86wUQXU97PLERePEqz',
         clientSecret: '1230c6a9ccfcf0ddd960b14082f1bbb5',
+    },
+    {
+        name: '[배포]롯데프리미엄아울렛 동부산점',
+        id: 'MP-1hbd9bwa6muzq4723',
+        clientId: 'do9czMJRkiu8fAfhlTKHkB',
+        clientSecret: 'a78a1f93a5ba6cea2123d83d8cfc19c6',
     },
 ];

@@ -11,11 +11,13 @@ export class MyLocationMoreMenu {
         this.iconApplyFlag = false;
         this.anchorApply = false;
         this.animateApplyFlag = false;
+        this.floorList = null;
     }
     init(menu, mapData, map, mapContainer) {
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
+        this.floorList = this.mapData.dataFloor.getFloors();
         this.menu = menu.addFolder('More');
         this.initlocatest(this.menu);
         this.initlocatestOn(this.menu);
@@ -138,10 +140,10 @@ export class MyLocationMoreMenu {
                 };
                 this.map.mylocation.set(locationOption);
                 setTimeout(() => {
-                    this.map.context.changeFloor('FL-vf3q07spbmsw8132');
+                    this.map.context.changeFloor(this.floorList[0].id);
                 }, 2000);
                 setTimeout(() => {
-                    this.map.context.changeFloor('FL-t4vqgyek3jnb8146');
+                    this.map.context.changeFloor(this.floorList[1].id);
                 }, 4000);
             };
 
@@ -169,10 +171,10 @@ export class MyLocationMoreMenu {
                 };
                 this.map.mylocation.set(locationOption);
                 setTimeout(() => {
-                    this.map.context.changeFloor('FL-vf3q07spbmsw8132');
+                    this.map.context.changeFloor(this.floorList[0].id);
                 }, 2000);
                 setTimeout(() => {
-                    this.map.context.changeFloor('FL-t4vqgyek3jnb8146');
+                    this.map.context.changeFloor(this.floorList[1].id);
                 }, 4000);
             };
             myloca1();

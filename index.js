@@ -91,7 +91,7 @@ function initGetMapByInput(parentMenu) {
     const setting = {
         clientId: '',
         clientSecret: '',
-        serverType: 'REAL',
+        serverType: 'SERVER_REAL',
         getMapByInput: getMapByInput,
         getMapReal_Stage: getMapReal_Stage,
         local: local,
@@ -355,6 +355,7 @@ function initMapOptionMenu(parentMenu, map, option) {
         showpoitest: showpoitest,
         watermarktest: watermarktest,
         tilitingtest: tilitingtest,
+        emart: emart,
         mergeMesh: mergeMesh,
         splitetest: splitetest,
     };
@@ -363,6 +364,7 @@ function initMapOptionMenu(parentMenu, map, option) {
     menu.add(actionSetting, 'showpoitest');
     menu.add(actionSetting, 'watermarktest');
     menu.add(actionSetting, 'tilitingtest');
+    menu.add(actionSetting, 'emart');
     menu.add(actionSetting, 'mergeMesh');
     menu.add(actionSetting, 'splitetest');
     // new indexMore().init(menu, map, option, gui);
@@ -436,6 +438,53 @@ function initMapOptionMenu(parentMenu, map, option) {
         };
         const mapOption = {
             enableTiling: true,
+        };
+
+        //mapData 가져오기
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        const mapContainer = makeMapElement();
+
+        if (map) map.context.cleanup();
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        removeAllMenu();
+
+        initAllMenu(gui, mapData, map, mapContainer);
+
+        currentMenu = mapOptionMenu;
+    }
+
+    async function emart() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapDataOption = {
+            name: '이마트_연수점',
+            id: 'MP-1iev226pi8f1v0652',
+            clientId: 'c_VGxATtQ_M9uxz1YdsWDj',
+            clientSecret: 'ed2dbb75cd356b8a44ffa9d9993bc922',
+        };
+        const mapOption = {
+            camera: '3d', // 초기 카메라 모드. default는 3d
+            floor: null, // 적용할 층 정보. default는 지도 설정값
+            // theme: string,                    // 적용할 테마의 ID
+            language: 'ko', // 초기 poi 언어 설정. default는 지도 설정값
+            showPoi: true,
+            spriteEnable: true, // Poi를 항상 정면으로 보이게 함. default는 true
+            spriteKeepRotation: true, // POI sprite로 그릴때 원래 각도 유지 여부. default는 false
+            showWaterMarker: false,
+            // canvasSize: {
+            //     width: 4000,
+            //     height: 2000,
+            // },
+            controlOption: {
+                zoom: 20, // 0~24
+                pan: {
+                    // 중심좌표, default는 지도 중심
+                    x: 2000,
+                    y: 2200,
+                },
+                tilt: 30,
+            },
+            enableFloorMotionOnRouteSimulation: true,
         };
 
         //mapData 가져오기
@@ -631,17 +680,23 @@ function initMapOptionMenu(parentMenu, map, option) {
             },
             mergeMesh: setting.mergeMesh, // mergedMesh 활성화 여부
             showWaterMarker: setting.showWaterMarker,
-            enableFloorMotion: setting.enableFloorMotion,
-            floorMotionSpeed: {
-                rotateSpeed: setting.rotateSpeed,
-                fadeSpeed: setting.fadeSpeed,
-            },
             canvasSize: {
                 width: setting.canvasSizewidth,
                 height: setting.canvasSizeheight,
             },
+            enablePoiCollisionTest: setting.enablePoiCollisionTest,
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
+            enableFloorMotionOnChangeFloor: setting.enableFloorMotionOnChangeFloor,
+            enableFloorMotionOnRouteSimulation: setting.enableFloorMotionOnRouteSimulation,
+            floorMotionSpeedOnChangeFloor: {
+                rotateSpeed: setting.OnChangeFloorrotateSpeed,
+                fadeSpeed: setting.OnChangeFloorfadeSpeed,
+            },
+            floorMotionSpeedOnRouteSimulation: {
+                rotateSpeed: setting.OnRouteSimulationrotateSpeed,
+                fadeSpeed: setting.OnRouteSimulationfadeSpeed,
+            },
         };
         return mapOption;
     }
@@ -669,19 +724,24 @@ function initOptionSetting() {
         tilt: '', //기울기 3d
         mergeMesh: false, // mergedMesh 활성화 여부
         showWaterMarker: true,
-        enableFloorMotion: false,
-        rotateSpeed: 0.3,
-        fadeSpeed: 0.3,
         canvasSizewidth: '',
         canvasSizeheight: '',
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
+        enablePoiCollisionTest: true,
+        enableFloorMotionOnChangeFloor: true,
+        enableFloorMotionOnRouteSimulation: true,
+        OnChangeFloorrotateSpeed: 0.3,
+        OnChangeFloorfadeSpeed: 0.3,
+        OnRouteSimulationrotateSpeed: 0.05,
+        OnRouteSimulationfadeSpeed: 0.05,
     };
     return setting;
 }
 
 function initOptionMenu(setting, parentMenu) {
     const menu = parentMenu.addFolder('mapOption');
+    const flooranimation = menu.addFolder('flooranimation');
     const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
@@ -696,6 +756,7 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'language', langSetting);
     menu.add(setting, 'theme', theme);
     menu.add(setting, 'showPoi');
+    menu.add(setting, 'enablePoiCollisionTest');
     menu.add(setting, 'spriteEnable');
     menu.add(setting, 'spriteKeepRotation');
     menu.add(setting, 'zoom');
@@ -703,15 +764,18 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'y');
     menu.add(setting, 'rotate');
     menu.add(setting, 'tilt');
-    menu.add(setting, 'rotateSpeed');
-    menu.add(setting, 'fadeSpeed');
     menu.add(setting, 'canvasSizewidth');
     menu.add(setting, 'canvasSizeheight');
     menu.add(setting, 'mergeMesh');
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
-    menu.add(setting, 'enableFloorMotion');
     menu.add(setting, 'enableTiling');
+    flooranimation.add(setting, 'enableFloorMotionOnChangeFloor');
+    flooranimation.add(setting, 'enableFloorMotionOnRouteSimulation');
+    flooranimation.add(setting, 'OnChangeFloorrotateSpeed');
+    flooranimation.add(setting, 'OnChangeFloorfadeSpeed');
+    flooranimation.add(setting, 'OnRouteSimulationrotateSpeed');
+    flooranimation.add(setting, 'OnRouteSimulationfadeSpeed');
     return menu;
 }
 
