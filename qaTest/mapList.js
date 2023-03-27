@@ -174,4 +174,10 @@ export const mapList = [
         clientId: 'do9czMJRkiu8fAfhlTKHkB',
         clientSecret: 'a78a1f93a5ba6cea2123d83d8cfc19c6',
     },
+    {
+        name: 'Waikiki 지도',
+        id: 'MP-1jew3bfvscoqa3785',
+        clientId: 'fb0zn9hZ4HTbbhtFCm-yoO',
+        clientSecret: '7ab047e966192189db16bdf43eef603f',
+    },
 ];

@@ -471,10 +471,11 @@ function initMapOptionMenu(parentMenu, map, option) {
             spriteEnable: true, // Poi를 항상 정면으로 보이게 함. default는 true
             spriteKeepRotation: true, // POI sprite로 그릴때 원래 각도 유지 여부. default는 false
             showWaterMarker: false,
-            // canvasSize: {
-            //     width: 4000,
-            //     height: 2000,
-            // },
+            enableFloorMotionOnRouteSimulation: 0,
+            canvasSize: {
+                width: 4000,
+                height: 2000,
+            },
             controlOption: {
                 zoom: 20, // 0~24
                 pan: {
@@ -484,7 +485,6 @@ function initMapOptionMenu(parentMenu, map, option) {
                 },
                 tilt: 30,
             },
-            enableFloorMotionOnRouteSimulation: true,
         };
 
         //mapData 가져오기
@@ -697,6 +697,7 @@ function initMapOptionMenu(parentMenu, map, option) {
                 rotateSpeed: setting.OnRouteSimulationrotateSpeed,
                 fadeSpeed: setting.OnRouteSimulationfadeSpeed,
             },
+            fadeDistanceRatio: setting.fadeDistanceRatio,
         };
         return mapOption;
     }
@@ -729,12 +730,13 @@ function initOptionSetting() {
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
-        enableFloorMotionOnChangeFloor: true,
-        enableFloorMotionOnRouteSimulation: true,
-        OnChangeFloorrotateSpeed: 0.3,
-        OnChangeFloorfadeSpeed: 0.3,
-        OnRouteSimulationrotateSpeed: 0.05,
-        OnRouteSimulationfadeSpeed: 0.05,
+        enableFMotionOnChangeFloor: true,
+        enableFMotionOnRouteSimulation: true,
+        FloorrotateSpeed: 0.3,
+        FloorfadeSpeed: 0.3,
+        SimulationrotateSpeed: 0.05,
+        SimulationfadeSpeed: 0.05,
+        fadeDistanceRatio: 0.5,
     };
     return setting;
 }
@@ -770,12 +772,13 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
-    flooranimation.add(setting, 'enableFloorMotionOnChangeFloor');
-    flooranimation.add(setting, 'enableFloorMotionOnRouteSimulation');
-    flooranimation.add(setting, 'OnChangeFloorrotateSpeed');
-    flooranimation.add(setting, 'OnChangeFloorfadeSpeed');
-    flooranimation.add(setting, 'OnRouteSimulationrotateSpeed');
-    flooranimation.add(setting, 'OnRouteSimulationfadeSpeed');
+    flooranimation.add(setting, 'enableFMotionOnChangeFloor');
+    flooranimation.add(setting, 'enableFMotionOnRouteSimulation');
+    flooranimation.add(setting, 'FloorrotateSpeed');
+    flooranimation.add(setting, 'FloorfadeSpeed');
+    flooranimation.add(setting, 'SimulationrotateSpeed');
+    flooranimation.add(setting, 'SimulationfadeSpeed');
+    flooranimation.add(setting, 'fadeDistanceRatio');
     return menu;
 }
 

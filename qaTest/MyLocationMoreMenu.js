@@ -140,10 +140,10 @@ export class MyLocationMoreMenu {
                 };
                 this.map.mylocation.set(locationOption);
                 setTimeout(() => {
-                    this.map.context.changeFloor(this.floorList[0].id);
+                    this.map.context.changeFloor(this.floorList[1].id);
                 }, 2000);
                 setTimeout(() => {
-                    this.map.context.changeFloor(this.floorList[1].id);
+                    this.map.context.changeFloor(this.floorList[0].id);
                 }, 4000);
             };
 
@@ -171,10 +171,10 @@ export class MyLocationMoreMenu {
                 };
                 this.map.mylocation.set(locationOption);
                 setTimeout(() => {
-                    this.map.context.changeFloor(this.floorList[0].id);
+                    this.map.context.changeFloor(this.floorList[1].id);
                 }, 2000);
                 setTimeout(() => {
-                    this.map.context.changeFloor(this.floorList[1].id);
+                    this.map.context.changeFloor(this.floorList[0].id);
                 }, 4000);
             };
             myloca1();

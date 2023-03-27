@@ -218,7 +218,7 @@ export class EventMenu {
             if (setting['object-mouse-leave']) console.log('object-mouse-leave 대한 결과값: ', e.detail);
         });
         mapContainer.addEventListener('floor-change-animation-end', (e) => {
-            if (setting['floor-change-animation-end']) console.log('object-mouse-leave 대한 결과값: ', e.detail);
+            if (setting['floor-change-animation-end']) console.log('floor-change-animation-end 대한 결과값: ', e.detail);
         });
     }
 }
