@@ -180,4 +180,10 @@ export const mapList = [
         clientId: 'fb0zn9hZ4HTbbhtFCm-yoO',
         clientSecret: '7ab047e966192189db16bdf43eef603f',
     },
+    {
+        name: '공덕동 다비오 사무실 지도',
+        id: 'MP-skms4mvl6ogx3597',
+        clientId: '6FLO-0RJQDv9oPd_mgAJX0',
+        clientSecret: '4ff90a5feffb4d5d785994e981cf3924',
+    },
 ];
