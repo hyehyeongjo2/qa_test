@@ -375,7 +375,7 @@ function initMapOptionMenu(parentMenu, map, option) {
         const option = getOption(setting);
         const mapContainer = makeMapElement();
         map = await dabeeoMaps.showMap(mapContainer, option, mapData);
-
+        console.log('mapoption', option);
         removeAllMenu();
 
         initAllMenu(gui, mapData, map, mapContainer);
