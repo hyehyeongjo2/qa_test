@@ -688,14 +688,15 @@ function initMapOptionMenu(parentMenu, map, option) {
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
             enableFloorMotionOnChangeFloor: setting.enableFloorMotionOnChangeFloor,
+            framerate: setting.framerate,
             enableFloorMotionOnRouteSimulation: setting.enableFloorMotionOnRouteSimulation,
             floorMotionSpeedOnChangeFloor: {
-                rotateSpeed: setting.OnChangeFloorrotateSpeed,
-                fadeSpeed: setting.OnChangeFloorfadeSpeed,
+                rotateSpeed: setting.FloorrotateSpeed,
+                fadeSpeed: setting.FloorfadeSpeed,
             },
             floorMotionSpeedOnRouteSimulation: {
-                rotateSpeed: setting.OnRouteSimulationrotateSpeed,
-                fadeSpeed: setting.OnRouteSimulationfadeSpeed,
+                rotateSpeed: setting.SimulationrotateSpeed,
+                fadeSpeed: setting.SimulationfadeSpeed,
             },
             fadeDistanceRatio: setting.fadeDistanceRatio,
         };
@@ -730,8 +731,9 @@ function initOptionSetting() {
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
-        enableFMotionOnChangeFloor: true,
-        enableFMotionOnRouteSimulation: true,
+        enableFloorMotionOnChangeFloor: true,
+        enableFloorMotionOnRouteSimulation: true,
+        framerate: 30,
         FloorrotateSpeed: 0.3,
         FloorfadeSpeed: 0.3,
         SimulationrotateSpeed: 0.05,
@@ -768,12 +770,13 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'tilt');
     menu.add(setting, 'canvasSizewidth');
     menu.add(setting, 'canvasSizeheight');
+    menu.add(setting, 'framerate');
     menu.add(setting, 'mergeMesh');
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
-    flooranimation.add(setting, 'enableFMotionOnChangeFloor');
-    flooranimation.add(setting, 'enableFMotionOnRouteSimulation');
+    flooranimation.add(setting, 'enableFloorMotionOnChangeFloor');
+    flooranimation.add(setting, 'enableFloorMotionOnRouteSimulation');
     flooranimation.add(setting, 'FloorrotateSpeed');
     flooranimation.add(setting, 'FloorfadeSpeed');
     flooranimation.add(setting, 'SimulationrotateSpeed');

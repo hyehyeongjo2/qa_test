@@ -140,12 +140,12 @@ export class ContextMoreMenu {
     initconvertImg(gui) {
         const imgTest = async () => {
             this.map.context.convertToImg({ ratio: 5 });
-            setTimeout(() => {
-                this.map.context.convertToImg({ ratio: 5 });
-            }, 3000);
-            setTimeout(() => {
-                this.map.context.convertToImg({ ratio: 5 });
-            }, 6000);
+            // setTimeout(() => {
+            //     this.map.context.convertToImg({ ratio: 5 });
+            // }, 3000);
+            // setTimeout(() => {
+            //     this.map.context.convertToImg({ ratio: 5 });
+            // }, 6000);
         };
         const setting = {
             imgTest: imgTest,

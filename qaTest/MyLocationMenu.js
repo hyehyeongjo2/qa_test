@@ -8,11 +8,10 @@ export class MyLocationMenu {
         this.mapContainer = null;
         this.menu = null;
         this.setting = null;
-
+        this.setPosition = null;
         this.iconSetting = null;
         this.anchorSetting = null;
         this.animateSetting = null;
-
         this.iconApplyFlag = false;
         this.anchorApply = false;
         this.animateApplyFlag = false;
@@ -31,6 +30,7 @@ export class MyLocationMenu {
         this.menu = this.gui.addFolder('My Location Menu');
         this.menu.open();
         this.setting = this.initSetting();
+        this.setPosition = this.initsetPosition();
         this.iconSetting = this.initIconSetting();
         this.anchorSetting = this.initAnchorSetting();
         this.animateSetting = this.initAnimateSetting();
@@ -54,6 +54,22 @@ export class MyLocationMenu {
         };
         menu.add(actionSetting, 'set');
         menu.add(actionSetting, 'clear');
+        return setting;
+    }
+
+    initsetPosition() {
+        const setting = {
+            x: '0',
+            y: '0',
+        };
+        const menu = this.menu.addFolder('setPosition');
+        menu.add(setting, 'x');
+        menu.add(setting, 'y');
+
+        const actionSetting = {
+            setPosition: this.setposition.bind(this),
+        };
+        menu.add(actionSetting, 'setPosition');
         return setting;
     }
 
@@ -143,5 +159,10 @@ export class MyLocationMenu {
 
     clear() {
         this.map.mylocation.clear();
+    }
+
+    setposition() {
+        const option = Object.assign({}, this.setPosition);
+        this.map.mylocation.setPosition(option);
     }
 }
