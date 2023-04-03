@@ -203,6 +203,9 @@ export class MapDataMenu {
             console.log('getFloorData', await this.mapData.getFloorData(floorList[0].id), floorList[0].name[0]);
             console.log('getFloorData', await this.mapData.getFloorData(floorList[1].id), floorList[1].name[0]);
         }
+        async function getNodeData() {
+            console.log('node data ', await this.mapData.dataObject.getNodes());
+        }
         const changeObject = async (value) => {
             console.log(value);
             const option = {
@@ -286,6 +289,7 @@ export class MapDataMenu {
             getObjectCenter: getObjectCenter.bind(this),
             getFloorData: getFloorData.bind(this),
             object: '',
+            getNodeData: getNodeData.bind(this),
         };
         const menu = gui.addFolder('dataObject');
         // menu.open();
@@ -296,6 +300,7 @@ export class MapDataMenu {
         objectsMenu = menu.add(setting, 'object').name('find object 결과').onChange(changeObject);
         menu.add(setting, 'getObjectCenter');
         menu.add(setting, 'getFloorData');
+        menu.add(setting, 'getNodeData');
     }
 
     initDataGroupCode(gui) {
