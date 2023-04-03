@@ -736,8 +736,8 @@ function initOptionSetting() {
         framerate: 30,
         FloorrotateSpeed: 0.3,
         FloorfadeSpeed: 0.3,
-        SimulationrotateSpeed: 0.05,
-        SimulationfadeSpeed: 0.05,
+        SimulationrotateSpeed: 0.3,
+        SimulationfadeSpeed: 0.3,
     };
     return setting;
 }
