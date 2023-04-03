@@ -57,10 +57,9 @@ async function initMenu() {
 
     // mapContainer를 만든다
     const mapContainer = makeMapElement();
-
     // map을 그린다
     map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
-
+    // console.log('mapoption', map.getMapOptions());
     // 메뉴를 만든다
     getMapMenu = initGetMap(gui);
     mapOptionMenu = initMapOptionMenu(gui);
@@ -74,7 +73,7 @@ async function initMenu() {
         }
     });
     console.log(menuList);
-
+    console.log('mapoption', map.context.getMapOptions());
     currentMenu = getMapMenu;
 }
 
@@ -160,9 +159,10 @@ function initGetMapByInput(parentMenu) {
 
         // mapContainer에 mapOption으로 mapData의 지도데이터를 그리기
         map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        console.log('mapoption', map.context.getMapOptions());
         gui.removeFolder(mapOptionMenu);
         removeAllMenu();
-
+        console.log('mapoption', mapOption);
         // 메뉴 다시 만들기
         mapOptionMenu = initMapOptionMenu(gui);
         mapOptionMenu.hide();
@@ -246,7 +246,6 @@ async function getMapDataByIndex(index) {
 async function getMapData(option) {
     // 맵 데이터 새로 가져오기
     mapData = await dabeeoMaps.getMapData(option);
-
     //이전에 그려졌던 맵 삭제 및 메모리 해제
     if (map) map.context.cleanup();
     document.querySelector('.map').remove();
@@ -254,7 +253,7 @@ async function getMapData(option) {
     //맵 컨테이너 만들고 맵 그리기
     const mapContainer = makeMapElement();
     map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
-
+    console.log('mapoption', map.context.getMapOptions());
     //메뉴 삭제
     gui.removeFolder(mapOptionMenu);
     removeAllMenu();
@@ -375,7 +374,7 @@ function initMapOptionMenu(parentMenu, map, option) {
         const option = getOption(setting);
         const mapContainer = makeMapElement();
         map = await dabeeoMaps.showMap(mapContainer, option, mapData);
-        console.log('mapoption', option);
+        console.log('mapoption', map.context.getMapOptions());
         removeAllMenu();
 
         initAllMenu(gui, mapData, map, mapContainer);
@@ -733,19 +732,20 @@ function initOptionSetting() {
         enablePoiCollisionTest: true,
         enableFloorMotionOnChangeFloor: true,
         enableFloorMotionOnRouteSimulation: true,
+        fadeDistanceRatio: 0.5,
         framerate: 30,
         FloorrotateSpeed: 0.3,
         FloorfadeSpeed: 0.3,
         SimulationrotateSpeed: 0.05,
         SimulationfadeSpeed: 0.05,
-        fadeDistanceRatio: 0.5,
     };
     return setting;
 }
 
 function initOptionMenu(setting, parentMenu) {
     const menu = parentMenu.addFolder('mapOption');
-    const flooranimation = menu.addFolder('flooranimation');
+    const enableFloorMotionOnChangeFloor = menu.addFolder('enableFloorMotionOnChangeFloor');
+    const enableFloorMotionOnRouteSimulation = menu.addFolder('enableFloorMotionOnRouteSimulation');
     const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
@@ -775,13 +775,13 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
-    flooranimation.add(setting, 'enableFloorMotionOnChangeFloor');
-    flooranimation.add(setting, 'enableFloorMotionOnRouteSimulation');
-    flooranimation.add(setting, 'FloorrotateSpeed');
-    flooranimation.add(setting, 'FloorfadeSpeed');
-    flooranimation.add(setting, 'SimulationrotateSpeed');
-    flooranimation.add(setting, 'SimulationfadeSpeed');
-    flooranimation.add(setting, 'fadeDistanceRatio');
+    menu.add(setting, 'enableFloorMotionOnChangeFloor');
+    menu.add(setting, 'enableFloorMotionOnRouteSimulation');
+    enableFloorMotionOnChangeFloor.add(setting, 'FloorrotateSpeed');
+    enableFloorMotionOnChangeFloor.add(setting, 'FloorfadeSpeed');
+    enableFloorMotionOnRouteSimulation.add(setting, 'SimulationrotateSpeed');
+    enableFloorMotionOnRouteSimulation.add(setting, 'SimulationfadeSpeed');
+    menu.add(setting, 'fadeDistanceRatio');
     return menu;
 }
 
