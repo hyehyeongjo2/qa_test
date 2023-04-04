@@ -470,17 +470,25 @@ function initMapOptionMenu(parentMenu, map, option) {
             spriteEnable: true, // Poi를 항상 정면으로 보이게 함. default는 true
             spriteKeepRotation: true, // POI sprite로 그릴때 원래 각도 유지 여부. default는 false
             showWaterMarker: false,
-            enableFloorMotionOnRouteSimulation: 0,
+            enableFloorMotionOnChangeFloor: false,
+            enableFloorMotionOnRouteSimulation: true,
+            enablePoiCollisionTest: false,
+            floorMotionSpeedOnRouteSimulation: {
+                rotateSpeed: 0.9,
+                fadeSpeed: 0.9,
+            },
+            fadeDistanceRatio: 0.3,
             canvasSize: {
-                width: 4000,
-                height: 2000,
+                width: 1000,
+                height: 800,
             },
             controlOption: {
-                zoom: 20, // 0~24
+                rotate: 180,
+                zoom: 21.2, // 0~24
                 pan: {
                     // 중심좌표, default는 지도 중심
-                    x: 2000,
-                    y: 2200,
+                    x: 940,
+                    y: 600,
                 },
                 tilt: 30,
             },
@@ -686,9 +694,9 @@ function initMapOptionMenu(parentMenu, map, option) {
             enablePoiCollisionTest: setting.enablePoiCollisionTest,
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
-            enableFloorMotionOnChangeFloor: setting.enableFloorMotionOnChangeFloor,
+            enableFloorMotionOnChangeFloor: setting.MotionOnChangeFloor,
             framerate: setting.framerate,
-            enableFloorMotionOnRouteSimulation: setting.enableFloorMotionOnRouteSimulation,
+            enableFloorMotionOnRouteSimulation: setting.MotionOnRouteSimulation,
             floorMotionSpeedOnChangeFloor: {
                 rotateSpeed: setting.FloorrotateSpeed,
                 fadeSpeed: setting.FloorfadeSpeed,
@@ -730,10 +738,10 @@ function initOptionSetting() {
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
-        enableFloorMotionOnChangeFloor: true,
-        enableFloorMotionOnRouteSimulation: true,
+        MotionOnChangeFloor: true,
+        MotionOnRouteSimulation: true,
         fadeDistanceRatio: 0.5,
-        framerate: 30,
+        framerate: 24,
         FloorrotateSpeed: 0.3,
         FloorfadeSpeed: 0.3,
         SimulationrotateSpeed: 0.3,
@@ -775,8 +783,8 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
-    menu.add(setting, 'enableFloorMotionOnChangeFloor');
-    menu.add(setting, 'enableFloorMotionOnRouteSimulation');
+    menu.add(setting, 'MotionOnChangeFloor');
+    menu.add(setting, 'MotionOnRouteSimulation');
     enableFloorMotionOnChangeFloor.add(setting, 'FloorrotateSpeed');
     enableFloorMotionOnChangeFloor.add(setting, 'FloorfadeSpeed');
     enableFloorMotionOnRouteSimulation.add(setting, 'SimulationrotateSpeed');
