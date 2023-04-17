@@ -357,12 +357,16 @@ export class SimulationMenu {
             changeFloorDelay: 1000,
             speedRate: 50,
             removeIcon: true,
+            enableFloorMotionCSS: true,
+            floorMotionDuration: 2000,
         };
         const menu = this.menu.addFolder(menuName);
         menu.add(setting, 'zoom');
         menu.add(setting, 'changeFloorDelay');
         menu.add(setting, 'speedRate');
         menu.add(setting, 'removeIcon');
+        menu.add(setting, 'enableFloorMotionCSS');
+        menu.add(setting, 'floorMotionDuration');
         return setting;
     }
 

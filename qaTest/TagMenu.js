@@ -35,9 +35,9 @@ export class TagMenu {
             y: '2000',
             z: '100',
             floor: '',
-            MarkerWithPos:"CENTER",
-            PoiPos:"CENTER",
-            ClickPos:"CENTER",
+            MarkerWithPos: 'CENTER',
+            PoiPos: 'CENTER',
+            ClickPos: 'CENTER',
             set: this.set.bind(this),
             clearALL: this.clear.bind(this),
             setMarkerTag_마커_클릭하여_생성: this.setMarkerclickTag.bind(this),
@@ -64,25 +64,25 @@ export class TagMenu {
         menu.add(setting, 'setMarkerTag_마커_클릭하여_생성');
         menu.add(setting, 'setMarkerTag_마커와_같이_생성');
         menu.add(setting, 'setPoiTag_POI_클릭하여_생성');
-        menu.add(setting, 'PoiPos',[ "TOP" ,"BOTTOM" ,"LEFT", "RIGHT" ,"CENTER"]);
-        menu.add(setting, 'MarkerWithPos',[ "TOP" ,"BOTTOM" ,"LEFT", "RIGHT" ,"CENTER"]);
-        menu.add(setting, 'ClickPos',[ "TOP" ,"BOTTOM" ,"LEFT", "RIGHT" ,"CENTER"]);
+        menu.add(setting, 'PoiPos', ['TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER']);
+        menu.add(setting, 'MarkerWithPos', ['TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER']);
+        menu.add(setting, 'ClickPos', ['TOP', 'BOTTOM', 'LEFT', 'RIGHT', 'CENTER']);
     }
 
-    initTagFolder(menuName){
+    initTagFolder(menuName) {
         this.tagsetting = {
-            width : '100',
-            height : '50',
-            backgroundColor : "#808080",
-            textAlign : 'center',
+            width: '100',
+            height: '50',
+            backgroundColor: '#808080',
+            textAlign: 'center',
             set: this.createTag.bind(this),
-        }
+        };
         const tagsetting = this.tagsetting;
         const menu = this.menu.addFolder(menuName);
-        menu.add(tagsetting,'width');
-        menu.add(tagsetting,'height');
-        menu.add(tagsetting,'backgroundColor');
-        menu.add(tagsetting,'textAlign',['left','center','right']);
+        menu.add(tagsetting, 'width');
+        menu.add(tagsetting, 'height');
+        menu.add(tagsetting, 'backgroundColor');
+        menu.add(tagsetting, 'textAlign', ['left', 'center', 'right']);
         menu.add(tagsetting, 'set');
     }
 
@@ -90,8 +90,8 @@ export class TagMenu {
         const tagsetting = this.tagsetting;
         const tag = document.createElement('div');
         tag.className = 'tag';
-        tag.style.width = tagsetting.width+'px';
-        tag.style.height = tagsetting.height+'px';
+        tag.style.width = tagsetting.width + 'px';
+        tag.style.height = tagsetting.height + 'px';
         tag.style.backgroundColor = tagsetting.backgroundColor;
         // console.log(tagsetting.textAlign)
         tag.innerHTML = '<div>침구류</div>';
@@ -118,6 +118,11 @@ export class TagMenu {
         console.log(option);
         const item = this.map.tag.set(option);
         console.log(item);
+        if (option == item) {
+            console.log('true');
+        } else {
+            console.log('false');
+        }
         tag.addEventListener('click', () => {
             this.map.tag.clear(item.id); // id에 해당하는 태그 삭제 메소드
         });
@@ -125,7 +130,7 @@ export class TagMenu {
     clear(value) {
         this.map.tag.clearAll(); // 모든 태그 삭제 메소드
     }
-    async setMarkerclickTag(value){
+    async setMarkerclickTag(value) {
         const setting = this.setting;
         const tag = this.createTag();
         const mapContainer = this.mapContainer;
@@ -133,7 +138,7 @@ export class TagMenu {
         mapContainer.addEventListener('marker-click', (e) => {
             if (e.detail[0]) {
                 item = this.map.tag.setMarkerTag({ parentId: e.detail[0].userData.id, pos: setting.ClickPos, tag: tag });
-                console.log(this.map.tag.find(item.id));
+                console.log(this.map.tag.setMarkerTag({ parentId: e.detail[0].userData.id, pos: setting.ClickPos, tag: tag }));
                 return item;
             }
         });
@@ -151,12 +156,12 @@ export class TagMenu {
                     x: setting.x,
                     y: setting.y,
                     z: setting.z,
-                }
+                },
             ],
         });
 
         const item = this.map.tag.setMarkerTag({ parentId: list[0], pos: setting.MarkerWithPos, tag: tag });
-        console.log(this.map.tag.find(item.id));
+        console.log(this.map.tag.setMarkerTag({ parentId: list[0], pos: setting.MarkerWithPos, tag: tag }));
         tag.addEventListener('click', () => {
             this.map.tag.clear(item.id); // id에 해당하는 태그 삭제 메소드
         });
@@ -176,7 +181,7 @@ export class TagMenu {
         this.mapContainer.addEventListener('poi-click', (e) => {
             console.log('poi click 에 대한 결과값', e.detail);
             if (e.detail[0]) {
-                poiset = this.map.tag.setPOITag({ parentId: e.detail[0].id, pos:setting.PoiPos, tag: tag });
+                poiset = this.map.tag.setPOITag({ parentId: e.detail[0].id, pos: setting.PoiPos, tag: tag });
                 console.log(this.map.tag.find(poiset.id));
                 return poiset;
             }

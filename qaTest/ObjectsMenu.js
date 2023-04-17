@@ -105,8 +105,15 @@ export class ObjectsMenu {
         if (this.actionSetting.ids) {
             option.ids = [this.actionSetting.ids];
         }
-        console.log(option);
+
         this.map.objects.set(option);
+        const oboption = console.log(option);
+        const setoboption = console.log(this.map.objects.set(option));
+        if (oboption == setoboption) {
+            console.log('true');
+        } else {
+            console.log('false');
+        }
     }
     reset() {
         if (this.actionSetting.ids) this.map.objects.reset(this.actionSetting.ids);

@@ -152,9 +152,14 @@ export class MyLocationMenu {
         if (this.animateApplyFlag) {
             option.animate = this.animateSetting;
         }
-        console.log(option);
-
         this.map.mylocation.set(option);
+        const oboption = console.log(option);
+        const setoboption = console.log(this.map.mylocation.set(option));
+        if (oboption == setoboption) {
+            console.log('true');
+        } else {
+            console.log('false');
+        }
     }
 
     clear() {

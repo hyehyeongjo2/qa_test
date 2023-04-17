@@ -176,6 +176,7 @@ export class ControlMenu {
             };
             console.log(option);
             this.map.control.zoomIn(option);
+            console.log(this.map.control.zoomIn(option));
         };
         const setting = {
             zoomIn: zoomIn,
@@ -191,6 +192,7 @@ export class ControlMenu {
             };
             console.log(option);
             this.map.control.zoomOut(option);
+            console.log(this.map.control.zoomOut(option));
         };
         const setting = {
             zoomOut: zoomOut,
@@ -238,8 +240,14 @@ export class ControlMenu {
                 transition: this.transitionSetting.transition,
                 position: { x: setting.x, y: setting.y },
             };
-            console.log(option);
             this.map.control.moveTo(option);
+            const moveoption = console.log(option);
+            const moveoptionreturn = console.log(this.map.control.moveTo(option));
+            if (moveoption == moveoptionreturn) {
+                console.log('true');
+            } else {
+                console.log('false');
+            }
         };
         const setting = {
             x: '',
@@ -262,8 +270,15 @@ export class ControlMenu {
                 if (setting[key] != '') option[key] = Number(setting[key]);
             }
             option.transition = this.transitionSetting.transition;
-            console.log(option);
+
             this.map.control.set(option);
+            const setoption = console.log(option);
+            const setoptionreturn = console.log(this.map.control.set(option));
+            if (setoption == setoptionreturn) {
+                console.log('true');
+            } else {
+                console.log('false');
+            }
         };
 
         const setting = {

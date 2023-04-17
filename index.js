@@ -470,14 +470,7 @@ function initMapOptionMenu(parentMenu, map, option) {
             spriteEnable: true, // Poi를 항상 정면으로 보이게 함. default는 true
             spriteKeepRotation: true, // POI sprite로 그릴때 원래 각도 유지 여부. default는 false
             showWaterMarker: false,
-            enableFloorMotionOnChangeFloor: false,
-            enableFloorMotionOnRouteSimulation: true,
             enablePoiCollisionTest: false,
-            floorMotionSpeedOnRouteSimulation: {
-                rotateSpeed: 0.9,
-                fadeSpeed: 0.9,
-            },
-            fadeDistanceRatio: 0.3,
             canvasSize: {
                 width: 1000,
                 height: 800,
@@ -694,18 +687,7 @@ function initMapOptionMenu(parentMenu, map, option) {
             enablePoiCollisionTest: setting.enablePoiCollisionTest,
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
-            enableFloorMotionOnChangeFloor: setting.MotionOnChangeFloor,
             framerate: setting.framerate,
-            enableFloorMotionOnRouteSimulation: setting.MotionOnRouteSimulation,
-            floorMotionSpeedOnChangeFloor: {
-                rotateSpeed: setting.FloorrotateSpeed,
-                fadeSpeed: setting.FloorfadeSpeed,
-            },
-            floorMotionSpeedOnRouteSimulation: {
-                rotateSpeed: setting.SimulationrotateSpeed,
-                fadeSpeed: setting.SimulationfadeSpeed,
-            },
-            fadeDistanceRatio: setting.fadeDistanceRatio,
         };
         return mapOption;
     }
@@ -738,22 +720,13 @@ function initOptionSetting() {
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
-        MotionOnChangeFloor: true,
-        MotionOnRouteSimulation: true,
-        fadeDistanceRatio: 0.5,
         framerate: 24,
-        FloorrotateSpeed: 0.3,
-        FloorfadeSpeed: 0.3,
-        SimulationrotateSpeed: 0.3,
-        SimulationfadeSpeed: 0.3,
     };
     return setting;
 }
 
 function initOptionMenu(setting, parentMenu) {
     const menu = parentMenu.addFolder('mapOption');
-    const enableFloorMotionOnChangeFloor = menu.addFolder('enableFloorMotionOnChangeFloor');
-    const enableFloorMotionOnRouteSimulation = menu.addFolder('enableFloorMotionOnRouteSimulation');
     const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
@@ -783,13 +756,6 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
-    menu.add(setting, 'MotionOnChangeFloor');
-    menu.add(setting, 'MotionOnRouteSimulation');
-    enableFloorMotionOnChangeFloor.add(setting, 'FloorrotateSpeed');
-    enableFloorMotionOnChangeFloor.add(setting, 'FloorfadeSpeed');
-    enableFloorMotionOnRouteSimulation.add(setting, 'SimulationrotateSpeed');
-    enableFloorMotionOnRouteSimulation.add(setting, 'SimulationfadeSpeed');
-    menu.add(setting, 'fadeDistanceRatio');
     return menu;
 }
 
