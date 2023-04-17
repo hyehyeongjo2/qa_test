@@ -51,9 +51,13 @@ export class MyLocationMenu {
         const actionSetting = {
             set: this.set.bind(this),
             clear: this.clear.bind(this),
+            GifAnimationOn: this.gifon.bind(this),
+            GifAnimationOff: this.gifoff.bind(this),
         };
         menu.add(actionSetting, 'set');
         menu.add(actionSetting, 'clear');
+        menu.add(actionSetting, 'GifAnimationOn');
+        menu.add(actionSetting, 'GifAnimationOff');
         return setting;
     }
 
@@ -88,7 +92,7 @@ export class MyLocationMenu {
         };
         const menu = this.menu.addFolder('Icon setting');
         menu.add(setting, 'positionZ');
-        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png']);
+        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png', 'https://assets.dabeeomaps.com/image/ico/landy.gif']);
         menu.add(setting, 'width');
         menu.add(setting, 'height');
         const actionSetting = {
@@ -160,6 +164,14 @@ export class MyLocationMenu {
         } else {
             console.log('false');
         }
+    }
+
+    gifon() {
+        this.map.mylocation.gifOn();
+    }
+
+    gifoff() {
+        this.map.mylocation.gifOff();
     }
 
     clear() {
