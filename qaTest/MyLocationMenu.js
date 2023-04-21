@@ -8,11 +8,10 @@ export class MyLocationMenu {
         this.mapContainer = null;
         this.menu = null;
         this.setting = null;
-
+        this.setPosition = null;
         this.iconSetting = null;
         this.anchorSetting = null;
         this.animateSetting = null;
-
         this.iconApplyFlag = false;
         this.anchorApply = false;
         this.animateApplyFlag = false;
@@ -31,6 +30,7 @@ export class MyLocationMenu {
         this.menu = this.gui.addFolder('My Location Menu');
         this.menu.open();
         this.setting = this.initSetting();
+        this.setPosition = this.initsetPosition();
         this.iconSetting = this.initIconSetting();
         this.anchorSetting = this.initAnchorSetting();
         this.animateSetting = this.initAnimateSetting();
@@ -51,9 +51,29 @@ export class MyLocationMenu {
         const actionSetting = {
             set: this.set.bind(this),
             clear: this.clear.bind(this),
+            GifAnimationOn: this.gifon.bind(this),
+            GifAnimationOff: this.gifoff.bind(this),
         };
         menu.add(actionSetting, 'set');
         menu.add(actionSetting, 'clear');
+        menu.add(actionSetting, 'GifAnimationOn');
+        menu.add(actionSetting, 'GifAnimationOff');
+        return setting;
+    }
+
+    initsetPosition() {
+        const setting = {
+            x: '0',
+            y: '0',
+        };
+        const menu = this.menu.addFolder('setPosition');
+        menu.add(setting, 'x');
+        menu.add(setting, 'y');
+
+        const actionSetting = {
+            setPosition: this.setposition.bind(this),
+        };
+        menu.add(actionSetting, 'setPosition');
         return setting;
     }
 
@@ -72,7 +92,7 @@ export class MyLocationMenu {
         };
         const menu = this.menu.addFolder('Icon setting');
         menu.add(setting, 'positionZ');
-        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png']);
+        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/ico/img_person-3x.png', 'https://assets.dabeeomaps.com/image/ico/landy.gif']);
         menu.add(setting, 'width');
         menu.add(setting, 'height');
         const actionSetting = {
@@ -136,12 +156,30 @@ export class MyLocationMenu {
         if (this.animateApplyFlag) {
             option.animate = this.animateSetting;
         }
-        console.log(option);
-
         this.map.mylocation.set(option);
+        const oboption = console.log(option);
+        const setoboption = console.log(this.map.mylocation.set(option));
+        if (oboption == setoboption) {
+            console.log('true');
+        } else {
+            console.log('false');
+        }
+    }
+
+    gifon() {
+        this.map.mylocation.gifOn();
+    }
+
+    gifoff() {
+        this.map.mylocation.gifOff();
     }
 
     clear() {
         this.map.mylocation.clear();
+    }
+
+    setposition() {
+        const option = Object.assign({}, this.setPosition);
+        this.map.mylocation.setPosition(option);
     }
 }

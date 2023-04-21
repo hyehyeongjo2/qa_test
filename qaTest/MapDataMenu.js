@@ -188,24 +188,23 @@ export class MapDataMenu {
             // console.log('object click ', e.detail);
             const id = e.detail[0].id;
             if (this.objectIds.includes(id)) {
-                this.map.objects.reset(id);
                 this.objectIds = this.objectIds.filter((item) => item !== id); //화살표 함수로 필터 함수를 단순화
             } else {
                 this.objectIds.push(id);
             }
-            console.log(this.objectIds);
         });
         async function getObjectCenter() {
-            const objectCenter = this.mapData.dataObject.getObjectsCenter(
-                this.objectIds
-            );
+            const objectCenter = this.mapData.dataObject.getObjectsCenter(this.objectIds);
             console.log('mapData.dataObject.getObjectsCenter() 에 대한 결과값', objectCenter);
             if (objectCenter) await this.map.markers.set({ marker: [{ x: objectCenter.x, y: objectCenter.y }] });
         }
         async function getFloorData() {
             const floorList = this.mapData.dataFloor.getFloors();
-            console.log('getFloorData',  await this.mapData.getFloorData(floorList[0].id), floorList[0].name[0]);
-            console.log('getFloorData',  await this.mapData.getFloorData(floorList[1].id), floorList[1].name[0]);
+            console.log('getFloorData', await this.mapData.getFloorData(floorList[0].id), floorList[0].name[0]);
+            console.log('getFloorData', await this.mapData.getFloorData(floorList[1].id), floorList[1].name[0]);
+        }
+        async function getNodeData() {
+            console.log('node data ', await this.mapData.dataObject.getNodes());
         }
         const changeObject = async (value) => {
             console.log(value);
@@ -290,6 +289,7 @@ export class MapDataMenu {
             getObjectCenter: getObjectCenter.bind(this),
             getFloorData: getFloorData.bind(this),
             object: '',
+            getNodeData: getNodeData.bind(this),
         };
         const menu = gui.addFolder('dataObject');
         // menu.open();
@@ -300,6 +300,7 @@ export class MapDataMenu {
         objectsMenu = menu.add(setting, 'object').name('find object 결과').onChange(changeObject);
         menu.add(setting, 'getObjectCenter');
         menu.add(setting, 'getFloorData');
+        menu.add(setting, 'getNodeData');
     }
 
     initDataGroupCode(gui) {
@@ -331,9 +332,9 @@ export class MapDataMenu {
             const groups = this.mapData.dataGroupCode.findAll();
             groupCodeMenu = groupCodeMenu.options(groups).onChange(changeGroupCode);
         }
-        function getCodes(){
+        function getCodes() {
             const getCodes = this.mapData.dataGroupCode.getCodes();
-            console.log(getCodes)
+            console.log(getCodes);
         }
 
         const groupList = this.mapData.dataGroupCode.findAll();

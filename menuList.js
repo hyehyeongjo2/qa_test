@@ -10,6 +10,7 @@ import { TagMenu } from './qaTest/TagMenu.js';
 import { ModelMenu } from './qaTest/ModelMenu.js';
 import { EventMenu } from './qaTest/EventMenu.js';
 import { ContextMenu } from './qaTest/ContextMenu.js';
+import { routeSimulation2 } from './qaTest/routeSimulationMenu.js';
 export const menuList = [
     { name: 'getMap', text: '지도가져오기' },
     { name: 'mapOption', text: '지도옵션' },
@@ -20,6 +21,7 @@ export const menuList = [
     { name: 'marker', text: '마커', menu: MarkerMenu },
     { name: 'myLocation', text: '내위치', menu: MyLocationMenu },
     { name: 'navigation', text: '길찾기', menu: SimulationMenu },
+    { name: 'routeSimulation2', text: '길찾기 루트테스트', menu: routeSimulation2 },
     { name: 'object', text: '오브젝트', menu: ObjectsMenu },
     { name: 'poi', text: 'POI', menu: PoisMenu },
     { name: 'tag', text: 'Tag', menu: TagMenu },

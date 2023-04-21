@@ -5,6 +5,7 @@ export class MarkerMoreMenu {
         this.mapContainer = null;
         this.menu = null;
         this.setting = null;
+        this.floorList = null;
     }
     removeMenu() {
         if (this.menu) {
@@ -16,6 +17,7 @@ export class MarkerMoreMenu {
         this.mapData = mapData;
         this.map = map;
         this.mapContainer = mapContainer;
+        this.floorList = this.mapData.dataFloor.getFloors();
         this.menu = menu.addFolder('More');
         this.initMoreSetting();
         return this.menu;
@@ -75,28 +77,28 @@ export class MarkerMoreMenu {
         const list = await this.map.markers.set({
             marker: [
                 { x: 2000, y: 500 }, // 11층
-                { x: 2000, y: 1000, floorId: 'FL-vf3q07spbmsw8132' }, // 2층
+                { x: 2000, y: 1000, floorId: this.floorList[0].id }, // 2층
             ],
         });
         await this.map.markers.set({
             marker: [
-                { x: 3000, y: 500, floorId: 'FL-t4vqgyek3jnb8146' }, // 11층
+                { x: 3000, y: 500, floorId: this.floorList[1].id }, // 11층
                 { x: 3000, y: 1000 }, // 11층
-                { x: 3000, y: 1000, floorId: 'FL-vf3q07spbmsw8132' }, // 2층
+                { x: 3000, y: 1000, floorId: this.floorList[0].id }, // 2층
             ],
         });
-    
+
         setTimeout(async () => {
             await this.map.markers.set({
                 marker: [
-                    { x: 4000, y: 500, floorId: 'FL-t4vqgyek3jnb8146' }, // 11층
-                    { x: 4000, y: 1000, floorId: 'FL-vf3q07spbmsw8132' }, // 2층
-                    { x: 4000, y: 1500, floorId: 'FL-vf3q07spbmsw8132' }, // 2층
+                    { x: 4000, y: 500, floorId: this.floorList[1].id }, // 11층
+                    { x: 4000, y: 1000, floorId: this.floorList[0].id }, // 2층
+                    { x: 4000, y: 1500, floorId: this.floorList[0].id }, // 2층
                     { x: 4000, y: 2000 }, // 11층
                 ],
             });
         }, 3000);
-    
+
         await this.map.markers.set({
             // 11층
             marker: [
@@ -118,7 +120,7 @@ export class MarkerMoreMenu {
                 },
             ],
         });
-    
+
         setTimeout(() => {
             if (list) {
                 this.map.markers.clear(list);

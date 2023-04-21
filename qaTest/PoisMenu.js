@@ -125,8 +125,14 @@ export class PoisMenu {
         if (this.actionSetting.ids) {
             option.ids = [this.actionSetting.ids];
         }
-        console.log(option);
         this.map.pois.set(option);
+        const oboption = console.log(option);
+        const setoboption = console.log(this.map.pois.set(option));
+        if (oboption == setoboption) {
+            console.log('true');
+        } else {
+            console.log('false');
+        }
     }
 
     reset() {

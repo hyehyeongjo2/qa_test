@@ -41,21 +41,21 @@ export class ControlMenu {
         return this.menu;
     }
 
-    initgetCurrentZoomLevel(gui){
-        const getCurrentZoomLevel = (value) =>{
+    initgetCurrentZoomLevel(gui) {
+        const getCurrentZoomLevel = (value) => {
             console.log('currentZoomLevel:', this.map.control.getCurrentZoomLevel());
-        }
-        const setting ={
-            getCurrentZoomLevel : getCurrentZoomLevel,
+        };
+        const setting = {
+            getCurrentZoomLevel: getCurrentZoomLevel,
         };
         gui.add(setting, 'getCurrentZoomLevel');
     }
-    initgetCameraType(gui){
-        const getCameraType = (value) =>{
+    initgetCameraType(gui) {
+        const getCameraType = (value) => {
             console.log('getCameraType:', this.map.control.getCameraType());
-        }
-        const setting ={
-            getCameraType : getCameraType,
+        };
+        const setting = {
+            getCameraType: getCameraType,
         };
         gui.add(setting, 'getCameraType');
     }
@@ -176,6 +176,7 @@ export class ControlMenu {
             };
             console.log(option);
             this.map.control.zoomIn(option);
+            console.log(this.map.control.zoomIn(option));
         };
         const setting = {
             zoomIn: zoomIn,
@@ -191,6 +192,7 @@ export class ControlMenu {
             };
             console.log(option);
             this.map.control.zoomOut(option);
+            console.log(this.map.control.zoomOut(option));
         };
         const setting = {
             zoomOut: zoomOut,
@@ -231,7 +233,6 @@ export class ControlMenu {
         gui.add(setting, 'reset');
     }
 
-
     //initMoveTo
     initMoveTo(gui) {
         const moveTo = (value) => {
@@ -239,8 +240,14 @@ export class ControlMenu {
                 transition: this.transitionSetting.transition,
                 position: { x: setting.x, y: setting.y },
             };
-            console.log(option);
             this.map.control.moveTo(option);
+            const moveoption = console.log(option);
+            const moveoptionreturn = console.log(this.map.control.moveTo(option));
+            if (moveoption == moveoptionreturn) {
+                console.log('true');
+            } else {
+                console.log('false');
+            }
         };
         const setting = {
             x: '',
@@ -263,8 +270,15 @@ export class ControlMenu {
                 if (setting[key] != '') option[key] = Number(setting[key]);
             }
             option.transition = this.transitionSetting.transition;
-            console.log(option);
+
             this.map.control.set(option);
+            const setoption = console.log(option);
+            const setoptionreturn = console.log(this.map.control.set(option));
+            if (setoption == setoptionreturn) {
+                console.log('true');
+            } else {
+                console.log('false');
+            }
         };
 
         const setting = {

@@ -150,12 +150,12 @@ export class MarkerMenu {
         }, 8000);
     }
 
-    clickClear(){
+    clickClear() {
         const mapContainer = this.mapContainer;
         const setting = this.setting;
-            mapContainer.addEventListener('marker-click', (e) => {
-                if (setting['clickClear']) this.map.markers.clear(e.detail[0].userData.id);
-            });
+        mapContainer.addEventListener('marker-click', (e) => {
+            if (setting['clickClear']) this.map.markers.clear(e.detail[0].userData.id);
+        });
     }
 
     initMarkerFolder() {
@@ -173,7 +173,7 @@ export class MarkerMenu {
         menu.add(setting, 'x');
         menu.add(setting, 'y');
         menu.add(setting, 'data');
-        menu.add(setting, 'floor', floorSetting);;
+        menu.add(setting, 'floor', floorSetting);
         menu.add(setting, 'deltest');
         menu.add(setting, 'set');
         menu.add(setting, 'start');

@@ -1,5 +1,6 @@
 import { mapList } from './qaTest/mapList.js';
 import { menuList } from './menuList.js';
+// import { indexMore } from './indexMore.js';
 
 const dabeeoMaps = new dabeeo.Maps();
 // let gui = null;
@@ -56,10 +57,9 @@ async function initMenu() {
 
     // mapContainer를 만든다
     const mapContainer = makeMapElement();
-
     // map을 그린다
     map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
-
+    // console.log('mapoption', map.getMapOptions());
     // 메뉴를 만든다
     getMapMenu = initGetMap(gui);
     mapOptionMenu = initMapOptionMenu(gui);
@@ -73,7 +73,7 @@ async function initMenu() {
         }
     });
     console.log(menuList);
-
+    console.log('mapoption', map.context.getMapOptions());
     currentMenu = getMapMenu;
 }
 
@@ -92,11 +92,15 @@ function initGetMapByInput(parentMenu) {
         clientSecret: '',
         serverType: 'SERVER_REAL',
         getMapByInput: getMapByInput,
+        getMapReal_Stage: getMapReal_Stage,
+        local: local,
     };
     menu.add(setting, 'clientId');
     menu.add(setting, 'clientSecret');
     menu.add(setting, 'serverType', ['SERVER_REAL', 'SERVER_STAGE']);
     menu.add(setting, 'getMapByInput');
+    menu.add(setting, 'getMapReal_Stage');
+    menu.add(setting, 'local');
 
     async function getMapByInput() {
         const option = {
@@ -105,6 +109,109 @@ function initGetMapByInput(parentMenu) {
             serverType: setting.serverType,
         };
         await getMapData(option);
+    }
+
+    async function local() {
+        const dabeeoMaps = new dabeeo.Maps();
+
+        //mapDataOption 정의
+        const path = `./MP-1jydrhzb11sh17965`;
+
+        const mapDataOption = {
+            baseUrl: path,
+            mapId: 'MP-1jydrhzb11sh17965',
+            serverType: 'SERVER_LOCAL',
+        };
+        //mapData 가져오기
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        console.log(mapData);
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        //mapContainer
+        const mapContainer = makeMapElement();
+
+        //mapOption 정의
+        const mapOption = Object.assign({
+            // camera: '2d' | '3d',                        // 초기 카메라 모드 3d
+            // floor: string,                              // 적용할 층 정보
+            // theme: string,                              // 적용할 테마의 ID
+            language: 'en', // 초기 poi 언어 설정
+            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+            spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
+            // spriteKeepRotation: true,                      // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
+            // controlOption: {
+            //     // zoom: 0,                             // 초기 줌
+            //     // pan: {                               // 중심좌표
+            //     //     // x: number,
+            //     //     // y: number
+            //     // },
+            //     // rotate: 0,                           // 회전 3d, 2d
+            //     // tilt: 0                              // 기울기 3d
+            // },
+            // poiLevel: any[]                             // poi 중요도에 따라 설정한 지도 확대 백분율에 맞게 보이게 설정.
+            // fontWeight: {                               // poi title font style
+            //   // normal:number,
+            //   // bold:number
+            // },
+            // mergeMesh: boolean,                         // mergedMesh 활성화 여부
+            waterMarkPosition: 'RIGHT_TOP',
+        });
+
+        // mapContainer에 mapOption으로 mapData의 지도데이터를 그리기
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        console.log('mapoption', map.context.getMapOptions());
+        gui.removeFolder(mapOptionMenu);
+        removeAllMenu();
+        console.log('mapoption', mapOption);
+        // 메뉴 다시 만들기
+        mapOptionMenu = initMapOptionMenu(gui);
+        mapOptionMenu.hide();
+
+        initAllMenu(gui, mapData, map, mapContainer);
+        console.log(map);
+        console.log('test: dabeeoMaps');
+    }
+
+    async function getMapReal_Stage() {
+        const mapDataOption1 = {
+            name: '사무실_real',
+            clientId: '75hb8YSnAokb-sZ04aDR91',
+            clientSecret: '0f7ad84f160c7b3fd1849a7920af718b',
+            serverType: 'SERVER_REAL',
+        };
+        const mapDataOption2 = {
+            name: '사무실_stage',
+            clientId: '75hb8YSnAokb-sZ04aDR91',
+            clientSecret: '0f7ad84f160c7b3fd1849a7920af718b',
+            serverType: 'SERVER_STAGE',
+        };
+        const mapDataOption3 = {
+            name: '사무실_real',
+            clientId: '6cHpIJoJknv9ZbsaLRN2Dj',
+            clientSecret: 'ad980b99be38dbd033aac1c757115064',
+            serverType: 'SERVER_REAL',
+        };
+        const mapDataOption4 = {
+            name: '사무실_stage',
+            clientId: '6cHpIJoJknv9ZbsaLRN2Dj',
+            clientSecret: 'ad980b99be38dbd033aac1c757115064',
+            serverType: 'SERVER_REAL',
+        };
+
+        await dabeeoMaps.getMapData(mapDataOption1);
+        console.log('사무실_real');
+        setTimeout(async () => {
+            await dabeeoMaps.getMapData(mapDataOption2);
+            console.log('사무실_stage');
+        }, 3000);
+        setTimeout(async () => {
+            await dabeeoMaps.getMapData(mapDataOption3);
+            console.log('이케아_real');
+        }, 6000);
+        setTimeout(async () => {
+            await dabeeoMaps.getMapData(mapDataOption4);
+            console.log('이케아_stage');
+        }, 9000);
     }
 }
 
@@ -139,7 +246,6 @@ async function getMapDataByIndex(index) {
 async function getMapData(option) {
     // 맵 데이터 새로 가져오기
     mapData = await dabeeoMaps.getMapData(option);
-
     //이전에 그려졌던 맵 삭제 및 메모리 해제
     if (map) map.context.cleanup();
     document.querySelector('.map').remove();
@@ -147,7 +253,7 @@ async function getMapData(option) {
     //맵 컨테이너 만들고 맵 그리기
     const mapContainer = makeMapElement();
     map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
-
+    console.log('mapoption', map.context.getMapOptions());
     //메뉴 삭제
     gui.removeFolder(mapOptionMenu);
     removeAllMenu();
@@ -239,14 +345,28 @@ function initFloorMenu(gui, mapData, map, mapContainer) {
     return menu;
 }
 
-function initMapOptionMenu(parentMenu) {
+function initMapOptionMenu(parentMenu, map, option) {
     const setting = initOptionSetting();
     const menu = initOptionMenu(setting, parentMenu);
     const actionSetting = {
         showMap: showMap,
+        langtest: langtest,
+        showpoitest: showpoitest,
+        watermarktest: watermarktest,
+        tilitingtest: tilitingtest,
+        emart: emart,
+        mergeMesh: mergeMesh,
+        splitetest: splitetest,
     };
     menu.add(actionSetting, 'showMap');
-
+    menu.add(actionSetting, 'langtest');
+    menu.add(actionSetting, 'showpoitest');
+    menu.add(actionSetting, 'watermarktest');
+    menu.add(actionSetting, 'tilitingtest');
+    menu.add(actionSetting, 'emart');
+    menu.add(actionSetting, 'mergeMesh');
+    menu.add(actionSetting, 'splitetest');
+    // new indexMore().init(menu, map, option, gui);
     async function showMap() {
         if (map) map.context.cleanup();
         document.querySelector('.map').remove();
@@ -254,7 +374,7 @@ function initMapOptionMenu(parentMenu) {
         const option = getOption(setting);
         const mapContainer = makeMapElement();
         map = await dabeeoMaps.showMap(mapContainer, option, mapData);
-
+        console.log('mapoption', map.context.getMapOptions());
         removeAllMenu();
 
         initAllMenu(gui, mapData, map, mapContainer);
@@ -262,6 +382,283 @@ function initMapOptionMenu(parentMenu) {
         // mapOptionMenu.show();
         currentMenu = mapOptionMenu;
     }
+
+    //Daniel 임시추가 내역 ( 추후 업데이트 )
+    async function splitetest() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapDataOption = {
+            name: '사무실',
+            id: 'MP-1jydrhzb11sh17965',
+            clientId: '75hb8YSnAokb-sZ04aDR91',
+            clientSecret: '0f7ad84f160c7b3fd1849a7920af718b',
+        };
+        const mapOption = {
+            spriteEnable: false,
+        };
+        const mapOption2 = {
+            spriteEnable: true,
+            spriteKeepRotation: true,
+        };
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        const mapContainer = makeMapElement();
+        map = await dabeeoMaps.showMap(mapContainer, {}, mapData);
+        map.control.set({ zoom: 20, rotation: 90, tilt: 0 });
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+            map.control.set({ zoom: 20, rotation: 90, tilt: 0 });
+            removeAllMenu();
+
+            initAllMenu(gui, mapData, map, mapContainer);
+
+            currentMenu = mapOptionMenu;
+        }, 3000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption2, mapData);
+            map.control.set({ zoom: 20, rotation: 90, tilt: 0 });
+            removeAllMenu();
+
+            initAllMenu(gui, mapData, map, mapContainer);
+
+            currentMenu = mapOptionMenu;
+        }, 6000);
+    }
+
+    async function tilitingtest() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapDataOption = {
+            name: '경주',
+            id: 'MP-1ib99qh85lu903573',
+            clientId: '8sQFPWruAUGbcZt7OyxFX0',
+            clientSecret: '120ad2959d5533e44cc24905d8af0da4',
+        };
+        const mapOption = {
+            enableTiling: true,
+        };
+
+        //mapData 가져오기
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        const mapContainer = makeMapElement();
+
+        if (map) map.context.cleanup();
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        removeAllMenu();
+
+        initAllMenu(gui, mapData, map, mapContainer);
+
+        currentMenu = mapOptionMenu;
+    }
+
+    async function emart() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapDataOption = {
+            name: '이마트_연수점',
+            id: 'MP-1iev226pi8f1v0652',
+            clientId: 'c_VGxATtQ_M9uxz1YdsWDj',
+            clientSecret: 'ed2dbb75cd356b8a44ffa9d9993bc922',
+        };
+        const mapOption = {
+            camera: '3d', // 초기 카메라 모드. default는 3d
+            floor: null, // 적용할 층 정보. default는 지도 설정값
+            // theme: string,                    // 적용할 테마의 ID
+            language: 'ko', // 초기 poi 언어 설정. default는 지도 설정값
+            showPoi: true,
+            spriteEnable: true, // Poi를 항상 정면으로 보이게 함. default는 true
+            spriteKeepRotation: true, // POI sprite로 그릴때 원래 각도 유지 여부. default는 false
+            showWaterMarker: false,
+            enablePoiCollisionTest: false,
+            canvasSize: {
+                width: 1000,
+                height: 800,
+            },
+            controlOption: {
+                rotate: 180,
+                zoom: 21.2, // 0~24
+                pan: {
+                    // 중심좌표, default는 지도 중심
+                    x: 940,
+                    y: 600,
+                },
+                tilt: 30,
+            },
+        };
+
+        //mapData 가져오기
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        const mapContainer = makeMapElement();
+
+        if (map) map.context.cleanup();
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        removeAllMenu();
+
+        initAllMenu(gui, mapData, map, mapContainer);
+
+        currentMenu = mapOptionMenu;
+    }
+
+    async function mergeMesh() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapDataOption = {
+            name: '경주',
+            id: 'MP-1ib99qh85lu903573',
+            clientId: '8sQFPWruAUGbcZt7OyxFX0',
+            clientSecret: '120ad2959d5533e44cc24905d8af0da4',
+        };
+        const mapOption = {
+            mergeMesh: true,
+        };
+        setTimeout(async () => {
+            const mapData = await dabeeoMaps.getMapData(mapDataOption);
+            const mapContainer = makeMapElement();
+
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+            removeAllMenu();
+
+            initAllMenu(gui, mapData, map, mapContainer);
+
+            currentMenu = mapOptionMenu;
+        }, 3000);
+        //mapData 가져오기
+    }
+
+    async function langtest() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+
+        const mapOption = {
+            language: 'en', // 초기 poi 언어 설정
+            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        };
+        const mapOption2 = {
+            language: 'ko', // 초기 poi 언어 설정
+            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        };
+        const mapContainer = makeMapElement();
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        console.log(mapData);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption2, mapData);
+            removeAllMenu();
+
+            initAllMenu(gui, mapData, map, mapContainer);
+
+            currentMenu = mapOptionMenu;
+        }, 5000);
+
+        // removeAllMenu();
+
+        // initAllMenu(gui, mapData, map, mapContainer);
+        // getMapMenu.hide();
+        // mapOptionMenu.show();
+        // currentMenu = mapOptionMenu;
+    }
+
+    async function showpoitest() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapContainer = makeMapElement();
+        const mapOption = Object.assign({
+            camera: '2d',
+            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        });
+        const mapOption2 = Object.assign({
+            camera: '3d',
+            showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        });
+        const mapOption3 = Object.assign({
+            camera: '2d',
+            showPoi: false, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        });
+        const mapOption4 = Object.assign({
+            camera: '3d',
+            showPoi: false, // map상에 poi 보여줄지 말지 결정 여부. default는 true
+        });
+
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption2, mapData);
+        }, 2000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption3, mapData);
+        }, 6000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption4, mapData);
+            removeAllMenu();
+
+            initAllMenu(gui, mapData, map, mapContainer);
+            // getMapMenu.hide();
+            // mapOptionMenu.show();
+            currentMenu = mapOptionMenu;
+        }, 11000);
+    }
+
+    async function watermarktest() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapContainer = makeMapElement();
+        const mapOption = Object.assign({
+            showWaterMarker: false,
+        });
+        const mapOption2 = Object.assign({
+            showWaterMarker: true,
+        });
+        const mapOption3 = Object.assign({
+            showWaterMarker: true,
+            waterMarkPosition: 'LEFT_TOP',
+        });
+        const mapOption4 = Object.assign({
+            showWaterMarker: true,
+            waterMarkPosition: 'RIGHT_TOP',
+        });
+        const mapOption5 = Object.assign({
+            showWaterMarker: true,
+            waterMarkPosition: 'LEFT_BOTTOM',
+        });
+        const mapOption6 = Object.assign({
+            showWaterMarker: true,
+            waterMarkPosition: 'RIGHT_BOTTOM',
+        });
+
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption2, mapData);
+        }, 2000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption3, mapData);
+        }, 5000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption4, mapData);
+        }, 8000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption5, mapData);
+        }, 11000);
+        setTimeout(async () => {
+            if (map) map.context.cleanup();
+            map = await dabeeoMaps.showMap(mapContainer, mapOption6, mapData);
+            removeAllMenu();
+
+            initAllMenu(gui, mapData, map, mapContainer);
+            // getMapMenu.hide();
+            // mapOptionMenu.show();
+            currentMenu = mapOptionMenu;
+        }, 14000);
+    }
+
+    //Daniel 임시추가 내역(완)
     function getOption(setting) {
         const mapOption = {
             camera: setting.camera, // 초기 카메라 모드 3d
@@ -283,9 +680,14 @@ function initMapOptionMenu(parentMenu) {
             },
             mergeMesh: setting.mergeMesh, // mergedMesh 활성화 여부
             showWaterMarker: setting.showWaterMarker,
-            enableFloorMotion: setting.enableFloorMotion,
+            canvasSize: {
+                width: setting.canvasSizewidth,
+                height: setting.canvasSizeheight,
+            },
+            enablePoiCollisionTest: setting.enablePoiCollisionTest,
             waterMarkPosition: setting.waterMarkPosition,
-            enableTiling:setting.enableTiling,
+            enableTiling: setting.enableTiling,
+            framerate: setting.framerate,
         };
         return mapOption;
     }
@@ -313,9 +715,12 @@ function initOptionSetting() {
         tilt: '', //기울기 3d
         mergeMesh: false, // mergedMesh 활성화 여부
         showWaterMarker: true,
-        enableFloorMotion: false,
+        canvasSizewidth: '',
+        canvasSizeheight: '',
         enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
+        enablePoiCollisionTest: true,
+        framerate: 24,
     };
     return setting;
 }
@@ -336,6 +741,7 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'language', langSetting);
     menu.add(setting, 'theme', theme);
     menu.add(setting, 'showPoi');
+    menu.add(setting, 'enablePoiCollisionTest');
     menu.add(setting, 'spriteEnable');
     menu.add(setting, 'spriteKeepRotation');
     menu.add(setting, 'zoom');
@@ -343,10 +749,12 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'y');
     menu.add(setting, 'rotate');
     menu.add(setting, 'tilt');
+    menu.add(setting, 'canvasSizewidth');
+    menu.add(setting, 'canvasSizeheight');
+    menu.add(setting, 'framerate');
     menu.add(setting, 'mergeMesh');
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
-    menu.add(setting, 'enableFloorMotion');
     menu.add(setting, 'enableTiling');
     return menu;
 }

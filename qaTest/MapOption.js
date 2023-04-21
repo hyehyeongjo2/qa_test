@@ -24,7 +24,7 @@ export class MapOption {
         this.map = await this.dabeeoMaps.showMap(this.mapContainer, option, this.mapData);
         console.log(`await this.dabeeoMaps.showMap(${this.mapContainer}, ${option}, ${this.mapData});`);
         console.log('this.mapContainer:', this.mapContainer);
-        console.log('option: ', option);
+        console.log('option: ');
         console.log('this.mapData : ', this.mapData);
         this.context.init(this.gui, this.mapData, this.map, this.mapContainer);
         if (this.menuClass !== null) this.menuClass.init(this.gui, this.mapData, this.map, this.mapContainer);
@@ -58,7 +58,7 @@ export class MapOption {
             tilt: '', //기울기 3d
             mergeMesh: false, // mergedMesh 활성화 여부
             showWaterMarker: true,
-            waterMarkPosition:'LEFT_BOTTOM'
+            waterMarkPosition: 'LEFT_BOTTOM',
         };
         this.actionSetting = {
             showMap: this.showMap.bind(this),
@@ -96,10 +96,9 @@ export class MapOption {
         menu.add(setting, 'tilt');
         menu.add(setting, 'mergeMesh');
         menu.add(setting, 'showWaterMarker');
-        menu.add(setting, 'waterMarkPosition', ['LEFT_TOP','RIGHT_TOP','LEFT_BOTTOM','RIGHT_BOTTOM']);
+        menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
         menu.add(this.actionSetting, 'showMap');
         menu.add(this.actionSetting, 'deleteMap');
-       
 
         return menu;
     }
@@ -125,7 +124,7 @@ export class MapOption {
             },
             mergeMesh: setting.mergeMesh, // mergedMesh 활성화 여부
             showWaterMarker: setting.showWaterMarker,
-            waterMarkPosition : setting.waterMarkPosition
+            waterMarkPosition: setting.waterMarkPosition,
         };
         return mapOption;
     }

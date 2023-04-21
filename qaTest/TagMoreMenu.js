@@ -82,11 +82,11 @@ export class TagMoreMenu {
         tag8.textContent = 'POI EVENT Created at beggining';
         tag9.className = 'tag-container';
         tag9.textContent = 'POI EVENT Created at beggining';
-        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'TOP', tag: tag5 });
-        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'BOTTOM', tag: tag6 });
-        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'RIGHT', tag: tag7 });
-        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'LEFT', tag: tag8 });
-        this.map.tag.setPOITag({ parentId: this.poiList[1].id, pos: 'CENTER', tag: tag9 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1], pos: 'TOP', tag: tag5 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1], pos: 'BOTTOM', tag: tag6 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1], pos: 'RIGHT', tag: tag7 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1], pos: 'LEFT', tag: tag8 });
+        this.map.tag.setPOITag({ parentId: this.poiList[1], pos: 'CENTER', tag: tag9 });
 
         const floorList = this.mapData.dataFloor.getDefaultFloor();
         const tag0 = document.createElement('div');
@@ -97,6 +97,10 @@ export class TagMoreMenu {
             tag: tag0,
             floorId: floorList.id,
         };
-        this.map.tag.set(option);
+        const postag = this.map.tag.set(option);
+        console.log(this.map.tag.find(postag.id), 'find tag 값 5초 후 삭제');
+        setTimeout(() => {
+            this.map.tag.clear(postag.id);
+        }, 5000);
     }
 }
