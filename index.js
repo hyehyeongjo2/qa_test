@@ -688,6 +688,7 @@ function initMapOptionMenu(parentMenu, map, option) {
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
             framerate: setting.framerate,
+            backgroundImage: setting.backgroundImage,
         };
         return mapOption;
     }
@@ -721,6 +722,7 @@ function initOptionSetting() {
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
         framerate: 24,
+        backgroundImage: '',
     };
     return setting;
 }
@@ -756,6 +758,7 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'showWaterMarker');
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
+    menu.add(setting, 'backgroundImage', ['', 'https://assets.dabeeomaps.com/upload/library/assets/EVO_Sports_Expo_SANTA_CLARA_2023_layout.jpg']);
     return menu;
 }
 

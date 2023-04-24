@@ -186,4 +186,16 @@ export const mapList = [
         clientId: '6FLO-0RJQDv9oPd_mgAJX0',
         clientSecret: '4ff90a5feffb4d5d785994e981cf3924',
     },
+    {
+        name: 'Test Drawing',
+        id: 'MP-vf6goqvggdwj4864',
+        clientId: 'efA6AguIAqRaUY3VQFknX6',
+        clientSecret: '6418d710b32ba3248ec150448beea46f',
+    },
+    {
+        name: '위고로보틱스',
+        id: 'MP-qhvoll8oiulg2351',
+        clientId: '3QUNV6dUkjZ9L_bztHLMbr',
+        clientSecret: 'ebe9e83d29c11ce3b9063987ef552c45',
+    },
 ];
