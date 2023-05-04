@@ -21,6 +21,7 @@ export class MyLocationMoreMenu {
         this.menu = menu.addFolder('More');
         this.initlocatest(this.menu);
         this.initlocatestOn(this.menu);
+        this.initgiftest(this.menu);
         return this.menu;
     }
     initlocatest(gui) {
@@ -186,5 +187,52 @@ export class MyLocationMoreMenu {
             mylocatestOn: mylocatestOn,
         };
         gui.add(setting, 'mylocatestOn');
+    }
+
+    initgiftest(gui) {
+        const giftest = async () => {
+            const giftestonoff = async () => {
+                const locationOption = {
+                    x: 2500,
+                    y: 1000,
+                    iconOption: {
+                        positionZ: 400,
+                        iconUrl: 'https://assets.dabeeomaps.com/image/ico/landy.gif',
+                        width: 200,
+                        height: 200,
+                        anchor: {
+                            x: 0.5,
+                            y: 0.5,
+                        },
+                    },
+                };
+                this.map.mylocation.set(locationOption);
+                setTimeout(() => {
+                    const option = {
+                        x: 1000,
+                        y: 1000,
+                    };
+                    this.map.mylocation.setPosition(option);
+                }, 3000);
+                setTimeout(() => {
+                    this.map.mylocation.gifOff();
+                }, 6000);
+                setTimeout(() => {
+                    const option = {
+                        x: 3000,
+                        y: 3000,
+                    };
+                    this.map.mylocation.setPosition(option);
+                }, 9000);
+                setTimeout(() => {
+                    this.map.mylocation.gifOn();
+                }, 12000);
+            };
+            giftestonoff();
+        };
+        const setting = {
+            giftest: giftest,
+        };
+        gui.add(setting, 'giftest');
     }
 }

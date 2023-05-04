@@ -154,6 +154,11 @@ function initGetMapByInput(parentMenu) {
             //   // bold:number
             // },
             // mergeMesh: boolean,                         // mergedMesh 활성화 여부
+            enableTiling: true,
+            tilingOption: {
+                treeDepth: 7,
+                thresholdLevel: 7,
+            },
             waterMarkPosition: 'RIGHT_TOP',
         });
 
@@ -689,6 +694,10 @@ function initMapOptionMenu(parentMenu, map, option) {
             enableTiling: setting.enableTiling,
             framerate: setting.framerate,
             backgroundImage: setting.backgroundImage,
+            tilingOption: {
+                treeDepth: setting.treeDepth,
+                thresholdLevel: setting.thresholdLevel,
+            },
         };
         return mapOption;
     }
@@ -718,11 +727,14 @@ function initOptionSetting() {
         showWaterMarker: true,
         canvasSizewidth: '',
         canvasSizeheight: '',
-        enableTiling: false,
+        enableTiling: true,
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
         framerate: 24,
         backgroundImage: '',
+        enableTiling: true,
+        treeDepth: '7',
+        thresholdLevel: '1',
     };
     return setting;
 }
@@ -759,6 +771,8 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'waterMarkPosition', ['LEFT_TOP', 'RIGHT_TOP', 'LEFT_BOTTOM', 'RIGHT_BOTTOM']);
     menu.add(setting, 'enableTiling');
     menu.add(setting, 'backgroundImage', ['', 'https://assets.dabeeomaps.com/upload/library/assets/EVO_Sports_Expo_SANTA_CLARA_2023_layout.jpg']);
+    menu.add(setting, 'treeDepth');
+    menu.add(setting, 'thresholdLevel');
     return menu;
 }
 

@@ -53,6 +53,7 @@ export class EventMenu {
             'poi-mouse-enter': false,
             'poi-mouse-leave': false,
             'floor-change-animation-end': false,
+            'zoom-end': false,
         };
         let menu = this.menu;
         const setting = this.setting;
@@ -81,6 +82,8 @@ export class EventMenu {
         menu.add(setting, 'object-mouse-enter');
         menu.add(setting, 'object-mouse-leave');
         menu.add(setting, 'floor-change-animation-end');
+        menu.add(setting, 'zoom-end');
+
         return menu;
     }
     initObjectHover() {
@@ -219,6 +222,9 @@ export class EventMenu {
         });
         mapContainer.addEventListener('floor-change-animation-end', (e) => {
             if (setting['floor-change-animation-end']) console.log('floor-change-animation-end 대한 결과값: ', e.detail);
+        });
+        mapContainer.addEventListener('zoom-end', (e) => {
+            if (setting['zoom-end']) console.log('zoom-end 대한 결과값: ', e.detail);
         });
     }
 }
