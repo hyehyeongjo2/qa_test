@@ -12,6 +12,7 @@ export class MyLocationMenu {
         this.iconSetting = null;
         this.anchorSetting = null;
         this.animateSetting = null;
+        this.setRotation = null;
         this.iconApplyFlag = false;
         this.anchorApply = false;
         this.animateApplyFlag = false;
@@ -31,6 +32,7 @@ export class MyLocationMenu {
         this.menu.open();
         this.setting = this.initSetting();
         this.setPosition = this.initsetPosition();
+        this.setRotation = this.initsetRotation();
         this.iconSetting = this.initIconSetting();
         this.anchorSetting = this.initAnchorSetting();
         this.animateSetting = this.initAnimateSetting();
@@ -47,7 +49,6 @@ export class MyLocationMenu {
         menu.add(setting, 'x');
         menu.add(setting, 'y');
         menu.add(setting, 'onActive');
-
         const actionSetting = {
             set: this.set.bind(this),
             clear: this.clear.bind(this),
@@ -74,6 +75,20 @@ export class MyLocationMenu {
             setPosition: this.setposition.bind(this),
         };
         menu.add(actionSetting, 'setPosition');
+        return setting;
+    }
+
+    initsetRotation() {
+        const setting = {
+            setRotation: '0',
+        };
+        const menu = this.menu.addFolder('setRotation');
+        menu.add(setting, 'setRotation');
+
+        const actionSetting = {
+            setRotation: this.setrotation.bind(this),
+        };
+        menu.add(actionSetting, 'setRotation');
         return setting;
     }
 
@@ -177,9 +192,12 @@ export class MyLocationMenu {
     clear() {
         this.map.mylocation.clear();
     }
-
     setposition() {
         const option = Object.assign({}, this.setPosition);
         this.map.mylocation.setPosition(option);
+    }
+    setrotation() {
+        const option = this.setRotation.setRotation;
+        this.map.mylocation.setRotation(option);
     }
 }

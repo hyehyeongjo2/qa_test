@@ -154,11 +154,8 @@ function initGetMapByInput(parentMenu) {
             //   // bold:number
             // },
             // mergeMesh: boolean,                         // mergedMesh 활성화 여부
-            enableTiling: true,
-            tilingOption: {
-                treeDepth: 7,
-                thresholdLevel: 7,
-            },
+            // enableTiling: true,
+            tilingOption: {},
             waterMarkPosition: 'RIGHT_TOP',
         });
 
@@ -441,7 +438,7 @@ function initMapOptionMenu(parentMenu, map, option) {
             clientSecret: '120ad2959d5533e44cc24905d8af0da4',
         };
         const mapOption = {
-            enableTiling: true,
+            // enableTiling: true,
         };
 
         //mapData 가져오기
@@ -727,14 +724,13 @@ function initOptionSetting() {
         showWaterMarker: true,
         canvasSizewidth: '',
         canvasSizeheight: '',
-        enableTiling: true,
+        enableTiling: false,
         waterMarkPosition: 'LEFT_BOTTOM',
         enablePoiCollisionTest: true,
         framerate: 24,
         backgroundImage: '',
-        enableTiling: true,
-        treeDepth: '7',
-        thresholdLevel: '1',
+        treeDepth: '',
+        thresholdLevel: '',
     };
     return setting;
 }
