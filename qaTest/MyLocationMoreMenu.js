@@ -22,6 +22,7 @@ export class MyLocationMoreMenu {
         this.initlocatest(this.menu);
         this.initlocatestOn(this.menu);
         this.initgiftest(this.menu);
+        this.initrotatetest(this.menu);
         return this.menu;
     }
     initlocatest(gui) {
@@ -234,5 +235,74 @@ export class MyLocationMoreMenu {
             giftest: giftest,
         };
         gui.add(setting, 'giftest');
+    }
+    initrotatetest(gui) {
+        const rotatetest = async () => {
+            const rotate = async () => {
+                let rotation = 0;
+                let interval = 0;
+                const locationOption = {
+                    x: 2500,
+                    y: 1000,
+                    iconOption: {
+                        positionZ: 400,
+                        iconUrl: 'https://api-assets.dabeeomaps.com/upload/ico/img_mylocation_direction_red.png',
+                        width: 200,
+                        height: 200,
+                        anchor: {
+                            x: 0.5,
+                            y: 0.5,
+                        },
+                    },
+                };
+                const locationOption2 = {
+                    x: 2500,
+                    y: 1000,
+                    iconOption: {
+                        positionZ: 400,
+                        iconUrl: 'https://api-assets.dabeeomaps.com/upload/ico/img_mylocation_direction_blue.png',
+                        width: 200,
+                        height: 200,
+                        anchor: {
+                            x: 0.5,
+                            y: 0.5,
+                        },
+                    },
+                };
+                this.map.mylocation.set(locationOption);
+                setTimeout(() => {
+                    interval = setInterval(() => {
+                        rotation += 0.1;
+                        this.map.mylocation.setRotation(rotation);
+                    }, 100);
+                }, 1000);
+
+                setTimeout(() => {
+                    this.map.mylocation.setRotation(0);
+                    clearInterval(interval);
+                    interval = null;
+                }, 6000);
+                setTimeout(() => {
+                    this.map.mylocation.set(locationOption2);
+                    interval = setInterval(() => {
+                        rotation -= 0.1;
+                        this.map.mylocation.setRotation(rotation);
+                    }, 100);
+                }, 6500);
+                setTimeout(() => {
+                    this.map.mylocation.setRotation(0);
+                    clearInterval(interval);
+                    interval = null;
+                }, 12000);
+                setTimeout(() => {
+                    this.map.mylocation.clear();
+                }, 12500);
+            };
+            rotate();
+        };
+        const setting = {
+            rotatetest: rotatetest,
+        };
+        gui.add(setting, 'rotatetest');
     }
 }
