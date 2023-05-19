@@ -25,6 +25,8 @@ export class SimulationMenu {
         this.animOption = null;
         this.animMarkerOptions = null;
         this.destOption = null;
+        this.destinationMarkeranimateOptions = null;
+        this.destApply = false;
     }
     removeMenu() {
         if (this.menu) {
@@ -53,7 +55,7 @@ export class SimulationMenu {
         this.defaultLineOption = this.initLineMenu('Default Line');
         this.originMarkerOptions = this.initIconMenu('Origin Icon');
         this.destTagOption = this.initdestTagMenu('destTag');
-        // this.destinationMarkerOptions = this.initDestIconMenu('Destination Icon');
+        this.destinationMarkeranimateOptions = this.initDestIconMenu();
         this.destinationMarkerOptions = this.initIconMenu('Destination Icon');
         this.destinationLineOptions = this.initLineMenu('Destination Line');
         this.waypointMarkerOptions1 = this.initIconMenu('Waypoint1 Icon');
@@ -236,6 +238,9 @@ export class SimulationMenu {
         naviOption.origin.markerOptions = this.originMarkerOptions;
         naviOption.destination = this.destTagOption;
         naviOption.destination.markerOptions = this.destinationMarkerOptions;
+        if (this.destApplyFlag) {
+            naviOption.destination.markerOptions.animate = this.destinationMarkeranimateOptions;
+        }
         naviOption.destination.lineOptions = this.destinationLineOptions;
 
         console.log(naviOption);
@@ -330,42 +335,25 @@ export class SimulationMenu {
         menu.add(setting.anchor, 'y');
         return setting;
     }
-    initDestIconMenu(menuName) {
+    initDestIconMenu() {
         let destController = null;
         const destApply = () => {
-            this.iconApplyFlag = !this.iconApplyFlag;
-            if (this.iconApplyFlag) iconController = iconController.name('est Reset');
-            else iconController = iconController.name('dest Apply');
+            this.destApplyFlag = !this.destApplyFlag;
+            if (this.destApplyFlag) destController = destController.name('est Reset');
+            else destController = destController.name('dest Apply');
         };
         const setting = {
-            iconUrl: '',
-            width: '',
-            height: '',
-            positionZ: 0,
-            visibleIcon: true,
-            anchor: {
-                x: '0.5',
-                y: '0.5',
-            },
-            destani: false,
-            animate: {
-                duration: 1000,
-                // repeat: 3,
-                opacity: 1,
-            },
+            duration: 1000,
+            // repeat: 3,
+            opacity: 0.1,
         };
-
-        const menu = this.menu.addFolder(menuName);
-        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/btn_floor_up.png']);
-        menu.add(setting, 'width');
-        menu.add(setting, 'height');
-        menu.add(setting, 'positionZ');
-        menu.add(setting, 'visibleIcon');
-        menu.add(setting.anchor, 'x');
-        menu.add(setting.anchor, 'y');
-        menu.add(setting.animate, 'duration');
-        menu.add(setting.animate, 'opacity');
-        iconController = menu.add(actionSetting, 'iconApply');
+        const actionSetting = {
+            destApply: destApply,
+        };
+        const menu = this.menu.addFolder('dest animate');
+        menu.add(setting, 'duration');
+        menu.add(setting, 'opacity');
+        destController = menu.add(actionSetting, 'destApply');
         return setting;
     }
 
