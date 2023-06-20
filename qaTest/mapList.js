@@ -198,4 +198,10 @@ export const mapList = [
         clientId: '3QUNV6dUkjZ9L_bztHLMbr',
         clientSecret: 'ebe9e83d29c11ce3b9063987ef552c45',
     },
+    {
+        name: '롯데몰 Tay Ho _작업 원본',
+        id: 'MP-s1dw6dn3zr6t0054',
+        clientId: '5r38szj3AJv8X7O-oHFnBy',
+        clientSecret: '0e0f2aefd8f1eb8ee277ad6475005cd3',
+    },
 ];
