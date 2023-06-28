@@ -1,15 +1,26 @@
+import { MapInfoMoreMenu } from './MapInfoMoreMenu.js';
+
 export class MapInfoMenu {
     constructor() {
         this.gui = null;
         this.mapData = null;
+        this.map = null;
+        this.mapContainer = null;
         this.menu = null;
+        this.setting = null;
     }
-
-    init(gui, mapData) {
+    removeMenu() {
+        if (this.menu) {
+            this.gui.removeFolder(this.menu);
+            this.menu = null;
+        }
+    }
+    init(gui, mapData, map, mapContainer) {
         this.gui = gui;
         this.mapData = mapData;
-        this.mapData = this.mapData;
+        this.map = map;
         console.log(this.mapData);
+        this.mapContainer = mapContainer;
         const georeferencingEast = mapData.dataMapInfo.mapInfo.georeferencingEast || '';
         const georeferencingNorth = mapData.dataMapInfo.mapInfo.georeferencingNorth || '';
         const georeferencingSouth = mapData.dataMapInfo.mapInfo.georeferencingSouth || '';
@@ -42,8 +53,10 @@ export class MapInfoMenu {
         this.menu.add(mapInfo, 'georeferencingSouth');
         this.menu.add(mapInfo, 'geoReferencingWest');
 
+        new MapInfoMoreMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
+
     removeMenu() {
         if (this.menu) {
             this.gui.removeFolder(this.menu);

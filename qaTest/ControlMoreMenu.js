@@ -132,19 +132,11 @@ export class ControlMoreMenu {
         let cameraType = this.map.control.getCameraType();
         const Mtest = (value) => {
             const option = {
-                transition: true,
+                transition: false,
                 position: { x: 1000, y: 1000 },
             };
             const option2 = {
-                transition: true,
-                position: { x: 2000, y: 2000 },
-            };
-            const option3 = {
-                transition: true,
-                position: { x: 1000, y: 1000 },
-            };
-            const option4 = {
-                transition: true,
+                transition: false,
                 position: { x: 2000, y: 2000 },
             };
             setTimeout(() => {
@@ -153,13 +145,6 @@ export class ControlMoreMenu {
             setTimeout(() => {
                 this.map.control.moveTo(option2);
             }, 3000);
-            setTimeout(() => {
-                this.map.control.moveTo(option3);
-            }, 5000);
-            setTimeout(() => {
-                this.map.control.moveTo(option4);
-            }, 7000);
-            this.map.control.moveTo(option);
         };
         const setting = {
             Mtest: Mtest,
