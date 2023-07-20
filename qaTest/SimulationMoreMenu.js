@@ -30,6 +30,8 @@ export class SimulationMoreMenu {
             PosLineSet: this.PosLineSet.bind(this),
             IdPointSet: this.IdPointSet.bind(this),
             routetype: this.routetype.bind(this),
+            emart_kintex_set: this.emart_kintex_set.bind(this),
+            emart_kintex_start: this.emart_kintex_start.bind(this),
             // test: this.createNaviListContainer.bind(this),
         };
         const menu = this.menu;
@@ -38,6 +40,8 @@ export class SimulationMoreMenu {
         menu.add(setting, 'PosLineSet');
         menu.add(setting, 'IdPointSet');
         menu.add(setting, 'routetype');
+        menu.add(setting, 'emart_kintex_set');
+        menu.add(setting, 'emart_kintex_start');
         // menu.add(setting, 'test');
     }
 
@@ -522,5 +526,88 @@ export class SimulationMoreMenu {
                 console.log('엘리베이터없음');
             }
         }, 8000);
+    }
+    async emart_kintex_set() {
+        const route = {
+            origin: {
+                poiId: 'PO-H_JZKUsEB0662',
+                floorId: 'FL-uvjpe96mhid05379',
+            },
+            destination: {
+                poiId: 'PO-8ydRcNBPy7672',
+                floorId: 'FL-1ibkcfzdvj4mp5357',
+            },
+            type: ['recommendation'],
+        };
+        const naviOption = {
+            origin: {
+                markerOptions: {
+                    // iconUrl: '/assets/icon/start.svg',
+                    width: 60,
+                    height: 60,
+                    positionZ: 10,
+                    visibleIcon: true,
+                },
+            },
+            destination: {
+                showTag: false,
+                markerOptions: {
+                    // iconUrl: '/assets/icon/arrive.svg',
+                    width: 100,
+                    height: 160,
+                    positionZ: 10,
+                    visibleIcon: true,
+                },
+                lineOptions: {
+                    lineColor: '#ffbb00',
+                    solidLineEnabled: true,
+                    solidLineWidth: 20,
+                },
+            },
+
+            defaultLineOption: {
+                lineColor: 'rgb(110,91, 227, 0.3)',
+                solidLineEnabled: true,
+                solidLineWidth: 13,
+                solidLineCap: 'round',
+                solidLineJoin: 'round',
+            }, // 기본 주행선 옵션
+            lineDivide: false,
+            lineZ: 10,
+        };
+        const naviResponse = await this.mapData.getRoute(route);
+        await this.map.routeSimulation.set(naviResponse.recommendation, naviOption);
+    }
+    emart_kintex_start() {
+        const mapContainer = this.mapContainer;
+        this.complete = true;
+        const animOption = {
+            destOption: {
+                opacity: 0.8,
+                isAnimate: true,
+                duration: 1000,
+                isRepeat: false,
+                isYoyo: false,
+            },
+            changeFloorDelay: 0,
+            speedRate: 23,
+            removeIcon: true,
+            markerOptions: {
+                iconUrl: 'https://assets.dabeeomaps.com/image/ico/landy.gif',
+                width: 50,
+                height: 50,
+            },
+
+            enableFloorMotionCSS: true,
+            floorMotionDuration: 1500,
+            enableTwoFloorsNavigation: true,
+            twoFloorsNavigationDuration: 1500,
+            twoFloorsNavigationOriginCss: 'display: flex; flex-direction: column; align-items:center; top: 300px',
+            twoFloorsNavigationDestCss: 'display: flex; flex-direction: column; align-items:center; bottom: 472px',
+            //   twoFloorsNavigationOriginElement: createFloorElement(machineStore.machine.floor.name, '출발'),
+            //   twoFloorsNavigationDestElement: createFloorElement(floorStore.getTargetFloorName(tenantStore.currentTenant.floorId)
+        };
+        this.map.routeSimulation.start(animOption);
+        console.log(this.complete);
     }
 }

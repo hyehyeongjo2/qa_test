@@ -362,6 +362,7 @@ function initMapOptionMenu(parentMenu, map, option) {
         watermarktest: watermarktest,
         tilitingtest: tilitingtest,
         emart: emart,
+        emart_kintex: emart_kintex,
         mergeMesh: mergeMesh,
         splitetest: splitetest,
     };
@@ -371,6 +372,7 @@ function initMapOptionMenu(parentMenu, map, option) {
     menu.add(actionSetting, 'watermarktest');
     menu.add(actionSetting, 'tilitingtest');
     menu.add(actionSetting, 'emart');
+    menu.add(actionSetting, 'emart_kintex');
     menu.add(actionSetting, 'mergeMesh');
     menu.add(actionSetting, 'splitetest');
     // new indexMore().init(menu, map, option, gui);
@@ -665,6 +667,55 @@ function initMapOptionMenu(parentMenu, map, option) {
         }, 14000);
     }
 
+    async function emart_kintex() {
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+        const mapDataOption = {
+            name: '이마트 킨텍스점',
+            id: 'MP-tofnywde992s5071',
+            clientId: '9VdvV-erQOw80wxmR8Q6fG',
+            clientSecret: '7e027c76adbf27f73301e2cec0dda3d5',
+        };
+        const mapOption = {
+            camera: '3d', // 초기 카메라 모드. default는 3d
+            // floor: this.machineInfo.floor.mapFloorId, // 적용할 층 정보. default는 지도 설정값
+            language: 'ko', // 초기 poi 언어 설정. default는 지도 설정값
+            showPoi: true,
+            spriteEnable: true, // Poi를 항상 정면으로 보이게 함. default는 true
+            spriteKeepRotation: true, // POI sprite로 그릴때 원래 각도 유지 여부. default는 false
+            showWaterMarker: false,
+            canvasSize: {
+                // width: 3870,
+                // height: 1550,
+            },
+            framerate: 60,
+            controlOption: {
+                //   rotate: Number(this.machineInfo.mapPosition.rotation),
+                //   zoom: Number(this.machineInfo.mapPosition.zoom), // 0~24
+                pan: {
+                    // 중심좌표, default는 지도 중심
+                    // x: Number(this.machineInfo.mapPosition.centerPositionX),
+                    // y: Number(this.machineInfo.mapPosition.centerPositionY),
+                },
+                tilt: 30,
+            },
+            enablePoiCollisionTest: false,
+            dragDistance: 100,
+        };
+
+        //mapData 가져오기
+        const mapData = await dabeeoMaps.getMapData(mapDataOption);
+        const mapContainer = makeMapElement();
+
+        if (map) map.context.cleanup();
+        map = await dabeeoMaps.showMap(mapContainer, mapOption, mapData);
+        removeAllMenu();
+
+        initAllMenu(gui, mapData, map, mapContainer);
+
+        currentMenu = mapOptionMenu;
+    }
+
     //Daniel 임시추가 내역(완)
     function getOption(setting) {
         const mapOption = {
@@ -691,11 +742,11 @@ function initMapOptionMenu(parentMenu, map, option) {
                 width: setting.canvasSizewidth,
                 height: setting.canvasSizeheight,
             },
-            // enablePoiCollisionTest: setting.enablePoiCollisionTest,
-            // poiTextPadding: {
-            //     horizontal: setting.horizontal,
-            //     vertical: setting.vertical,
-            // },
+            enablePoiCollisionTest: setting.enablePoiCollisionTest,
+            poiTextPadding: {
+                horizontal: setting.horizontal,
+                vertical: setting.vertical,
+            },
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
             framerate: setting.framerate,
@@ -763,10 +814,10 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'language', langSetting);
     menu.add(setting, 'theme', theme);
     menu.add(setting, 'showPoi');
-    // menu.add(setting, 'enablePoiCollisionTest');
-    // const poiTextPadding = menu.addFolder('poiTextPadding (CollisionTestOFF)');
-    // poiTextPadding.add(setting, 'horizontal');
-    // poiTextPadding.add(setting, 'vertical');
+    menu.add(setting, 'enablePoiCollisionTest');
+    const poiTextPadding = menu.addFolder('poiTextPadding (CollisionTestOFF)');
+    poiTextPadding.add(setting, 'horizontal');
+    poiTextPadding.add(setting, 'vertical');
     menu.add(setting, 'spriteEnable');
     menu.add(setting, 'spriteKeepRotation');
     menu.add(setting, 'zoom');
