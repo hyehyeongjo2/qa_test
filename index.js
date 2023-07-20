@@ -1,3 +1,8 @@
+/**
+ * FileName: index.js
+ * Description : poiTextPadding옵션 추가
+ * Change History
+ */
 import { mapList } from './qaTest/mapList.js';
 import { menuList } from './menuList.js';
 // import { indexMore } from './indexMore.js';
@@ -686,7 +691,11 @@ function initMapOptionMenu(parentMenu, map, option) {
                 width: setting.canvasSizewidth,
                 height: setting.canvasSizeheight,
             },
-            enablePoiCollisionTest: setting.enablePoiCollisionTest,
+            // enablePoiCollisionTest: setting.enablePoiCollisionTest,
+            // poiTextPadding: {
+            //     horizontal: setting.horizontal,
+            //     vertical: setting.vertical,
+            // },
             waterMarkPosition: setting.waterMarkPosition,
             enableTiling: setting.enableTiling,
             framerate: setting.framerate,
@@ -714,6 +723,8 @@ function initOptionSetting() {
         theme: theme,
         showPoi: true, // map상에 poi 보여줄지 말지 결정 여부. default는 true
         spriteEnable: true, // POI,Marker,MyLocation,길찾기 마커를 항상 정면으로 보이게 함.
+        horizontal: 50,
+        vertical: 50,
         spriteKeepRotation: false, // POI,Marker,MyLocation,길찾기 마커를 sprite로 그릴때 원래 각도 유지 여부
         zoom: '', //초기줌
         x: '',
@@ -737,6 +748,7 @@ function initOptionSetting() {
 
 function initOptionMenu(setting, parentMenu) {
     const menu = parentMenu.addFolder('mapOption');
+    // const poiTextPadding = menu.addFolder('mapOption');
     const floorSetting = mapData.dataFloor.getFloors().reduce((prev, cur) => {
         return { ...prev, [cur.name[0].text]: cur.id };
     }, {});
@@ -751,7 +763,10 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'language', langSetting);
     menu.add(setting, 'theme', theme);
     menu.add(setting, 'showPoi');
-    menu.add(setting, 'enablePoiCollisionTest');
+    // menu.add(setting, 'enablePoiCollisionTest');
+    // const poiTextPadding = menu.addFolder('poiTextPadding (CollisionTestOFF)');
+    // poiTextPadding.add(setting, 'horizontal');
+    // poiTextPadding.add(setting, 'vertical');
     menu.add(setting, 'spriteEnable');
     menu.add(setting, 'spriteKeepRotation');
     menu.add(setting, 'zoom');

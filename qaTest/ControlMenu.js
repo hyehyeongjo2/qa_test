@@ -1,4 +1,6 @@
 import { ControlMoreMenu } from './ControlMoreMenu.js';
+import { ControlMoreFocusMenu } from './ControlMoreFocusMenu.js';
+import { ControlMorePaddingMenu } from './ControlMorePaddingMenu.js';
 
 export class ControlMenu {
     constructor() {
@@ -37,7 +39,10 @@ export class ControlMenu {
         this.initReset(this.menu);
         this.initgetCurrentZoomLevel(this.menu);
         this.initgetCameraType(this.menu);
+
         new ControlMoreMenu().init(this.menu, mapData, map, mapContainer);
+        new ControlMoreFocusMenu().init(this.menu, mapData, map, mapContainer);
+        new ControlMorePaddingMenu().init(this.menu, mapData, map, mapContainer);
         return this.menu;
     }
 
@@ -405,7 +410,7 @@ export class ControlMenu {
             // console.log('poi enter ', e.detail);
             const id = e.detail.id;
             option = { ...option, ids: [id] };
-            await map.pois.set(option);
+            // await map.pois.set(option);
         });
 
         mapContainer.addEventListener('poi-mouse-leave', async (e) => {
@@ -423,7 +428,7 @@ export class ControlMenu {
             } else {
                 poisIds.push(id);
                 option = { ...option, ids: poisIds };
-                map.pois.set(option);
+                // map.pois.set(option);
             }
             console.log(poisIds);
         });

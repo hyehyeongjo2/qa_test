@@ -96,6 +96,8 @@ export class MapDataMenu {
 
     initDataPoi(gui) {
         const allPois = this.mapData.dataPoi.getPois();
+        console.log(allPois);
+        console.log(this.mapData);
         let poisSetting = {
             선택: -1,
         };

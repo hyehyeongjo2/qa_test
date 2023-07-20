@@ -73,6 +73,17 @@ export class MapInfoMoreMenu {
         }
         return false;
     }
+    filecheck(testname, arr1, arr2) {
+        const fileContent = [];
+        const fileContent1 = [];
+        fileContent.push(arr1);
+        fileContent1.push(arr2);
+        const arr1_string = JSON.stringify(fileContent, null, 2);
+        const arr2_string = JSON.stringify(fileContent1, null, 2);
+        console.log(testname + this.compareArrays(arr1_string, arr2_string), arr1);
+        fileContent.length = 0;
+        fileContent1.length = 0;
+    }
     downloadTextFile(text, filename) {
         const element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -84,8 +95,6 @@ export class MapInfoMoreMenu {
     }
     controltest() {
         console.clear();
-        const fileContent = [];
-        const fileContent1 = [];
         const SetOptiontest = this.map.control.setOption({
             controlRangeOption: {
                 zoom: {
@@ -136,13 +145,7 @@ export class MapInfoMoreMenu {
                 minRotate: 30,
             },
         };
-        fileContent.push(SetOptiontest);
-        fileContent1.push(SetOptionOri);
-        const SetOptiontest_arr = JSON.stringify(fileContent, null, 2);
-        const SetOptionOri_arr = JSON.stringify(fileContent1, null, 2);
-        console.log('moveto :' + this.compareArrays(SetOptiontest_arr, SetOptionOri_arr), SetOptiontest);
-        fileContent.length = 0;
-        fileContent1.length = 0;
+        filecheck('setoption :', SetOptiontest, SetOptionOri);
 
         const zoomOuttest = this.map.control.zoomOut({ transition: true });
         console.log('zoomOut :', this.checkNull(zoomOuttest), zoomOuttest);
@@ -158,11 +161,7 @@ export class MapInfoMoreMenu {
             x: 1500,
             y: 1500,
         };
-        fileContent.push(movetotest);
-        fileContent1.push(movetoori);
-        const movetotest_arr = JSON.stringify(fileContent, null, 2);
-        const movetoori_arr = JSON.stringify(fileContent1, null, 2);
-        console.log('moveto :' + this.compareArrays(movetotest_arr, movetoori_arr), movetotest);
+        filecheck('moveto :', movetotest, movetoori);
 
         // const test = this.map.control.set({ zoom: 21, rotation: 0, tilt: 10, transition: true });
         // test1 = JSON.stringify(fileContent);
@@ -175,8 +174,6 @@ export class MapInfoMoreMenu {
         const floorList = this.mapData.dataFloor.getFloors();
         const obj = this.mapData.dataObject.getObjects(floorList[0].id);
         const poi = this.mapData.dataPoi.getPois(floorList[0].id);
-        const fileContent = [];
-        const fileContent1 = [];
         const focusToObj_single_test = this.map.control.focusTo({
             focus: {
                 type: 'OBJECT',
@@ -205,13 +202,7 @@ export class MapInfoMoreMenu {
                 right: 0,
             },
         };
-        fileContent.push(focusToObj_single_test);
-        fileContent1.push(focusToObj_single_ori);
-        const focusToObj_single_test_arr = JSON.stringify(fileContent, null, 2);
-        const focusToObj_single_ori_arr = JSON.stringify(fileContent1, null, 2);
-        console.log('focusToObj_single :' + this.compareArrays(focusToObj_single_test_arr, focusToObj_single_ori_arr), focusToObj_single_test);
-        fileContent.length = 0;
-        fileContent1.length = 0;
+        filecheck('focusToObj_single :', focusToObj_single_test, focusToObj_single_ori);
 
         const focusToObj_All_test = this.map.control.focusTo({
             focus: {
@@ -240,13 +231,7 @@ export class MapInfoMoreMenu {
                 right: 0,
             },
         };
-        fileContent.push(focusToObj_All_test);
-        fileContent1.push(focusToObj_All_ori);
-        const focusToObj_All_test_arr = JSON.stringify(fileContent, null, 2);
-        const focusToObj_All_ori_arr = JSON.stringify(fileContent1, null, 2);
-        console.log('focusToObj_All :' + this.compareArrays(focusToObj_All_test_arr, focusToObj_All_ori_arr), focusToObj_All_test);
-        fileContent.length = 0;
-        fileContent1.length = 0;
+        filecheck('focusToObj_All :', focusToObj_All_test, focusToObj_All_ori);
 
         const focusToObj_arr_test = this.map.control.focusTo({
             focus: {
