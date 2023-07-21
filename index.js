@@ -755,6 +755,7 @@ function initMapOptionMenu(parentMenu, map, option) {
                 treeDepth: setting.treeDepth,
                 thresholdLevel: setting.thresholdLevel,
             },
+            dragDistance: setting.treeDepth,
         };
         return mapOption;
     }
@@ -791,6 +792,7 @@ function initOptionSetting() {
         enablePoiCollisionTest: true,
         framerate: 24,
         backgroundImage: '',
+        dragDistance: 50,
         treeDepth: '',
         thresholdLevel: '',
     };
@@ -835,6 +837,7 @@ function initOptionMenu(setting, parentMenu) {
     menu.add(setting, 'backgroundImage', ['', 'https://assets.dabeeomaps.com/upload/library/assets/EVO_Sports_Expo_SANTA_CLARA_2023_layout.jpg']);
     menu.add(setting, 'treeDepth');
     menu.add(setting, 'thresholdLevel');
+    menu.add(setting, 'dragDistance');
     return menu;
 }
 
