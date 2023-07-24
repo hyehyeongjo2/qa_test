@@ -326,7 +326,7 @@ export class SimulationMenu {
         };
 
         const menu = this.menu.addFolder(menuName);
-        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/btn_floor_up.png']);
+        menu.add(setting, 'iconUrl', ['', 'https://assets.dabeeomaps.com/image/btn_floor_up.png', 'https://assets.dabeeomaps.com/image/ico/landy.gif']);
         menu.add(setting, 'width');
         menu.add(setting, 'height');
         menu.add(setting, 'positionZ');

@@ -204,4 +204,10 @@ export const mapList = [
         clientId: '5r38szj3AJv8X7O-oHFnBy',
         clientSecret: '0e0f2aefd8f1eb8ee277ad6475005cd3',
     },
+    {
+        name: '이마트 킨텍스점',
+        id: 'MP-tofnywde992s5071',
+        clientId: '9VdvV-erQOw80wxmR8Q6fG',
+        clientSecret: '7e027c76adbf27f73301e2cec0dda3d5',
+    },
 ];

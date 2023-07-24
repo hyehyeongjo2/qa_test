@@ -410,7 +410,7 @@ export class ControlMenu {
             // console.log('poi enter ', e.detail);
             const id = e.detail.id;
             option = { ...option, ids: [id] };
-            // await map.pois.set(option);
+            await map.pois.set(option);
         });
 
         mapContainer.addEventListener('poi-mouse-leave', async (e) => {
@@ -428,7 +428,7 @@ export class ControlMenu {
             } else {
                 poisIds.push(id);
                 option = { ...option, ids: poisIds };
-                // map.pois.set(option);
+                map.pois.set(option);
             }
             console.log(poisIds);
         });
