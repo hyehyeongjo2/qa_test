@@ -755,7 +755,7 @@ function initMapOptionMenu(parentMenu, map, option) {
                 treeDepth: setting.treeDepth,
                 thresholdLevel: setting.thresholdLevel,
             },
-            dragDistance: setting.treeDepth,
+            dragDistance: setting.dragDistance,
         };
         return mapOption;
     }
