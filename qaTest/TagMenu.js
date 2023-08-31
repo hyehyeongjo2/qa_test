@@ -101,7 +101,6 @@ export class TagMenu {
     set(value) {
         const setting = this.setting;
         const tag = this.createTag();
-        console.log(value);
         if (setting.floor === '') {
             alert('층을 선택해주세요');
             return;

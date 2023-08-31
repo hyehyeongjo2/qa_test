@@ -43,6 +43,9 @@ export class ContextMenu {
             getMapOptions: this.getMapOptions.bind(this),
             hideByCode: '',
             showByCode: '',
+            addBackground: this.addBackground.bind(this),
+            showBackground: this.showBackground.bind(this),
+            hideBackground: this.hideBackground.bind(this),
             cleanup: this.cleanup.bind(this),
         };
 
@@ -54,10 +57,13 @@ export class ContextMenu {
         menu.add(setting, 'getMapOptions');
         menu.add(setting, 'hideByCode', groupList).onChange(this.hideByCode.bind(this));
         menu.add(setting, 'showByCode', groupList).onChange(this.showByCode.bind(this));
+        const addBackground = menu.addFolder('addBackground');
+        addBackground.add(setting, 'addBackground');
+        addBackground.add(setting, 'showBackground');
+        addBackground.add(setting, 'hideBackground');
         menu.add(setting, 'cleanup');
         return setting;
     }
-
     cleanup(value) {
         this.map.context.cleanup();
         console.log(`this.map.context.cleanup()`);
@@ -90,6 +96,22 @@ export class ContextMenu {
     changeCamera(value) {
         this.map.control.changeCamera(value);
         console.log(`this.map.context.changeCamera(${value})`);
+    }
+    async addBackground() {
+        const backgroundImage = {
+            sampleImageUrl: 'https://assets.dabeeomaps.com/upload/library/assets/EVO_Sports_Expo_SANTA_CLARA_2023_layout.jpg',
+            sampleImageSize: { width: 6000, height: 3000 },
+            sampleImagePosition: { x: 0, y: 0, z: 0 },
+            sampleImageOpacity: 55,
+            visible: true,
+        };
+        await this.map.context.addBackground(backgroundImage);
+    }
+    async showBackground() {
+        await this.map.context.changeShowBackground(true);
+    }
+    async hideBackground() {
+        await this.map.context.changeShowBackground(false);
     }
     removeMenu() {
         if (this.menu) {

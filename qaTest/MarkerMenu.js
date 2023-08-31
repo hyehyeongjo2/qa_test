@@ -52,8 +52,6 @@ export class MarkerMenu {
     async set(value) {
         const setting = this.setting;
         const iconOption = this.iconMenu.getOption();
-
-        console.log(value);
         const markerOption = {
             x: setting.x,
             y: setting.y,

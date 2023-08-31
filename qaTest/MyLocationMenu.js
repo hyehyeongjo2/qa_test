@@ -190,13 +190,6 @@ export class MyLocationMenu {
             option.animate = this.animateSetting;
         }
         this.map.mylocation.set(option);
-        const oboption = console.log(option);
-        const setoboption = console.log(this.map.mylocation.set(option));
-        if (oboption == setoboption) {
-            console.log('true');
-        } else {
-            console.log('false');
-        }
     }
 
     gifon() {

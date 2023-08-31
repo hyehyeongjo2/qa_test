@@ -366,18 +366,18 @@ export class ControlMenu {
             isYoyo: true,
         };
 
-        this.mapContainer.addEventListener('object-mouse-enter', (e) => {
-            // console.log('object enter ', e.detail);
-            const id = e.detail.id;
-            option = { ...option, ids: [id] };
-            this.map.objects.set(option);
-        });
+        // this.mapContainer.addEventListener('object-mouse-enter', (e) => {
+        //     // console.log('object enter ', e.detail);
+        //     const id = e.detail.id;
+        //     option = { ...option, ids: [id] };
+        //     this.map.objects.set(option);
+        // });
 
-        this.mapContainer.addEventListener('object-mouse-leave', (e) => {
-            // console.log('object leave ', e.detail);
-            const id = e.detail.id;
-            if (!this.objectIds.includes(id)) this.map.objects.reset(id);
-        });
+        // this.mapContainer.addEventListener('object-mouse-leave', (e) => {
+        //     // console.log('object leave ', e.detail);
+        //     const id = e.detail.id;
+        //     if (!this.objectIds.includes(id)) this.map.objects.reset(id);
+        // });
 
         this.mapContainer.addEventListener('object-click', (e) => {
             // console.log('object click ', e.detail);
