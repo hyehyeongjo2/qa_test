@@ -356,7 +356,9 @@ function initMapOptionMenu(parentMenu, map, option) {
     const menu = initOptionMenu(setting, parentMenu);
     const actionSetting = {
         showMap: showMap,
+        cleanup: cleanup,
         langtest: langtest,
+
         showpoitest: showpoitest,
         watermarktest: watermarktest,
         tilitingtest: tilitingtest,
@@ -367,6 +369,7 @@ function initMapOptionMenu(parentMenu, map, option) {
         splitetest: splitetest,
     };
     menu.add(actionSetting, 'showMap');
+    menu.add(actionSetting, 'cleanup');
     menu.add(actionSetting, 'langtest');
     menu.add(actionSetting, 'showpoitest');
     menu.add(actionSetting, 'watermarktest');
@@ -389,6 +392,24 @@ function initMapOptionMenu(parentMenu, map, option) {
         removeAllMenu();
 
         initAllMenu(gui, mapData, map, mapContainer);
+        // getMapMenu.hide();
+        // mapOptionMenu.show();
+        currentMenu = mapOptionMenu;
+    }
+
+    async function cleanup() {
+        // map.context.cleanup();
+        if (map) map.context.cleanup();
+        document.querySelector('.map').remove();
+
+        // const option = getOption(setting);
+        // const mapContainer = makeMapElement();
+        // console.log(option);
+        // map = await dabeeoMaps.showMap(mapContainer, option, mapData);
+        // console.log('mapoption', map.context.getMapOptions());
+        removeAllMenu();
+
+        // initAllMenu(gui, mapData, map, mapContainer);
         // getMapMenu.hide();
         // mapOptionMenu.show();
         currentMenu = mapOptionMenu;

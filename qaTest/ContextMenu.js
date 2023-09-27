@@ -41,6 +41,7 @@ export class ContextMenu {
             convert2Image: '',
             getCurrentFloor: currentFloor.id,
             getMapOptions: this.getMapOptions.bind(this),
+            getCurrentCameraInfo: this.getCurrentCameraInfo.bind(this),
             hideByCode: '',
             showByCode: '',
             addBackground: this.addBackground.bind(this),
@@ -55,6 +56,7 @@ export class ContextMenu {
         menu.add(setting, 'convert2Image', scaleList).onChange(this.convert2Image.bind(this));
         menu.add(setting, 'getCurrentFloor').listen();
         menu.add(setting, 'getMapOptions');
+        menu.add(setting, 'getCurrentCameraInfo');
         menu.add(setting, 'hideByCode', groupList).onChange(this.hideByCode.bind(this));
         menu.add(setting, 'showByCode', groupList).onChange(this.showByCode.bind(this));
         const addBackground = menu.addFolder('addBackground');
@@ -67,8 +69,9 @@ export class ContextMenu {
     cleanup(value) {
         this.map.context.cleanup();
         console.log(`this.map.context.cleanup()`);
-        this.map = null;
-        this.removeMenu();
+        // this.map = null;
+        removeAllMenu();
+        initAllMenu(gui, mapData, map, mapContainer);
     }
     changeLanguage(value) {
         this.map.context.changeLanguage(value); // poi 언어를 바꿉니다. 'en' | 'ko'
@@ -93,19 +96,25 @@ export class ContextMenu {
         console.log(`this.map.context.getMapOptions()`, option);
     }
 
+    getCurrentCameraInfo(value) {
+        const result = this.map.control.getCurrentCameraInfo();
+        console.log(`this.map.control.getMapOptions()`, result);
+    }
+
     changeCamera(value) {
         this.map.control.changeCamera(value);
         console.log(`this.map.context.changeCamera(${value})`);
     }
     async addBackground() {
         const backgroundImage = {
-            sampleImageUrl: 'https://assets.dabeeomaps.com/upload/library/assets/EVO_Sports_Expo_SANTA_CLARA_2023_layout.jpg',
-            sampleImageSize: { width: 6000, height: 3000 },
-            sampleImagePosition: { x: 0, y: 0, z: 0 },
+            sampleImageUrl: 'https://assets.dabeeomaps.com/upload/floorBackground/230913180800480740151.png',
+            sampleImageSize: { width: 7500, height: 3118 },
+            sampleImagePosition: { x: 3750, y: 1600, z: 50 },
             sampleImageOpacity: 55,
             visible: true,
         };
         await this.map.context.addBackground(backgroundImage);
+        console.log(backgroundImage);
     }
     async showBackground() {
         await this.map.context.changeShowBackground(true);

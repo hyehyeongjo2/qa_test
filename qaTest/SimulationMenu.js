@@ -150,6 +150,8 @@ export class SimulationMenu {
             clear: this.clear.bind(this),
             start: this.start.bind(this),
             stop: this.stop.bind(this),
+            pause: this.pause.bind(this),
+            resume: this.resume.bind(this),
             pathset: this.createNaviListContainer.bind(this),
         };
 
@@ -159,6 +161,8 @@ export class SimulationMenu {
         menu.add(setting, 'clear');
         menu.add(setting, 'start');
         menu.add(setting, 'stop');
+        menu.add(setting, 'pause');
+        menu.add(setting, 'resume');
         menu.add(setting, 'pathset');
 
         return setting;
@@ -262,7 +266,12 @@ export class SimulationMenu {
         console.log(animOption);
         this.map.routeSimulation.start(animOption);
     }
-
+    pause() {
+        this.map.routeSimulation.pause();
+    }
+    resume() {
+        this.map.routeSimulation.resume();
+    }
     stop() {
         this.map.routeSimulation.stop();
     }
@@ -494,11 +503,11 @@ export class SimulationMenu {
                             totaldistance += Number(distance);
                         }
                     } else {
-                        textContent = `(${floorName}) ${transportation} 탑승`;
+                        textContent = `${poiTitle}(${floorName}) ${transportation} 탑승`;
                         this.createElement(naviListContainer, move, textContent);
 
                         ({ floorName, move } = this.getNavigationListData(arr[index + 1]));
-                        textContent = ` (${floorName}) ${transportation} 하차`;
+                        textContent = ` ${poiTitle}(${floorName}) ${transportation} 하차`;
                         this.createElement(naviListContainer, move, textContent);
                     }
                 } else {
